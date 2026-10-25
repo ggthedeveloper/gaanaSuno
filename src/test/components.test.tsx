@@ -4,6 +4,7 @@ import React from 'react';
 import App from '../App';
 import { TrackCard } from '../components/music/TrackCard';
 import { TrackRow } from '../components/music/TrackRow';
+import { HorizontalCarousel } from '../components/music/HorizontalCarousel';
 import { TRACKS } from '../data/catalog';
 import { AudioProvider } from '../context/AudioContext';
 import { LibraryProvider } from '../context/LibraryContext';
@@ -42,6 +43,19 @@ describe('UI Components Rendering', () => {
     expect(screen.getByText(track.title)).toBeInTheDocument();
     expect(screen.getByText(track.artist)).toBeInTheDocument();
     expect(screen.getByLabelText(`Play ${track.title}`)).toBeInTheDocument();
+  });
+
+  it('renders HorizontalCarousel with title and controls', () => {
+    render(
+      <HorizontalCarousel title="Test Carousel" devanagariTitle="टेस्ट">
+        <div>Item 1</div>
+        <div>Item 2</div>
+      </HorizontalCarousel>
+    );
+
+    expect(screen.getByText('Test Carousel')).toBeInTheDocument();
+    expect(screen.getByText('टेस्ट')).toBeInTheDocument();
+    expect(screen.getByText('Item 1')).toBeInTheDocument();
   });
 
   it('renders full GaanaSuno application in English without crashing', () => {

@@ -53,8 +53,9 @@ export const TopBar: React.FC<TopBarProps> = ({
           >
             <option value="all">All Languages</option>
             <option value="Hindi">हिंदी (Hindi)</option>
-            <option value="Urdu">اردو (Urdu)</option>
             <option value="Punjabi">ਪੰਜਾਬੀ (Punjabi)</option>
+            <option value="Awadhi">अवधी (Awadhi)</option>
+            <option value="Urdu">اردو (Urdu)</option>
           </select>
         </div>
 

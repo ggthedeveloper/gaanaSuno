@@ -7,9 +7,10 @@ import { Play, Music2 } from 'lucide-react';
 interface PlaylistCardProps {
   playlist: Playlist;
   onSelect: (playlist: Playlist) => void;
+  className?: string;
 }
 
-export const PlaylistCard: React.FC<PlaylistCardProps> = ({ playlist, onSelect }) => {
+export const PlaylistCard: React.FC<PlaylistCardProps> = ({ playlist, onSelect, className = '' }) => {
   const { playTrack } = useAudio();
 
   const playlistTracks = playlist.trackIds
@@ -31,15 +32,26 @@ export const PlaylistCard: React.FC<PlaylistCardProps> = ({ playlist, onSelect }
         if (e.key === 'Enter') onSelect(playlist);
       }}
       onClick={() => onSelect(playlist)}
-      className="group relative flex flex-col p-3 rounded-2xl bg-surface/50 hover:bg-surface-hover/90 border border-white/5 hover:border-white/15 transition-all duration-300 hover:shadow-2xl hover:-translate-y-1.5 cursor-pointer select-none"
+      className={`group relative flex flex-col p-2 sm:p-2.5 rounded-[1.25rem] bg-surface/40 hover:bg-surface-hover/80 border border-white/[0.07] hover:border-accent/40 shadow-sm hover:shadow-[0_12px_28px_-6px_rgba(0,0,0,0.5)] transition-all duration-300 hover:-translate-y-1.5 cursor-pointer select-none shrink-0 w-48 sm:w-52 lg:w-56 focus:outline-none focus-visible:ring-2 focus-visible:ring-accent ${className}`}
     >
-      <div className="relative aspect-square w-full rounded-xl overflow-hidden shadow-md bg-surface-subtle">
+      <div className="relative aspect-square w-full rounded-2xl overflow-hidden shadow-inner bg-surface-subtle">
         <img
           src={playlist.coverUrl}
           alt={playlist.title}
-          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+          className="w-full h-full object-cover transition-transform duration-700 ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:scale-105"
           loading="lazy"
         />
+
+        {/* Ambient bottom shadow overlay */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none" />
+
+        {/* Track count pill */}
+        <div className="absolute top-2 left-2">
+          <span className="px-2 py-0.5 rounded-full text-[9px] font-bold tracking-wider uppercase bg-black/60 text-white backdrop-blur-md border border-white/10 shadow-sm flex items-center gap-1">
+            <Music2 className="w-2.5 h-2.5 text-accent" />
+            <span>{playlist.trackIds.length} Songs</span>
+          </span>
+        </div>
 
         {/* Quick Play Button */}
         {playlistTracks.length > 0 && (
@@ -47,21 +59,29 @@ export const PlaylistCard: React.FC<PlaylistCardProps> = ({ playlist, onSelect }
             type="button"
             aria-label={`Play ${playlist.title}`}
             onClick={handleQuickPlay}
-            className="absolute bottom-3 right-3 w-11 h-11 rounded-full bg-accent text-accent-foreground flex items-center justify-center shadow-2xl opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 hover:scale-105 active:scale-95"
+            className="absolute bottom-2.5 right-2.5 w-10 h-10 rounded-full bg-accent text-accent-foreground flex items-center justify-center shadow-xl opacity-90 sm:opacity-0 translate-y-0 sm:translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 hover:scale-105 active:scale-95 cursor-pointer"
           >
-            <Play className="w-5 h-5 fill-current ml-0.5" />
+            <Play className="w-4 h-4 fill-current ml-0.5" />
           </button>
         )}
       </div>
 
-      <div className="mt-3">
+      <div className="mt-2.5 px-0.5">
         <h4 className="font-bold text-sm text-foreground truncate group-hover:text-accent transition-colors">
           {playlist.title}
         </h4>
-        <div className="flex items-center gap-1.5 text-xs text-foreground-muted mt-1 font-medium">
-          <Music2 className="w-3.5 h-3.5 text-accent" />
-          <span>{playlist.trackIds.length} tracks</span>
-          <span>•</span>
+
+        {playlist.titleDevanagari && (
+          <p className="text-[11px] text-foreground-subtle font-hindi truncate">
+            {playlist.titleDevanagari}
+          </p>
+        )}
+
+        <p className="text-xs text-foreground-muted line-clamp-1 mt-0.5 font-medium">
+          {playlist.description}
+        </p>
+
+        <div className="flex items-center gap-1.5 text-[10px] text-foreground-subtle mt-1.5 pt-1 border-t border-white/[0.04]">
           <span className="truncate">{playlist.curator}</span>
         </div>
       </div>
