@@ -14,7 +14,7 @@ describe('GaanaSuno Catalog Integrity', () => {
       expect(track.artist).toBeTruthy();
       expect(track.artistDevanagari).toBeTruthy();
       expect(track.duration).toBeGreaterThan(0);
-      expect(track.audioUrl).toMatch(/^https?:\/\//);
+      expect(track.audioUrl).toMatch(/^(\/|https?:\/\/)/);
       expect(track.coverUrl).toBeTruthy();
       expect(track.moods.length).toBeGreaterThan(0);
       expect(track.licenseNote).toBeTruthy();

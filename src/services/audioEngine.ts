@@ -13,7 +13,6 @@ class AudioEngine {
   private audio: HTMLAudioElement | null = null;
   private audioContext: AudioContext | null = null;
   private analyser: AnalyserNode | null = null;
-  private sourceNode: MediaElementAudioSourceNode | null = null;
   private frequencyData: Uint8Array = new Uint8Array(64);
   private listeners: Set<AudioEventListener> = new Set();
   private isSyntheticFallback = false;
@@ -38,8 +37,7 @@ class AudioEngine {
   private initAudioElement(): void {
     if (this.audio) return;
     this.audio = new Audio();
-    this.audio.preload = 'metadata';
-    this.audio.crossOrigin = 'anonymous';
+    this.audio.preload = 'auto';
 
     this.audio.addEventListener('play', () => {
       this.ensureAudioContext();
@@ -91,16 +89,6 @@ class AudioEngine {
         this.analyser.fftSize = 128;
         this.analyser.smoothingTimeConstant = 0.82;
         this.frequencyData = new Uint8Array(this.analyser.frequencyBinCount);
-
-        if (this.audio && !this.sourceNode) {
-          try {
-            this.sourceNode = this.audioContext.createMediaElementSource(this.audio);
-            this.sourceNode.connect(this.analyser);
-            this.analyser.connect(this.audioContext.destination);
-          } catch {
-            // MediaElementSource may fail with cross-origin or if already connected
-          }
-        }
       } catch (e) {
         console.warn('AudioContext init note:', e);
       }
