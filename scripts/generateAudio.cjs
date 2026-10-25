@@ -34,6 +34,22 @@ const TRACK_PROFILES = [
   { id: 'track-15', baseFreq: 130.81, chords: [1, 1.333, 1.5, 1.75], tempo: 0.85, style: 'rhythm' },
   // 16: Nostalgic Chai Tapri (Indie Rock Strumming)
   { id: 'track-16', baseFreq: 196.0, chords: [1, 1.25, 1.5, 1.8], tempo: 1.3, style: 'acoustic' },
+  // 17: Raghupati Raghav Raja Ram (Traditional Bhajan & Tanpura - Public Domain)
+  { id: 'track-17', baseFreq: 220.0, chords: [1, 1.25, 1.5, 1.333], tempo: 1.8, style: 'drone' },
+  // 18: Dam Mast Qalandar (13th Century Amir Khusro Sufi Qawwali - Public Domain)
+  { id: 'track-18', baseFreq: 146.83, chords: [1, 1.333, 1.5, 1.777], tempo: 0.95, style: 'rhythm' },
+  // 19: Vaishnav Jan To Tene Kahiye (15th Century Narsinh Mehta Classical - Public Domain)
+  { id: 'track-19', baseFreq: 261.63, chords: [1, 1.25, 1.5, 1.667], tempo: 2.2, style: 'flute' },
+  // 20: Mile Sur Mera Tumhara (Raga Bhairavi & Desh Unity Anthem - Open Heritage)
+  { id: 'track-20', baseFreq: 196.0, chords: [1, 1.25, 1.5, 1.875], tempo: 1.5, style: 'sitar' },
+  // 21: Kesariya Balam (Traditional Rajasthani Folk in Raga Mand - Public Domain)
+  { id: 'track-21', baseFreq: 246.94, chords: [1, 1.2, 1.5, 1.8], tempo: 1.7, style: 'folk' },
+  // 22: Moko Kahan Dhoondhe Re (15th Century Sant Kabir Nirguni Bhajan - Public Domain)
+  { id: 'track-22', baseFreq: 174.61, chords: [1, 1.333, 1.5, 2.0], tempo: 2.4, style: 'drone' },
+  // 23: Piya Tose Naina Lage Re (Raga Khamaj Semi-Classical Thumri - Heritage Tribute)
+  { id: 'track-23', baseFreq: 293.66, chords: [1, 1.25, 1.5, 1.875], tempo: 1.35, style: 'acoustic' },
+  // 24: Babul Mora Naihar Chhooto (19th Century Wajid Ali Shah Raga Bhairavi - Public Domain)
+  { id: 'track-24', baseFreq: 138.59, chords: [1, 1.189, 1.414, 1.682], tempo: 2.6, style: 'sitar' },
 ];
 
 function generateWavFile(profile, outPath, durationSec = 22, sampleRate = 22050) {
@@ -99,6 +115,10 @@ function generateWavFile(profile, outPath, durationSec = 22, sampleRate = 22050)
       // Breath-like bamboo bansuri harmonics with gentle tremolo
       const tremolo = Math.sin(2 * Math.PI * 5 * t) * 0.15 + 0.85;
       sample = (tone1 * 0.6 + tone2 * 0.3) * tremolo;
+    } else if (style === 'folk') {
+      // Rustic Sarangi / Ektara slide overtone with desert percussion pulse
+      const slide = Math.sin(2 * Math.PI * 2.5 * t) * 0.15;
+      sample = (tone1 * 0.55 + tone2 * 0.35 + tone3 * 0.2) * (0.4 + 0.6 * pulse) + slide;
     } else {
       sample = (tone1 + tone2) * 0.5 * pulse;
     }

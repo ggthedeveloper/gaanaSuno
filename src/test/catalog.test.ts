@@ -62,4 +62,16 @@ describe('GaanaSuno Catalog Integrity', () => {
       expect(alb.trackIds.length).toBeGreaterThan(0);
     });
   });
+
+  it('validates non-copyright Indian heritage tracks and playlist exist', () => {
+    const heritagePlaylist = PLAYLISTS.find((p) => p.id === 'pl-heritage');
+    expect(heritagePlaylist).toBeDefined();
+    expect(heritagePlaylist?.trackIds.length).toBeGreaterThanOrEqual(8);
+
+    const nonCopyrightTracks = TRACKS.filter((t) =>
+      t.licenseNote.toLowerCase().includes('public domain') ||
+      t.licenseNote.toLowerCase().includes('non-copyright')
+    );
+    expect(nonCopyrightTracks.length).toBeGreaterThanOrEqual(8);
+  });
 });
