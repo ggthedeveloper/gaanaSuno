@@ -31,7 +31,7 @@ export const ArtistCard: React.FC<ArtistCardProps> = ({ artist, onSelect }) => {
           {artist.name}
         </h4>
         <p className="text-xs text-foreground-muted font-normal truncate mt-0.5">
-          {artist.nameDevanagari}
+          {artist.role}
         </p>
         <span className="inline-block mt-1 text-[11px] font-medium text-foreground-subtle">
           {artist.monthlyListeners} listeners

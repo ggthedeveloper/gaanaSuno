@@ -48,11 +48,11 @@ export const HomeView: React.FC<HomeViewProps> = ({
           <div className="max-w-xl">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent/15 text-accent text-xs font-bold uppercase tracking-wider mb-3">
               <Sparkles className="w-3.5 h-3.5" />
-              <span>नमस्ते! सुरों की नई दुनिया</span>
+              <span>Welcome to GaanaSuno</span>
             </div>
 
             <h2 className="text-2xl sm:text-4xl font-extrabold text-foreground tracking-tight leading-tight">
-              आज क्या सुनने का <span className="text-gradient-accent">मन है?</span>
+              What do you want to <span className="text-gradient-accent">listen to today?</span>
             </h2>
             <p className="mt-2 text-sm sm:text-base text-foreground-muted leading-relaxed">
               Discover timeless Bollywood classics, soulful Sufi ghazals, midnight Hindi lo-fi, and high-octane Punjabi beats crafted for your heart.
@@ -109,7 +109,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
                   className="mt-2 flex items-center gap-1.5 text-xs font-bold text-accent hover:underline"
                 >
                   <Play className="w-3.5 h-3.5 fill-current" />
-                  <span>सुनें अभी (Listen Now)</span>
+                  <span>Listen Now</span>
                 </button>
               </div>
             </div>
@@ -123,7 +123,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
           <div className="flex items-center justify-between mb-4">
             <div>
               <h3 className="text-xl font-extrabold text-foreground tracking-tight">
-                Continue Listening (हाल ही में सुने गए)
+                Continue Listening
               </h3>
               <p className="text-xs text-foreground-muted mt-0.5">
                 Pick up where you left off
@@ -150,7 +150,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
           <div>
             <h3 className="text-xl font-extrabold text-foreground tracking-tight flex items-center gap-2">
               <Sparkles className="w-5 h-5 text-accent" />
-              <span>मन की धुन — Browse by Mood</span>
+              <span>Browse by Mood & Emotion</span>
             </h3>
             <p className="text-xs text-foreground-muted mt-0.5">
               Let your current feeling guide your playlist
@@ -208,7 +208,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
         <div className="flex items-center justify-between mb-4">
           <div>
             <h3 className="text-xl font-extrabold text-foreground tracking-tight">
-              Top Trending Tracks (सुपरहिट गाने)
+              Top Trending Hindi Songs
             </h3>
             <p className="text-xs text-foreground-muted mt-0.5">
               Most loved Bollywood and Indie melodies
@@ -234,7 +234,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
         <div className="flex items-center justify-between mb-4">
           <div>
             <h3 className="text-xl font-extrabold text-foreground tracking-tight">
-              Legendary Voices (शीर्ष गायक और उस्ताद)
+              Legendary Indian Artists & Maestros
             </h3>
             <p className="text-xs text-foreground-muted mt-0.5">
               Artists who shaped Indian music history

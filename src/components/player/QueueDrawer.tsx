@@ -29,7 +29,7 @@ export const QueueDrawer: React.FC = () => {
       <div className="flex items-center justify-between px-5 py-4 border-b border-border">
         <div>
           <h3 className="font-bold text-base text-foreground">
-            Playback Queue (कतार)
+            Playback Queue
           </h3>
           <p className="text-xs text-foreground-muted">
             {queue.length} track{queue.length !== 1 ? 's' : ''} in queue

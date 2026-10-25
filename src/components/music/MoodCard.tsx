@@ -39,10 +39,7 @@ export const MoodCard: React.FC<MoodCardProps> = ({ mood, isSelected, onSelect }
           <h3 className="text-lg sm:text-xl font-extrabold text-white tracking-tight drop-shadow-sm">
             {mood.label}
           </h3>
-          <p className="text-xs sm:text-sm font-semibold text-white/90 truncate">
-            {mood.labelDevanagari}
-          </p>
-          <p className="text-[11px] text-white/70 truncate mt-0.5 font-normal">
+          <p className="text-xs sm:text-sm font-medium text-white/90 truncate mt-0.5">
             {mood.tagline}
           </p>
         </div>

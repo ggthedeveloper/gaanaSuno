@@ -18,7 +18,7 @@ const Providers: React.FC<{ children: React.ReactNode }> = ({ children }) => (
 );
 
 describe('UI Components Rendering', () => {
-  it('renders TrackCard with English and Hindi titles', () => {
+  it('renders TrackCard with title, artist, and genre', () => {
     const track = TRACKS[0];
     render(
       <Providers>
@@ -27,8 +27,8 @@ describe('UI Components Rendering', () => {
     );
 
     expect(screen.getByText(track.title)).toBeInTheDocument();
-    expect(screen.getByText(track.titleDevanagari)).toBeInTheDocument();
     expect(screen.getByText(track.artist)).toBeInTheDocument();
+    expect(screen.getByText(new RegExp(track.genre))).toBeInTheDocument();
   });
 
   it('renders TrackRow with play button and duration', () => {
@@ -44,10 +44,10 @@ describe('UI Components Rendering', () => {
     expect(screen.getByLabelText(`Play ${track.title}`)).toBeInTheDocument();
   });
 
-  it('renders full GaanaSuno application without crashing', () => {
+  it('renders full GaanaSuno application in English without crashing', () => {
     render(<App />);
     expect(screen.getAllByText(/GaanaSuno/i).length).toBeGreaterThan(0);
-    expect(screen.getAllByText(/गाने सुनो/i).length).toBeGreaterThan(0);
-    expect(screen.getAllByText(/मन की धुन/i).length).toBeGreaterThan(0);
+    expect(screen.getAllByText(/Mood Discovery/i).length).toBeGreaterThan(0);
+    expect(screen.getAllByText(/Search & Explore/i).length).toBeGreaterThan(0);
   });
 });

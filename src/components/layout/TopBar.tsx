@@ -34,7 +34,7 @@ export const TopBar: React.FC<TopBarProps> = ({
           value={searchQuery}
           onChange={(e) => onSearchChange(e.target.value)}
           onFocus={handleSearchFocus}
-          placeholder="खोजें... Search Bollywood, Ghazals, Arijit, Sufi..."
+          placeholder="Search Bollywood, Ghazals, Arijit, Sufi, Lo-Fi..."
           aria-label="Search catalog"
           className="w-full pl-10 pr-4 py-2 rounded-full bg-surface text-foreground placeholder:text-foreground-muted/60 text-xs sm:text-sm border border-border/60 focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/20 transition-all"
         />

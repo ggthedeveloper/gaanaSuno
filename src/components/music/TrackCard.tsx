@@ -108,7 +108,7 @@ export const TrackCard: React.FC<TrackCardProps> = ({
           {track.artist}
         </p>
         <p className="text-[11px] text-foreground-subtle/80 font-normal truncate mt-0.5">
-          {track.titleDevanagari}
+          {track.genre} • {track.year}
         </p>
       </div>
     </div>

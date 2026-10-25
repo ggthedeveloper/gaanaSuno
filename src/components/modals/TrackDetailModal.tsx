@@ -63,15 +63,9 @@ export const TrackDetailModal: React.FC<TrackDetailModalProps> = ({ track, onClo
             <h3 className="text-xl sm:text-2xl font-extrabold text-foreground tracking-tight mt-2">
               {track.title}
             </h3>
-            <p className="text-sm font-hindi text-foreground-muted">
-              {track.titleDevanagari}
-            </p>
 
             <p className="text-xs text-foreground font-semibold mt-1">
               {track.artist}
-            </p>
-            <p className="text-[11px] font-hindi text-foreground-muted">
-              {track.artistDevanagari}
             </p>
 
             {/* Play & Like Buttons */}

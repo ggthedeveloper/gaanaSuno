@@ -190,8 +190,8 @@ export const NowPlayingModal: React.FC = () => {
                 {currentTrack.artist}
               </span>
               <span className="text-xs text-foreground-muted">•</span>
-              <span className="text-xs text-foreground-muted truncate font-hindi">
-                {currentTrack.titleDevanagari}
+              <span className="text-xs text-foreground-muted truncate">
+                {currentTrack.album}
               </span>
             </div>
           </div>

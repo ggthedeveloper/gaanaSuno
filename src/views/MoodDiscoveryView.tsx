@@ -50,11 +50,11 @@ export const MoodDiscoveryView: React.FC<MoodDiscoveryViewProps> = ({
         <div className="relative z-10 max-w-2xl">
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-black/30 backdrop-blur-md text-xs font-bold uppercase tracking-wider mb-2">
             <Sparkles className="w-3.5 h-3.5 text-amber-300" />
-            <span>मन की धुन • Mood Recommendation Engine</span>
+            <span>Mood Discovery Engine</span>
           </div>
 
           <h2 className="text-3xl sm:text-5xl font-black tracking-tight drop-shadow-md">
-            {activeMoodMeta.label} ({activeMoodMeta.labelDevanagari})
+            {activeMoodMeta.label}
           </h2>
           <p className="mt-2 text-sm sm:text-base text-white/90 font-medium">
             {activeMoodMeta.tagline}
@@ -133,8 +133,8 @@ export const MoodDiscoveryView: React.FC<MoodDiscoveryViewProps> = ({
                 <span className="text-2xl">{mood.emoji}</span>
                 <div className="min-w-0 flex-1">
                   <h4 className="font-bold text-xs truncate">{mood.label}</h4>
-                  <p className="text-[11px] text-foreground-muted truncate font-hindi">
-                    {mood.labelDevanagari}
+                  <p className="text-[11px] text-foreground-muted truncate">
+                    {mood.tagline}
                   </p>
                 </div>
               </button>

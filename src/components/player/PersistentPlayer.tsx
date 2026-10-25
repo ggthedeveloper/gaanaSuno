@@ -172,7 +172,7 @@ export const PersistentPlayer: React.FC = () => {
             </p>
             <div className="flex items-center gap-1 text-[11px] text-accent/80 font-medium truncate mt-0.5">
               <Sparkles className="w-3 h-3" />
-              <span>{currentTrack.titleDevanagari}</span>
+              <span>{currentTrack.genre}</span>
             </div>
           </div>
 

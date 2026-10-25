@@ -57,7 +57,7 @@ export const CreatePlaylistModal: React.FC<CreatePlaylistModalProps> = ({
               Create New Playlist
             </h3>
             <p className="text-xs text-foreground-muted">
-              नई प्लेलिस्ट बनाएं और अपने पसंदीदा सुर सहेजें
+              Organize your favorite Hindi and Indian melodies into custom collections
             </p>
           </div>
         </div>
@@ -65,7 +65,7 @@ export const CreatePlaylistModal: React.FC<CreatePlaylistModalProps> = ({
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <label className="block text-xs font-bold text-foreground mb-1.5">
-              Playlist Title (नाम) *
+              Playlist Title *
             </label>
             <input
               type="text"
@@ -73,14 +73,14 @@ export const CreatePlaylistModal: React.FC<CreatePlaylistModalProps> = ({
               autoFocus
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-              placeholder="e.g. Morning Chai Ragas, Midnight Indie..."
+              placeholder="e.g. Morning Chai Ragas, Midnight Indie, Roadtrip..."
               className="w-full px-3.5 py-2.5 rounded-xl bg-surface-subtle border border-border text-foreground text-sm focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/20 transition-all"
             />
           </div>
 
           <div>
             <label className="block text-xs font-bold text-foreground mb-1.5">
-              Description (विवरण)
+              Description
             </label>
             <textarea
               rows={3}

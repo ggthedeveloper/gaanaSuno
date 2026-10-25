@@ -49,7 +49,7 @@ export const PlaylistDetailView: React.FC<PlaylistDetailViewProps> = ({
         className="inline-flex items-center gap-1.5 text-xs font-bold text-foreground-muted hover:text-foreground transition-colors py-1"
       >
         <ArrowLeft className="w-4 h-4" />
-        <span>Back (वापस जाएं)</span>
+        <span>Back to Home</span>
       </button>
 
       {/* Playlist Hero Banner */}

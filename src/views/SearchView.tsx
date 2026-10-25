@@ -46,7 +46,7 @@ export const SearchView: React.FC<SearchViewProps> = ({
       {/* Search Header & Filter Chips */}
       <div>
         <h2 className="text-2xl sm:text-3xl font-extrabold text-foreground tracking-tight">
-          खोजें और सुरों को पहचानें
+          Search & Discover
         </h2>
         <p className="text-xs sm:text-sm text-foreground-muted mt-1">
           Search across Bollywood melodies, Sufi Qawwalis, Indie Lo-Fi, or lyrics
@@ -59,7 +59,7 @@ export const SearchView: React.FC<SearchViewProps> = ({
             type="text"
             value={searchQuery}
             onChange={(e) => onSearchChange(e.target.value)}
-            placeholder="Type song name, artist (e.g. Arijit, Amjad Sabri), raga, or lyrics..."
+            placeholder="Search by song, artist (e.g. Arijit Singh, Amjad Sabri), raga, or lyrics..."
             aria-label="Search"
             autoFocus
             className="w-full pl-12 pr-10 py-3 rounded-2xl bg-surface border border-border text-foreground placeholder:text-foreground-muted/60 text-sm focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/20 transition-all shadow-sm"

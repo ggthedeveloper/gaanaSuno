@@ -28,14 +28,14 @@ export const SettingsView: React.FC = () => {
   const accentOptions: Array<{
     id: AccentColor;
     label: string;
-    labelHindi: string;
+    sublabel: string;
     hex: string;
   }> = [
-    { id: 'saffron', label: 'Saffron Gold', labelHindi: 'केसरिया सुनहरी', hex: '#f59e0b' },
-    { id: 'rose', label: 'Rose Romance', labelHindi: 'गुलाबी इश्क़', hex: '#f43f5e' },
-    { id: 'indigo', label: 'Royal Indigo', labelHindi: 'शाही नील', hex: '#6366f1' },
-    { id: 'emerald', label: 'Emerald Sufi', labelHindi: 'ज़मुर्रद सूफ़ी', hex: '#10b981' },
-    { id: 'violet', label: 'Electric Violet', labelHindi: 'बैंगनी धुन', hex: '#8b5cf6' },
+    { id: 'saffron', label: 'Saffron Gold', sublabel: 'Signature Warm Amber', hex: '#f59e0b' },
+    { id: 'rose', label: 'Rose Romance', sublabel: 'Bollywood Pink', hex: '#f43f5e' },
+    { id: 'indigo', label: 'Royal Indigo', sublabel: 'Midnight Deep Blue', hex: '#6366f1' },
+    { id: 'emerald', label: 'Emerald Sufi', sublabel: 'Spiritual Jade Green', hex: '#10b981' },
+    { id: 'violet', label: 'Electric Violet', sublabel: 'Modern Desi Pop', hex: '#8b5cf6' },
   ];
 
   return (
@@ -44,7 +44,7 @@ export const SettingsView: React.FC = () => {
       <div className="flex items-center justify-between border-b border-border pb-4">
         <div>
           <h2 className="text-2xl sm:text-3xl font-extrabold text-foreground tracking-tight">
-            Settings & Customization (सैटिंग्स और शैली)
+            Settings & Customization
           </h2>
           <p className="text-xs sm:text-sm text-foreground-muted mt-0.5">
             Personalize your GaanaSuno visual aesthetics and audio playback experience
@@ -65,7 +65,7 @@ export const SettingsView: React.FC = () => {
       <section className="bg-surface/60 p-5 rounded-2xl border border-border/60">
         <h3 className="font-bold text-base text-foreground flex items-center gap-2 mb-3">
           <Sun className="w-4 h-4 text-accent" />
-          <span>Theme Mode (थीम मोड)</span>
+          <span>Theme Mode</span>
         </h3>
         <p className="text-xs text-foreground-muted mb-4">
           Choose dark charcoal surfaces for midnight listening or clean high-contrast light mode.
@@ -73,8 +73,8 @@ export const SettingsView: React.FC = () => {
 
         <div className="grid grid-cols-3 gap-3">
           {[
-            { id: 'dark', label: 'Dark Mode (डार्क)', icon: Moon },
-            { id: 'light', label: 'Light Mode (लाइट)', icon: Sun },
+            { id: 'dark', label: 'Dark Mode', icon: Moon },
+            { id: 'light', label: 'Light Mode', icon: Sun },
             { id: 'system', label: 'System Default', icon: Laptop },
           ].map((mode) => {
             const Icon = mode.icon;
@@ -102,7 +102,7 @@ export const SettingsView: React.FC = () => {
       <section className="bg-surface/60 p-5 rounded-2xl border border-border/60">
         <h3 className="font-bold text-base text-foreground flex items-center gap-2 mb-3">
           <Palette className="w-4 h-4 text-accent" />
-          <span>Indian Cultural Accent Palette (रंग चयन)</span>
+          <span>Signature Accent Palette</span>
         </h3>
         <p className="text-xs text-foreground-muted mb-4">
           Select the signature accent color that highlights players, buttons, and musical badges.
@@ -130,7 +130,7 @@ export const SettingsView: React.FC = () => {
                 </div>
                 <div>
                   <h4 className="font-bold text-xs text-foreground">{opt.label}</h4>
-                  <p className="text-[10px] text-foreground-muted font-hindi">{opt.labelHindi}</p>
+                  <p className="text-[10px] text-foreground-muted">{opt.sublabel}</p>
                 </div>
               </button>
             );
@@ -202,7 +202,7 @@ export const SettingsView: React.FC = () => {
           <label className="flex items-center justify-between cursor-pointer">
             <div>
               <span className="font-semibold text-xs text-foreground block">
-                Audio-Reactive Visualizer (ऑडियो विज़ुअलाइज़र)
+                Audio-Reactive Visualizer
               </span>
               <span className="text-[11px] text-foreground-muted">
                 Render hardware-accelerated spectrum bars synchronized with playback.

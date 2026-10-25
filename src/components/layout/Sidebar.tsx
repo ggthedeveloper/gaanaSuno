@@ -44,14 +44,13 @@ export const Sidebar: React.FC<SidebarProps> = ({
   const { likedTrackIds, customPlaylists } = useLibrary();
 
   const navItems = [
-    { id: 'home' as NavRoute, label: 'Home', labelDev: 'मुखपृष्ठ', icon: Home },
-    { id: 'search' as NavRoute, label: 'Search & Explore', labelDev: 'खोजें', icon: Compass },
-    { id: 'moods' as NavRoute, label: 'Mood Discovery', labelDev: 'मन की धुन', icon: Sparkles },
-    { id: 'library' as NavRoute, label: 'Your Library', labelDev: 'लाइब्रेरी', icon: Library },
+    { id: 'home' as NavRoute, label: 'Home', icon: Home },
+    { id: 'search' as NavRoute, label: 'Search & Explore', icon: Compass },
+    { id: 'moods' as NavRoute, label: 'Mood Discovery', icon: Sparkles },
+    { id: 'library' as NavRoute, label: 'Your Library', icon: Library },
     {
       id: 'liked' as NavRoute,
       label: 'Liked Songs',
-      labelDev: 'पसंदीदा गाने',
       icon: Heart,
       badge: likedTrackIds.length,
     },
@@ -85,8 +84,8 @@ export const Sidebar: React.FC<SidebarProps> = ({
                     Hindi
                   </span>
                 </h1>
-                <p className="text-[11px] font-hindi text-foreground-muted">
-                  गाने सुनो • सुर और ताल
+                <p className="text-[11px] text-foreground-muted">
+                  Hindi & Indian Music
                 </p>
               </div>
             )}

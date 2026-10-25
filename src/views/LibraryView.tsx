@@ -39,7 +39,7 @@ export const LibraryView: React.FC<LibraryViewProps> = ({
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <h2 className="text-2xl sm:text-3xl font-extrabold text-foreground tracking-tight">
-            Your Library (आपकी लाइब्रेरी)
+            Your Library
           </h2>
           <p className="text-xs sm:text-sm text-foreground-muted mt-0.5">
             Liked tracks, custom collections, and playback history
@@ -52,7 +52,7 @@ export const LibraryView: React.FC<LibraryViewProps> = ({
           className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-accent text-accent-foreground font-bold text-xs shadow-md hover:scale-105 active:scale-95 transition-all self-start sm:self-auto"
         >
           <Plus className="w-4 h-4" />
-          <span>New Playlist (नई प्लेलिस्ट)</span>
+          <span>New Playlist</span>
         </button>
       </div>
 
@@ -93,7 +93,7 @@ export const LibraryView: React.FC<LibraryViewProps> = ({
                   Collection
                 </span>
                 <h3 className="text-xl sm:text-3xl font-black tracking-tight">
-                  Liked Songs (पसंदीदा गाने)
+                  Liked Songs
                 </h3>
                 <p className="text-xs sm:text-sm text-white/80 mt-0.5">
                   {likedTracks.length} song{likedTracks.length !== 1 ? 's' : ''} saved to your heart
@@ -191,7 +191,7 @@ export const LibraryView: React.FC<LibraryViewProps> = ({
           <div className="flex items-center gap-2 mb-3">
             <Clock className="w-4 h-4 text-accent" />
             <h3 className="font-bold text-lg text-foreground">
-              Recently Played History (हाल में सुने गए)
+              Recently Played History
             </h3>
           </div>
 

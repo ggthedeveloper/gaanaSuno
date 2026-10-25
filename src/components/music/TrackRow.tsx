@@ -123,9 +123,6 @@ export const TrackRow: React.FC<TrackRowProps> = ({
             >
               {track.title}
             </span>
-            <span className="text-xs text-foreground-muted/80 font-normal truncate hidden sm:inline">
-              ({track.titleDevanagari})
-            </span>
           </div>
           <div className="text-xs text-foreground-muted truncate">
             {track.artist}
