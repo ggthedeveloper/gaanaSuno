@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="none">
+  <defs>
+    <linearGradient id="gs-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f59e0b" />
+      <stop offset="50%" stop-color="#f97316" />
+      <stop offset="100%" stop-color="#e11d48" />
+    </linearGradient>
+    <linearGradient id="gs-glow" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#fbbf24" stop-opacity="0.8"/>
+      <stop offset="100%" stop-color="#f43f5e" stop-opacity="0.8"/>
+    </linearGradient>
+  </defs>
+  <!-- Background disc -->
+  <circle cx="50" cy="50" r="46" fill="#12131a" stroke="url(#gs-grad)" stroke-width="2.5" />
+  <circle cx="50" cy="50" r="36" stroke="#262837" stroke-width="1.5" stroke-dasharray="3 3" />
+  <circle cx="50" cy="50" r="26" stroke="#373a4d" stroke-width="1.2" />
+  
+  <!-- Stylized Indian Raga / Soundwave Sitar & Music Note Icon -->
+  <path d="M42 28 C42 28, 58 24, 62 34 C64 39, 60 48, 48 48 C48 56, 52 64, 46 72 C41 78, 30 76, 28 68 C26 60, 36 54, 42 58 L42 28 Z" fill="url(#gs-grad)" />
+  <circle cx="36" cy="67" r="6" fill="#ffffff" />
+  <circle cx="50" cy="50" r="4" fill="url(#gs-glow)" />
+
+  <!-- Dynamic sound wave arcs -->
+  <path d="M68 40 C73 45, 73 55, 68 60" stroke="#f59e0b" stroke-width="3" stroke-linecap="round" />
+  <path d="M75 34 C82 43, 82 57, 75 66" stroke="#f97316" stroke-width="2.5" stroke-linecap="round" opacity="0.75" />
+</svg>
