@@ -16,7 +16,6 @@ import {
   Heart,
   ListMusic,
   Maximize2,
-  Sparkles,
 } from 'lucide-react';
 
 export const PersistentPlayer: React.FC = () => {
@@ -64,15 +63,15 @@ export const PersistentPlayer: React.FC = () => {
     <footer
       role="region"
       aria-label="Audio Player"
-      className="fixed bottom-0 left-0 right-0 z-40 bg-surface/95 backdrop-blur-xl border-t border-border shadow-[0_-8px_30px_rgba(0,0,0,0.25)] select-none transition-all"
+      className="fixed bottom-0 left-0 right-0 z-40 bg-surface/90 backdrop-blur-2xl border-t border-white/10 shadow-[0_-10px_35px_rgba(0,0,0,0.4)] select-none transition-all"
     >
       {/* Mobile Mini Player (< 640px) */}
       <div
-        className="flex sm:hidden items-center justify-between px-3 py-2 cursor-pointer"
+        className="flex sm:hidden items-center justify-between px-3.5 py-2.5 cursor-pointer"
         onClick={() => setIsExpandedNowPlaying(true)}
       >
         <div className="flex items-center gap-3 min-w-0 flex-1">
-          <div className="relative w-11 h-11 rounded-lg overflow-hidden shrink-0 border border-border/50">
+          <div className="relative w-11 h-11 rounded-xl overflow-hidden shrink-0 border border-white/10 shadow-md">
             <img
               src={currentTrack.coverUrl}
               alt={currentTrack.title}
@@ -91,12 +90,12 @@ export const PersistentPlayer: React.FC = () => {
           </div>
         </div>
 
-        <div className="flex items-center gap-1 shrink-0" onClick={(e) => e.stopPropagation()}>
+        <div className="flex items-center gap-1.5 shrink-0" onClick={(e) => e.stopPropagation()}>
           <button
             type="button"
             aria-label={liked ? 'Unlike' : 'Like'}
             onClick={() => toggleLike(currentTrack.id)}
-            className={`p-2 rounded-lg ${
+            className={`p-2 rounded-lg transition-colors ${
               liked ? 'text-rose-500' : 'text-foreground-muted'
             }`}
           >
@@ -107,7 +106,7 @@ export const PersistentPlayer: React.FC = () => {
             type="button"
             aria-label={isPlaying ? 'Pause' : 'Play'}
             onClick={togglePlay}
-            className="w-10 h-10 rounded-full bg-accent text-accent-foreground flex items-center justify-center shadow-md active:scale-95"
+            className="w-10 h-10 rounded-full bg-accent text-accent-foreground flex items-center justify-center shadow-lg active:scale-95"
           >
             {isPlaying ? (
               <Pause className="w-5 h-5 fill-current" />
@@ -128,7 +127,7 @@ export const PersistentPlayer: React.FC = () => {
       </div>
 
       {/* Mobile Seek Progress Indicator */}
-      <div className="block sm:hidden w-full bg-border/40 h-1 relative">
+      <div className="block sm:hidden w-full bg-white/5 h-1 relative">
         <div
           className="bg-accent h-full transition-all duration-150"
           style={{ width: `${progressPercent}%` }}
@@ -144,7 +143,7 @@ export const PersistentPlayer: React.FC = () => {
             tabIndex={0}
             onClick={() => setIsExpandedNowPlaying(true)}
             aria-label="Expand Now Playing"
-            className="group relative w-14 h-14 rounded-xl overflow-hidden shrink-0 shadow-md border border-border/60 cursor-pointer"
+            className="group relative w-14 h-14 rounded-xl overflow-hidden shrink-0 shadow-lg border border-white/10 cursor-pointer"
           >
             <img
               src={currentTrack.coverUrl}
@@ -167,11 +166,17 @@ export const PersistentPlayer: React.FC = () => {
                 {currentTrack.title}
               </h4>
             </div>
-            <p className="text-xs text-foreground-muted truncate">
+            <p className="text-xs text-foreground-muted truncate font-medium">
               {currentTrack.artist}
             </p>
-            <div className="flex items-center gap-1 text-[11px] text-accent/80 font-medium truncate mt-0.5">
-              <Sparkles className="w-3 h-3" />
+            <div className="flex items-center gap-1.5 text-[11px] text-accent font-semibold truncate mt-0.5">
+              {isPlaying && (
+                <span className="flex items-end gap-0.5 h-2.5">
+                  <span className="w-0.5 bg-accent rounded-full animate-bounce h-2.5" />
+                  <span className="w-0.5 bg-accent rounded-full animate-bounce h-1.5 delay-100" />
+                  <span className="w-0.5 bg-accent rounded-full animate-bounce h-2 delay-200" />
+                </span>
+              )}
               <span>{currentTrack.genre}</span>
             </div>
           </div>
@@ -180,7 +185,7 @@ export const PersistentPlayer: React.FC = () => {
             type="button"
             aria-label={liked ? 'Unlike' : 'Like'}
             onClick={() => toggleLike(currentTrack.id)}
-            className={`p-1.5 rounded-lg transition-colors ${
+            className={`p-2 rounded-lg transition-all active:scale-90 ${
               liked
                 ? 'text-rose-500 hover:text-rose-600'
                 : 'text-foreground-muted hover:text-foreground'
@@ -192,7 +197,7 @@ export const PersistentPlayer: React.FC = () => {
 
         {/* Center: Playback Controls & Progress Bar */}
         <div className="flex flex-col items-center w-2/4 max-w-xl">
-          <div className="flex items-center gap-3 md:gap-5 mb-1.5">
+          <div className="flex items-center gap-4 md:gap-6 mb-1.5">
             <button
               type="button"
               aria-label="Toggle shuffle"
@@ -219,7 +224,7 @@ export const PersistentPlayer: React.FC = () => {
               type="button"
               aria-label={isPlaying ? 'Pause' : 'Play'}
               onClick={togglePlay}
-              className="w-10 h-10 rounded-full bg-accent text-accent-foreground flex items-center justify-center shadow-md hover:scale-105 active:scale-95 transition-all"
+              className="w-11 h-11 rounded-full bg-accent text-accent-foreground flex items-center justify-center shadow-xl hover:scale-105 active:scale-95 transition-all shadow-accent/30"
             >
               {isPlaying ? (
                 <Pause className="w-5 h-5 fill-current" />
@@ -255,9 +260,9 @@ export const PersistentPlayer: React.FC = () => {
             </button>
           </div>
 
-          {/* Progress Scrubber */}
-          <div className="w-full flex items-center gap-2.5">
-            <span className="text-[11px] font-mono text-foreground-muted w-9 text-right">
+          {/* Progress Scrubber Bar */}
+          <div className="w-full flex items-center gap-3">
+            <span className="text-[11px] font-mono text-foreground-muted w-9 text-right font-medium">
               {formatTime(currentTime)}
             </span>
 
@@ -269,11 +274,11 @@ export const PersistentPlayer: React.FC = () => {
                 value={currentTime}
                 onChange={handleSeekChange}
                 aria-label="Seek track position"
-                className="w-full h-1.5 bg-border rounded-lg appearance-none cursor-pointer accent-accent focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+                className="w-full h-1.5 bg-white/10 rounded-lg appearance-none cursor-pointer accent-accent focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
               />
             </div>
 
-            <span className="text-[11px] font-mono text-foreground-muted w-9">
+            <span className="text-[11px] font-mono text-foreground-muted w-9 font-medium">
               {formatTime(duration)}
             </span>
           </div>
@@ -305,7 +310,7 @@ export const PersistentPlayer: React.FC = () => {
               value={isMuted ? 0 : volume}
               onChange={handleVolumeChange}
               aria-label="Volume slider"
-              className="w-20 lg:w-24 h-1.5 bg-border rounded-lg appearance-none cursor-pointer accent-accent focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+              className="w-20 lg:w-24 h-1.5 bg-white/10 rounded-lg appearance-none cursor-pointer accent-accent focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
             />
           </div>
 
@@ -314,15 +319,15 @@ export const PersistentPlayer: React.FC = () => {
             type="button"
             aria-label="Toggle Queue"
             onClick={() => setIsQueueDrawerOpen(!isQueueDrawerOpen)}
-            className={`relative p-2 rounded-lg transition-colors ${
+            className={`relative p-2 rounded-xl transition-all ${
               isQueueDrawerOpen
-                ? 'text-accent bg-accent/15'
+                ? 'text-accent bg-accent/15 border border-accent/30'
                 : 'text-foreground-muted hover:text-foreground hover:bg-surface-active'
             }`}
           >
             <ListMusic className="w-4 h-4" />
             {queue.length > 0 && (
-              <span className="absolute -top-1 -right-1 bg-accent text-accent-foreground text-[9px] font-bold px-1.5 py-0.2 rounded-full min-w-[16px] text-center">
+              <span className="absolute -top-1 -right-1 bg-accent text-accent-foreground text-[9px] font-black px-1.5 py-0.2 rounded-full min-w-[16px] text-center shadow-md">
                 {queue.length}
               </span>
             )}
@@ -333,7 +338,7 @@ export const PersistentPlayer: React.FC = () => {
             type="button"
             aria-label="Open immersive player"
             onClick={() => setIsExpandedNowPlaying(true)}
-            className="p-2 rounded-lg text-foreground-muted hover:text-foreground hover:bg-surface-active transition-colors"
+            className="p-2 rounded-xl text-foreground-muted hover:text-foreground hover:bg-surface-active transition-colors"
           >
             <Maximize2 className="w-4 h-4" />
           </button>

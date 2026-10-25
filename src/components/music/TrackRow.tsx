@@ -104,7 +104,7 @@ export const TrackRow: React.FC<TrackRowProps> = ({
         </div>
 
         {/* Thumbnail Artwork */}
-        <div className="relative w-11 h-11 rounded-lg overflow-hidden shrink-0 shadow-sm border border-border/40">
+        <div className="relative w-11 h-11 rounded-xl overflow-hidden shrink-0 shadow-md border border-white/10 bg-surface-subtle">
           <img
             src={track.coverUrl}
             alt={track.title}
@@ -117,14 +117,14 @@ export const TrackRow: React.FC<TrackRowProps> = ({
         <div className="min-w-0 flex-1 pr-2">
           <div className="flex items-center gap-2">
             <span
-              className={`font-semibold text-sm truncate ${
+              className={`font-bold text-sm truncate ${
                 isCurrent ? 'text-accent' : 'text-foreground'
               }`}
             >
               {track.title}
             </span>
           </div>
-          <div className="text-xs text-foreground-muted truncate">
+          <div className="text-xs text-foreground-muted truncate font-medium">
             {track.artist}
           </div>
         </div>

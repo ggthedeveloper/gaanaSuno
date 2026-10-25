@@ -39,15 +39,15 @@
 
   .dark {
     /* Dark Theme Surface Hierarchy */
-    --background: #090a0f;
-    --background-subtle: #0f1118;
-    --surface: #151822;
-    --surface-hover: #1e2230;
-    --surface-active: #272d40;
-    --surface-glass: rgba(21, 24, 34, 0.82);
+    --background: #08090d;
+    --background-subtle: #0d0e15;
+    --surface: #12141c;
+    --surface-hover: #191c28;
+    --surface-active: #222636;
+    --surface-glass: rgba(18, 20, 28, 0.85);
 
-    --border: #232838;
-    --border-subtle: #191c28;
+    --border: #1e2230;
+    --border-subtle: #151824;
 
     --foreground: #f8fafc;
     --foreground-muted: #94a3b8;
@@ -56,7 +56,7 @@
     --accent: #f59e0b;
     --accent-hover: #fbbf24;
     --accent-light: rgba(245, 158, 11, 0.15);
-    --accent-foreground: #090a0f;
+    --accent-foreground: #08090d;
     --accent-glow: rgba(245, 158, 11, 0.35);
   }
 

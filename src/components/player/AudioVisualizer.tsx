@@ -35,27 +35,32 @@ export const AudioVisualizer: React.FC<AudioVisualizerProps> = ({
       ctx.clearRect(0, 0, width, h);
 
       if (mode === 'bars') {
-        const barCount = 32;
-        const barWidth = (width / barCount) * 0.72;
-        const gap = (width / barCount) * 0.28;
+        const barCount = 36;
+        const barWidth = (width / barCount) * 0.68;
+        const gap = (width / barCount) * 0.32;
+
+        ctx.shadowBlur = 12;
+        ctx.shadowColor = 'var(--accent)';
 
         for (let i = 0; i < barCount; i++) {
           const value = freqData[i] || 0;
           const percent = value / 255;
-          const barHeight = Math.max(4, percent * h * 0.95);
+          const barHeight = Math.max(4, percent * h * 0.94);
           const x = i * (barWidth + gap);
           const y = h - barHeight;
 
-          // Gradient fill
+          // Multi-stop gradient fill
           const grad = ctx.createLinearGradient(0, y, 0, h);
-          grad.addColorStop(0, 'var(--accent)');
-          grad.addColorStop(1, 'rgba(249, 115, 22, 0.4)');
+          grad.addColorStop(0, '#ffffff');
+          grad.addColorStop(0.2, 'var(--accent)');
+          grad.addColorStop(1, 'rgba(249, 115, 22, 0.2)');
 
           ctx.fillStyle = grad;
           ctx.beginPath();
-          ctx.roundRect(x, y, barWidth, barHeight, [3, 3, 0, 0]);
+          ctx.roundRect(x, y, barWidth, barHeight, [4, 4, 1, 1]);
           ctx.fill();
         }
+        ctx.shadowBlur = 0;
       } else {
         // Wave mode
         ctx.beginPath();

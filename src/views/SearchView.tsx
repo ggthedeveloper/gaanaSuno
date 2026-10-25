@@ -54,7 +54,7 @@ export const SearchView: React.FC<SearchViewProps> = ({
 
         {/* Search Bar Input */}
         <div className="relative mt-4 max-w-2xl">
-          <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-foreground-muted" />
+          <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-accent" />
           <input
             type="text"
             value={searchQuery}
@@ -62,7 +62,7 @@ export const SearchView: React.FC<SearchViewProps> = ({
             placeholder="Search by song, artist (e.g. Arijit Singh, Amjad Sabri), raga, or lyrics..."
             aria-label="Search"
             autoFocus
-            className="w-full pl-12 pr-10 py-3 rounded-2xl bg-surface border border-border text-foreground placeholder:text-foreground-muted/60 text-sm focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/20 transition-all shadow-sm"
+            className="w-full pl-12 pr-10 py-3.5 rounded-2xl bg-surface/80 backdrop-blur-xl border border-white/10 text-foreground placeholder:text-foreground-muted/60 text-sm focus:outline-none focus:border-accent focus:ring-4 focus:ring-accent/15 transition-all shadow-xl"
           />
           {searchQuery && (
             <button

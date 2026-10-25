@@ -83,13 +83,13 @@ export const MoodDiscoveryView: React.FC<MoodDiscoveryViewProps> = ({
       </div>
 
       {/* Mood Selector Question */}
-      <section className="bg-surface/60 p-5 rounded-2xl border border-border/60">
+      <section className="bg-surface/50 backdrop-blur-xl p-6 rounded-3xl border border-white/8 shadow-xl">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4">
           <div>
-            <h3 className="font-bold text-base text-foreground flex items-center gap-2">
+            <h3 className="font-extrabold text-base text-foreground flex items-center gap-2">
               <span>How are you feeling right now?</span>
               <span className="text-xs text-foreground-muted font-normal">
-                (Choose an emotional state)
+                (Pick your current emotional state)
               </span>
             </h3>
           </div>
@@ -103,9 +103,9 @@ export const MoodDiscoveryView: React.FC<MoodDiscoveryViewProps> = ({
                 key={t}
                 type="button"
                 onClick={() => setTempo(t)}
-                className={`px-2.5 py-1 rounded-lg uppercase text-[10px] font-bold transition-all ${
+                className={`px-3 py-1 rounded-xl uppercase text-[10px] font-bold transition-all ${
                   tempo === t
-                    ? 'bg-accent text-accent-foreground'
+                    ? 'bg-accent text-accent-foreground shadow-sm'
                     : 'bg-surface-subtle hover:bg-surface-hover text-foreground-muted'
                 }`}
               >
@@ -116,7 +116,7 @@ export const MoodDiscoveryView: React.FC<MoodDiscoveryViewProps> = ({
         </div>
 
         {/* 8 Mood Pill Buttons */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
           {MOOD_OPTIONS.map((mood) => {
             const isSelected = selectedMood === mood.id;
             return (
@@ -124,16 +124,16 @@ export const MoodDiscoveryView: React.FC<MoodDiscoveryViewProps> = ({
                 key={mood.id}
                 type="button"
                 onClick={() => setSelectedMood(mood.id)}
-                className={`flex items-center gap-2.5 p-3 rounded-xl border text-left transition-all ${
+                className={`flex items-center gap-3 p-3.5 rounded-2xl border text-left transition-all hover:scale-[1.02] active:scale-95 ${
                   isSelected
-                    ? 'bg-accent/15 border-accent text-accent shadow-md scale-[1.02]'
-                    : 'bg-surface hover:bg-surface-hover border-border/60 text-foreground'
+                    ? 'bg-accent/15 border-accent text-accent shadow-lg shadow-accent/10'
+                    : 'bg-surface hover:bg-surface-hover border-white/5 text-foreground hover:border-white/15'
                 }`}
               >
-                <span className="text-2xl">{mood.emoji}</span>
+                <span className="text-2xl filter drop-shadow">{mood.emoji}</span>
                 <div className="min-w-0 flex-1">
                   <h4 className="font-bold text-xs truncate">{mood.label}</h4>
-                  <p className="text-[11px] text-foreground-muted truncate">
+                  <p className="text-[11px] text-foreground-muted truncate font-medium">
                     {mood.tagline}
                   </p>
                 </div>
