@@ -103,6 +103,11 @@ export const TrackCard: React.FC<TrackCardProps> = ({
                 {track.moods[0]}
               </span>
             )}
+            {track.licenseNote.toLowerCase().includes('youtube') && (
+              <span className="px-1.5 py-0.5 rounded-full text-[8px] font-black uppercase tracking-wider bg-red-600/90 text-white backdrop-blur-md shadow-sm">
+                YT
+              </span>
+            )}
           </div>
 
           {/* Favorite Heart Button */}

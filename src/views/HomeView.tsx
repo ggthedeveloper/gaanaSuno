@@ -66,9 +66,14 @@ export const HomeView: React.FC<HomeViewProps> = ({
     return TRACKS.filter((t) => t.language === preferences.preferredLanguage);
   }, [preferences.preferredLanguage]);
 
+  const youtubeHitsTracks = useMemo(
+    () => TRACKS.filter((t) => ['track-1', 'track-4', 'track-7', 'track-14', 'track-17', 'track-18', 'track-11', 'track-9', 'track-10', 'track-12', 'track-20', 'track-8'].includes(t.id)),
+    []
+  );
+
   // Specific thematic track collections
   const heritageTracks = useMemo(
-    () => TRACKS.filter((t) => t.id >= 'track-17' && t.id <= 'track-24'),
+    () => TRACKS.filter((t) => ['track-21', 'track-22', 'track-23', 'track-24', 'track-2', 'track-13', 'track-6'].includes(t.id)),
     []
   );
 
@@ -306,6 +311,29 @@ export const HomeView: React.FC<HomeViewProps> = ({
           ))}
         </HorizontalCarousel>
       )}
+
+      {/* ============================================================== */}
+      {/* YOUTUBE TRENDING HINDI & BOLLYWOOD HITS                        */}
+      {/* ============================================================== */}
+      <HorizontalCarousel
+        title="YouTube Trending — Hindi & Bollywood Hits"
+        devanagariTitle="यूट्यूब ट्रेंडिंग गाने"
+        subtitle="The definitive chart-topping hits by Arijit Singh, Anuv Jain, Pritam, The Local Train & Vishal Mishra"
+        icon={
+          <div className="w-5 h-5 rounded-md bg-red-600 flex items-center justify-center text-white shadow-sm">
+            <Play className="w-2.5 h-2.5 fill-current ml-0.5" />
+          </div>
+        }
+      >
+        {youtubeHitsTracks.map((track) => (
+          <TrackCard
+            key={`yt-${track.id}`}
+            track={track}
+            allTracks={youtubeHitsTracks}
+            onOpenDetail={onSelectTrack}
+          />
+        ))}
+      </HorizontalCarousel>
 
       {/* ============================================================== */}
       {/* SANSKRITI — NON-COPYRIGHT INDIAN HERITAGE CAROUSEL             */}

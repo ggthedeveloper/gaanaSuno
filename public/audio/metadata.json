@@ -1,0 +1,122 @@
+{
+  "track-1": {
+    "file": "/audio/track-1.m4a",
+    "duration": 266,
+    "size": 4293412
+  },
+  "track-2": {
+    "file": "/audio/track-2.m4a",
+    "duration": 543,
+    "size": 8776261
+  },
+  "track-3": {
+    "file": "/audio/track-3.m4a",
+    "duration": 261,
+    "size": 4221343
+  },
+  "track-4": {
+    "file": "/audio/track-4.m4a",
+    "duration": 293,
+    "size": 4742319
+  },
+  "track-5": {
+    "file": "/audio/track-5.m4a",
+    "duration": 234,
+    "size": 3782389
+  },
+  "track-6": {
+    "file": "/audio/track-6.m4a",
+    "duration": 299,
+    "size": 4830393
+  },
+  "track-7": {
+    "file": "/audio/track-7.m4a",
+    "duration": 208,
+    "size": 3357329
+  },
+  "track-8": {
+    "file": "/audio/track-8.m4a",
+    "duration": 204,
+    "size": 3293490
+  },
+  "track-9": {
+    "file": "/audio/track-9.m4a",
+    "duration": 174,
+    "size": 2811727
+  },
+  "track-10": {
+    "file": "/audio/track-10.m4a",
+    "duration": 248,
+    "size": 4013659
+  },
+  "track-11": {
+    "file": "/audio/track-11.m4a",
+    "duration": 273,
+    "size": 4406706
+  },
+  "track-12": {
+    "file": "/audio/track-12.m4a",
+    "duration": 277,
+    "size": 4474184
+  },
+  "track-13": {
+    "file": "/audio/track-13.m4a",
+    "duration": 488,
+    "size": 7893094
+  },
+  "track-14": {
+    "file": "/audio/track-14.m4a",
+    "duration": 342,
+    "size": 5521193
+  },
+  "track-15": {
+    "file": "/audio/track-15.m4a",
+    "duration": 234,
+    "size": 3780136
+  },
+  "track-16": {
+    "file": "/audio/track-16.m4a",
+    "duration": 264,
+    "size": 4263777
+  },
+  "track-17": {
+    "file": "/audio/track-17.m4a",
+    "duration": 250,
+    "size": 4031850
+  },
+  "track-18": {
+    "file": "/audio/track-18.m4a",
+    "duration": 219,
+    "size": 3529808
+  },
+  "track-19": {
+    "file": "/audio/track-19.m4a",
+    "duration": 351,
+    "size": 5666259
+  },
+  "track-20": {
+    "file": "/audio/track-20.m4a",
+    "duration": 256,
+    "size": 4129976
+  },
+  "track-21": {
+    "file": "/audio/track-21.m4a",
+    "duration": 367,
+    "size": 5938627
+  },
+  "track-22": {
+    "file": "/audio/track-22.m4a",
+    "duration": 202,
+    "size": 3259178
+  },
+  "track-23": {
+    "file": "/audio/track-23.m4a",
+    "duration": 518,
+    "size": 8369601
+  },
+  "track-24": {
+    "file": "/audio/track-24.m4a",
+    "duration": 188,
+    "size": 3038656
+  }
+}

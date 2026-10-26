@@ -115,7 +115,7 @@ export const TrackRow: React.FC<TrackRowProps> = ({
 
         {/* Titles & Artist */}
         <div className="min-w-0 flex-1 pr-2">
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1.5">
             <span
               className={`font-bold text-sm truncate ${
                 isCurrent ? 'text-accent' : 'text-foreground'
@@ -123,6 +123,11 @@ export const TrackRow: React.FC<TrackRowProps> = ({
             >
               {track.title}
             </span>
+            {track.licenseNote.toLowerCase().includes('youtube') && (
+              <span className="shrink-0 px-1.5 py-0.5 rounded text-[8px] font-black uppercase tracking-wider bg-red-600/90 text-white shadow-xs">
+                YT
+              </span>
+            )}
           </div>
           <div className="text-xs text-foreground-muted truncate font-medium">
             {track.artist}
