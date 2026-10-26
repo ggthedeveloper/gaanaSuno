@@ -52,7 +52,7 @@ const TRACK_PROFILES = [
   { id: 'track-24', baseFreq: 138.59, chords: [1, 1.189, 1.414, 1.682], tempo: 2.6, style: 'sitar' },
 ];
 
-function generateWavFile(profile, outPath, durationSec = 22, sampleRate = 22050) {
+function generateWavFile(profile, outPath, durationSec = 65, sampleRate = 22050) {
   const numSamples = Math.floor(sampleRate * durationSec);
   const dataSize = numSamples * 2;
   const buffer = Buffer.alloc(44 + dataSize);
@@ -78,6 +78,8 @@ function generateWavFile(profile, outPath, durationSec = 22, sampleRate = 22050)
 
   let offset = 44;
   const { baseFreq, chords, tempo, style } = profile;
+  const fadeInSamples = sampleRate * 1.5;
+  const fadeOutStart = numSamples - sampleRate * 2;
 
   for (let i = 0; i < numSamples; i++) {
     const t = i / sampleRate;
@@ -122,6 +124,15 @@ function generateWavFile(profile, outPath, durationSec = 22, sampleRate = 22050)
     } else {
       sample = (tone1 + tone2) * 0.5 * pulse;
     }
+
+    // Apply smooth fade-in and fade-out envelope
+    let envelope = 1;
+    if (i < fadeInSamples) {
+      envelope = i / fadeInSamples;
+    } else if (i > fadeOutStart) {
+      envelope = Math.max(0, (numSamples - i) / (sampleRate * 2));
+    }
+    sample *= envelope;
 
     // Soft master limiter to avoid distortion
     const clamped = Math.max(-0.95, Math.min(0.95, sample * 0.75));

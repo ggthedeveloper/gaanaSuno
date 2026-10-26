@@ -51,9 +51,24 @@ export const PersistentPlayer: React.FC = () => {
   const liked = isLiked(currentTrack.id);
   const progressPercent = duration > 0 ? (currentTime / duration) * 100 : 0;
 
-  const handleSeekChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const val = parseFloat(e.target.value);
-    seek(val);
+  const handleSeekFromClientX = (clientX: number) => {
+    if (!progressBarRef.current || duration <= 0) return;
+    const rect = progressBarRef.current.getBoundingClientRect();
+    const pos = Math.max(0, Math.min(1, (clientX - rect.left) / rect.width));
+    seek(pos * duration);
+  };
+
+  const handleBarClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    e.stopPropagation();
+    handleSeekFromClientX(e.clientX);
+  };
+
+  const handleMobileSeekClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    e.stopPropagation();
+    if (duration <= 0) return;
+    const rect = e.currentTarget.getBoundingClientRect();
+    const pos = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+    seek(pos * duration);
   };
 
   const handleVolumeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -138,11 +153,19 @@ export const PersistentPlayer: React.FC = () => {
           </div>
         </div>
 
-        {/* Mobile Progress Bar Line */}
-        <div className="w-full bg-white/5 h-1 relative">
+        {/* Mobile Progress Bar with Interactive Touch-to-Seek */}
+        <div
+          role="slider"
+          aria-label="Seek track"
+          aria-valuenow={currentTime}
+          aria-valuemin={0}
+          aria-valuemax={duration}
+          onClick={handleMobileSeekClick}
+          className="w-full bg-white/10 h-2.5 py-0.5 relative cursor-pointer"
+        >
           <div
-            className="bg-accent h-full transition-all duration-150 shadow-[0_0_10px_var(--accent)]"
-            style={{ width: `${progressPercent}%` }}
+            className="bg-gradient-to-r from-accent via-orange-500 to-accent h-1.5 rounded-full transition-all duration-100 shadow-[0_0_10px_var(--accent)]"
+            style={{ width: `${Math.min(100, Math.max(0, progressPercent))}%` }}
           />
         </div>
       </footer>
@@ -154,7 +177,7 @@ export const PersistentPlayer: React.FC = () => {
         <footer
           role="region"
           aria-label="Audio Player"
-          className="pointer-events-auto relative px-5 lg:px-8 py-3 rounded-full bg-[#0a0c14]/90 backdrop-blur-3xl border border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.8),inset_0_1px_1px_rgba(255,255,255,0.15)] ring-1 ring-white/5 transition-all duration-300"
+          className="pointer-events-auto relative px-5 lg:px-8 py-3 rounded-full bg-[#0a0c14]/92 backdrop-blur-3xl border border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.8),inset_0_1px_1px_rgba(255,255,255,0.15)] ring-1 ring-white/5 transition-all duration-300"
         >
           {/* Subtle Ambient Rim Glow */}
           <div
@@ -287,7 +310,7 @@ export const PersistentPlayer: React.FC = () => {
                 </button>
               </div>
 
-              {/* Progress Scrubber */}
+              {/* Progress Scrubber Bar */}
               <div className="w-full flex items-center gap-3">
                 <span className="text-[10px] font-mono text-foreground-muted w-8 text-right font-medium">
                   {formatTime(currentTime)}
@@ -295,29 +318,36 @@ export const PersistentPlayer: React.FC = () => {
 
                 <div
                   ref={progressBarRef}
+                  onClick={handleBarClick}
                   onMouseMove={handleProgressBarMouseMove}
                   onMouseLeave={() => setHoverSeekTime(null)}
-                  className="relative flex-1 group py-1 cursor-pointer"
+                  className="relative flex-1 group py-2.5 cursor-pointer"
                 >
+                  {/* Tooltip on hover */}
                   {hoverSeekTime !== null && (
                     <div
-                      className="absolute -top-7 -translate-x-1/2 px-2 py-0.5 rounded-md bg-black/85 text-white text-[10px] font-mono pointer-events-none border border-white/10 shadow-lg backdrop-blur-md"
+                      className="absolute -top-6 -translate-x-1/2 px-2 py-0.5 rounded-md bg-black/90 text-white text-[10px] font-mono pointer-events-none border border-white/10 shadow-lg backdrop-blur-md"
                       style={{
-                        left: `${(hoverSeekTime / (duration || 1)) * 100}%`,
+                        left: `${Math.max(4, Math.min(96, (hoverSeekTime / (duration || 1)) * 100))}%`,
                       }}
                     >
                       {formatTime(hoverSeekTime)}
                     </div>
                   )}
 
-                  <input
-                    type="range"
-                    min={0}
-                    max={duration || 100}
-                    value={currentTime}
-                    onChange={handleSeekChange}
-                    aria-label="Seek track position"
-                    className="w-full h-1.5 bg-white/10 rounded-lg appearance-none cursor-pointer accent-accent focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+                  {/* Visual Track Base */}
+                  <div className="w-full h-1.5 rounded-full bg-white/10 overflow-hidden relative group-hover:h-2 transition-all">
+                    {/* Filled Progress Bar Track */}
+                    <div
+                      className="h-full rounded-full bg-gradient-to-r from-accent via-orange-500 to-accent transition-all duration-75 shadow-[0_0_10px_var(--accent)]"
+                      style={{ width: `${Math.min(100, Math.max(0, progressPercent))}%` }}
+                    />
+                  </div>
+
+                  {/* Scrubber Thumb Knob */}
+                  <div
+                    className="absolute top-1/2 -translate-y-1/2 w-3.5 h-3.5 rounded-full bg-white shadow-md ring-2 ring-accent opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none -ml-1.5"
+                    style={{ left: `${Math.min(100, Math.max(0, progressPercent))}%` }}
                   />
                 </div>
 

@@ -160,7 +160,12 @@ class AudioEngine {
   public seek(seconds: number): void {
     if (!this.audio) return;
     if (Number.isFinite(seconds) && seconds >= 0) {
-      this.audio.currentTime = seconds;
+      const max = Number.isFinite(this.audio.duration) && this.audio.duration > 0
+        ? this.audio.duration
+        : Infinity;
+      const clamped = Math.max(0, Math.min(seconds, max));
+      this.audio.currentTime = clamped;
+      this.listeners.forEach((l) => l.onTimeUpdate?.(clamped, this.audio?.duration || 0));
     }
   }
 

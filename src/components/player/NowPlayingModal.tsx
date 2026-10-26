@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { useAudio } from '../../context/AudioContext';
 import { useLibrary } from '../../context/LibraryContext';
 import { formatTime } from '../../utils/formatters';
@@ -48,10 +48,30 @@ export const NowPlayingModal: React.FC = () => {
 
   const { isLiked, toggleLike } = useLibrary();
   const [activeTab, setActiveTab] = useState<'visualizer' | 'lyrics'>('visualizer');
+  const progressBarRef = useRef<HTMLDivElement>(null);
+  const [hoverSeekTime, setHoverSeekTime] = useState<number | null>(null);
+
+  const handleBarClick = (e: React.MouseEvent<HTMLDivElement> | React.TouchEvent<HTMLDivElement>) => {
+    if (!progressBarRef.current || !duration) return;
+    const rect = progressBarRef.current.getBoundingClientRect();
+    const clientX = 'touches' in e ? (e.touches[0]?.clientX ?? 0) : e.clientX;
+    const clickX = clientX - rect.left;
+    const ratio = Math.max(0, Math.min(1, clickX / rect.width));
+    seek(ratio * duration);
+  };
+
+  const handleProgressBarMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!progressBarRef.current || !duration) return;
+    const rect = progressBarRef.current.getBoundingClientRect();
+    const clickX = e.clientX - rect.left;
+    const ratio = Math.max(0, Math.min(1, clickX / rect.width));
+    setHoverSeekTime(ratio * duration);
+  };
 
   if (!isExpandedNowPlaying || !currentTrack) return null;
 
   const liked = isLiked(currentTrack.id);
+  const progressPercent = duration ? (currentTime / duration) * 100 : 0;
 
   // Active lyric calculation
   const currentLyric = currentTrack.lyrics?.slice().reverse().find((l) => currentTime >= l.time);
@@ -244,16 +264,53 @@ export const NowPlayingModal: React.FC = () => {
 
         {/* Seekable Progress Bar */}
         <div className="w-full max-w-md mt-6">
-          <input
-            type="range"
-            min={0}
-            max={duration || 100}
-            value={currentTime}
-            onChange={(e) => seek(parseFloat(e.target.value))}
+          <div
+            ref={progressBarRef}
+            onClick={handleBarClick}
+            onTouchStart={handleBarClick}
+            onMouseMove={handleProgressBarMouseMove}
+            onMouseLeave={() => setHoverSeekTime(null)}
+            className="relative w-full group py-3 cursor-pointer select-none"
+            role="slider"
             aria-label="Seek track"
-            className="w-full h-2 bg-white/10 rounded-lg appearance-none cursor-pointer accent-accent"
-          />
-          <div className="flex items-center justify-between text-xs font-mono text-foreground-muted mt-2">
+            aria-valuemin={0}
+            aria-valuemax={duration || 100}
+            aria-valuenow={currentTime}
+            tabIndex={0}
+            onKeyDown={(e) => {
+              if (e.key === 'ArrowRight') seek(Math.min(duration, currentTime + 5));
+              if (e.key === 'ArrowLeft') seek(Math.max(0, currentTime - 5));
+            }}
+          >
+            {/* Tooltip on hover */}
+            {hoverSeekTime !== null && (
+              <div
+                className="absolute -top-6 -translate-x-1/2 px-2.5 py-0.5 rounded-md bg-black/90 text-white text-xs font-mono pointer-events-none border border-white/10 shadow-xl backdrop-blur-md"
+                style={{
+                  left: `${Math.max(6, Math.min(94, (hoverSeekTime / (duration || 1)) * 100))}%`,
+                }}
+              >
+                {formatTime(hoverSeekTime)}
+              </div>
+            )}
+
+            {/* Visual Track Base */}
+            <div className="w-full h-2 rounded-full bg-white/10 overflow-hidden relative group-hover:h-2.5 transition-all">
+              {/* Filled Progress Bar Track */}
+              <div
+                className="h-full rounded-full bg-gradient-to-r from-accent via-orange-500 to-accent transition-all duration-75 shadow-[0_0_12px_var(--accent)]"
+                style={{ width: `${Math.min(100, Math.max(0, progressPercent))}%` }}
+              />
+            </div>
+
+            {/* Scrubber Thumb Knob */}
+            <div
+              className="absolute top-1/2 -translate-y-1/2 w-4 h-4 rounded-full bg-white shadow-lg ring-2 ring-accent opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none -ml-2"
+              style={{ left: `${Math.min(100, Math.max(0, progressPercent))}%` }}
+            />
+          </div>
+
+          <div className="flex items-center justify-between text-xs font-mono text-foreground-muted mt-1 px-0.5">
             <span>{formatTime(currentTime)}</span>
             <span>{formatTime(duration)}</span>
           </div>

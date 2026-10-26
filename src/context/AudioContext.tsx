@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect, useCallback, useMemo } from 'react';
+import React, { createContext, useContext, useState, useEffect, useCallback, useMemo, useRef } from 'react';
 import { Track, RepeatMode } from '../types/music';
 import { audioEngine } from '../services/audioEngine';
 import { TRACKS } from '../data/catalog';
@@ -53,36 +53,6 @@ export const AudioProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   const [isExpandedNowPlaying, setIsExpandedNowPlaying] = useState<boolean>(false);
   const [isQueueDrawerOpen, setIsQueueDrawerOpen] = useState<boolean>(false);
 
-  // Subscribe to audio engine events
-  useEffect(() => {
-    audioEngine.setVolume(volume);
-    audioEngine.setMuted(isMuted);
-
-    const unsubscribe = audioEngine.subscribe({
-      onPlay: () => setIsPlaying(true),
-      onPause: () => setIsPlaying(false),
-      onTimeUpdate: (cur, dur) => {
-        setCurrentTime(cur);
-        if (dur > 0) setDuration(dur);
-      },
-      onDurationChange: (dur) => {
-        if (dur > 0) setDuration(dur);
-      },
-      onLoading: (loading) => setIsLoading(loading),
-      onEnded: () => {
-        handleTrackEnd();
-      },
-      onError: (msg) => {
-        console.warn('Audio playback error:', msg);
-        setIsLoading(false);
-      },
-    });
-
-    return () => {
-      unsubscribe();
-    };
-  }, []);
-
   const handleTrackEnd = useCallback(() => {
     if (repeatMode === 'one') {
       audioEngine.seek(0);
@@ -115,9 +85,44 @@ export const AudioProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     }
   }, [repeatMode, queue, queueIndex]);
 
+  const handleTrackEndRef = useRef(handleTrackEnd);
+  handleTrackEndRef.current = handleTrackEnd;
+
+  // Subscribe to audio engine events
+  useEffect(() => {
+    audioEngine.setVolume(volume);
+    audioEngine.setMuted(isMuted);
+
+    const unsubscribe = audioEngine.subscribe({
+      onPlay: () => setIsPlaying(true),
+      onPause: () => setIsPlaying(false),
+      onTimeUpdate: (cur, dur) => {
+        setCurrentTime(cur);
+        if (dur > 0) setDuration(dur);
+      },
+      onDurationChange: (dur) => {
+        if (dur > 0) setDuration(dur);
+      },
+      onLoading: (loading) => setIsLoading(loading),
+      onEnded: () => {
+        handleTrackEndRef.current();
+      },
+      onError: (msg) => {
+        console.warn('Audio playback error:', msg);
+        setIsLoading(false);
+      },
+    });
+
+    return () => {
+      unsubscribe();
+    };
+  }, []);
+
   const playTrack = useCallback(
     async (track: Track, newQueue?: Track[]) => {
       setCurrentTrack(track);
+      setCurrentTime(0);
+      setDuration(track.duration || 65);
       storage.addRecentlyPlayed(track.id);
 
       let targetQueue = queue;

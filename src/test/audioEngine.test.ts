@@ -42,8 +42,16 @@ describe('AudioEngine Unit Tests', () => {
 
     const unsubscribe = audioEngine.subscribe(listener);
     expect(typeof unsubscribe).toBe('function');
+    unsubscribe();
+  });
 
-    // Unsubscribe cleanly
+  it('seeks cleanly and immediately dispatches onTimeUpdate', () => {
+    const onTimeUpdate = vi.fn();
+    const unsubscribe = audioEngine.subscribe({ onTimeUpdate });
+
+    audioEngine.seek(30);
+    expect(onTimeUpdate).toHaveBeenCalledWith(expect.any(Number), expect.any(Number));
+
     unsubscribe();
   });
 });
