@@ -153,22 +153,43 @@ export const NowPlayingModal: React.FC = () => {
       <main className="relative z-10 flex-1 flex flex-col items-center justify-center px-6 py-4 max-w-4xl mx-auto w-full">
         {activeTab === 'visualizer' ? (
           <div className="flex flex-col items-center w-full max-w-md">
-            {/* Big Artwork with Vinyl Record Styling & Ambient Glow */}
-            <div className="relative w-64 h-64 sm:w-80 sm:h-80 rounded-[2rem] overflow-hidden shadow-[0_25px_60px_-15px_rgba(0,0,0,0.8)] border-2 border-white/10 mb-6 group bg-surface-subtle">
-              <img
-                src={currentTrack.coverUrl}
-                alt={currentTrack.title}
-                className="w-full h-full object-cover transition-transform duration-500 hover:scale-[1.02]"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent pointer-events-none" />
+            {/* Big Artwork Vinyl Turntable Disc with Smooth Circular Spin */}
+            <div className="relative mb-6 group flex items-center justify-center">
+              {/* Ambient Turntable Glow */}
+              {isPlaying && (
+                <div className="absolute -inset-6 rounded-full bg-accent/25 blur-3xl animate-pulse pointer-events-none" />
+              )}
 
-              <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between text-white drop-shadow">
-                <span className="text-[11px] font-bold px-3 py-1 rounded-full bg-black/60 backdrop-blur-md border border-white/15 uppercase tracking-wider">
-                  {currentTrack.genre}
-                </span>
-                <span className="text-xs font-mono font-semibold px-2 py-0.5 rounded-md bg-white/10 backdrop-blur-md">
-                  {currentTrack.year}
-                </span>
+              <div
+                className={`relative w-64 h-64 sm:w-80 sm:h-80 rounded-full overflow-hidden shadow-[0_25px_60px_-15px_rgba(0,0,0,0.85)] border-4 border-white/15 bg-[#0c0e14] flex items-center justify-center transition-transform duration-700 ${
+                  isPlaying ? 'animate-spin-disc' : ''
+                }`}
+                style={{
+                  animationDuration: '18s',
+                  animationPlayState: isPlaying ? 'running' : 'paused',
+                }}
+              >
+                {/* Vinyl Grooves concentric rings */}
+                <div className="absolute inset-2.5 rounded-full border border-white/5 pointer-events-none z-10" />
+                <div className="absolute inset-7 rounded-full border border-white/5 pointer-events-none z-10" />
+                <div className="absolute inset-12 rounded-full border border-white/10 pointer-events-none z-10" />
+
+                {/* Album Artwork Label */}
+                <img
+                  src={currentTrack.coverUrl}
+                  alt={currentTrack.title}
+                  className="w-full h-full object-cover rounded-full"
+                />
+
+                {/* Center Turntable Spindle and Label Hub */}
+                <div className="absolute inset-0 m-auto w-14 h-14 rounded-full bg-surface-subtle/90 border-2 border-accent/60 shadow-2xl flex items-center justify-center z-20 pointer-events-none backdrop-blur-md">
+                  <div className="w-4 h-4 rounded-full bg-[#0c0e14] border border-white/50 shadow-inner flex items-center justify-center">
+                    <div className="w-1.5 h-1.5 rounded-full bg-accent" />
+                  </div>
+                </div>
+
+                {/* Vinyl Light Glare Sweep */}
+                <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-transparent via-white/10 to-transparent pointer-events-none z-10" />
               </div>
             </div>
 

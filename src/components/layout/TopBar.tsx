@@ -94,15 +94,11 @@ export const TopBar: React.FC<TopBarProps> = ({
             {/* Ambient inner glow */}
             <span className="absolute inset-0 rounded-full bg-accent/10 opacity-0 group-hover:opacity-100 transition-opacity" />
 
-            <div
-              className={`relative transition-transform duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] ${
-                preferences.theme === 'dark' ? 'rotate-0' : 'rotate-180'
-              }`}
-            >
+            <div className="relative transition-transform duration-300 ease-out">
               {preferences.theme === 'dark' ? (
-                <Sun className="w-4 h-4 text-amber-400 drop-shadow-[0_0_6px_rgba(251,191,36,0.5)] transition-transform group-hover:rotate-45" />
+                <Moon className="w-4 h-4 text-amber-300 drop-shadow-[0_0_8px_rgba(251,191,36,0.6)] transition-transform group-hover:scale-110" />
               ) : (
-                <Moon className="w-4 h-4 text-indigo-500 drop-shadow-[0_0_6px_rgba(99,102,241,0.5)] transition-transform group-hover:-rotate-12" />
+                <Sun className="w-4 h-4 text-amber-500 drop-shadow-[0_0_8px_rgba(245,158,11,0.6)] transition-transform group-hover:rotate-45" />
               )}
             </div>
           </button>

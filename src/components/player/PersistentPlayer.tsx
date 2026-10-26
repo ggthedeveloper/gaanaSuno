@@ -98,12 +98,33 @@ export const PersistentPlayer: React.FC = () => {
           onClick={() => setIsExpandedNowPlaying(true)}
         >
           <div className="flex items-center gap-3 min-w-0 flex-1">
-            <div className="relative w-12 h-12 rounded-xl overflow-hidden shrink-0 border border-border shadow-md">
-              <img
-                src={currentTrack.coverUrl}
-                alt={currentTrack.title}
-                className="w-full h-full object-cover"
-              />
+            <div
+              className={`relative shrink-0 shadow-md border transition-all duration-700 ease-[cubic-bezier(0.34,1.56,0.64,1)] ${
+                isPlaying
+                  ? 'w-12 h-12 rounded-full border-accent/50 shadow-[0_0_16px_rgba(245,158,11,0.35)] ring-2 ring-accent/40'
+                  : 'w-12 h-12 rounded-xl border-border'
+              }`}
+            >
+              <div
+                className={`w-full h-full rounded-full overflow-hidden relative flex items-center justify-center ${
+                  isPlaying ? 'animate-spin-disc' : ''
+                }`}
+                style={{
+                  animationDuration: '10s',
+                  animationPlayState: isPlaying ? 'running' : 'paused',
+                }}
+              >
+                <img
+                  src={currentTrack.coverUrl}
+                  alt={currentTrack.title}
+                  className="w-full h-full object-cover rounded-full"
+                />
+                {/* Turntable spindle hole */}
+                <div className="absolute inset-0 m-auto w-3 h-3 rounded-full bg-[#0c0e14] border-2 border-white/50 shadow-inner z-20 pointer-events-none flex items-center justify-center">
+                  <div className="w-1 h-1 rounded-full bg-accent" />
+                </div>
+                <div className="absolute inset-0 rounded-full border border-white/10 pointer-events-none" />
+              </div>
             </div>
             <div className="min-w-0 flex-1">
               <h4 className="font-extrabold text-sm text-foreground truncate">
@@ -186,21 +207,42 @@ export const PersistentPlayer: React.FC = () => {
           />
 
           <div className="flex items-center justify-between gap-4">
-            {/* Left: Track Info & Artwork */}
+            {/* Left: Track Info & Artwork with circular spinning disc */}
             <div className="flex items-center gap-3.5 w-1/4 min-w-[200px]">
               <div
                 role="button"
                 tabIndex={0}
                 onClick={() => setIsExpandedNowPlaying(true)}
                 aria-label="Expand Now Playing"
-                className="group relative w-13 h-13 rounded-2xl overflow-hidden shrink-0 shadow-md border border-border cursor-pointer"
+                className={`group relative shrink-0 cursor-pointer transition-all duration-700 ease-[cubic-bezier(0.34,1.56,0.64,1)] ${
+                  isPlaying
+                    ? 'w-13 h-13 rounded-full border border-accent/50 shadow-[0_0_18px_rgba(245,158,11,0.35)] ring-2 ring-accent/40'
+                    : 'w-13 h-13 rounded-2xl border border-border shadow-md'
+                }`}
               >
-                <img
-                  src={currentTrack.coverUrl}
-                  alt={currentTrack.title}
-                  className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-                />
-                <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity">
+                <div
+                  className={`w-full h-full rounded-full overflow-hidden relative flex items-center justify-center ${
+                    isPlaying ? 'animate-spin-disc' : ''
+                  }`}
+                  style={{
+                    animationDuration: '10s',
+                    animationPlayState: isPlaying ? 'running' : 'paused',
+                  }}
+                >
+                  <img
+                    src={currentTrack.coverUrl}
+                    alt={currentTrack.title}
+                    className="w-full h-full object-cover rounded-full"
+                  />
+                  {/* Vinyl turntable spindle center hole */}
+                  <div className="absolute inset-0 m-auto w-3.5 h-3.5 rounded-full bg-[#0c0e14] border-2 border-white/50 shadow-inner z-20 pointer-events-none flex items-center justify-center">
+                    <div className="w-1 h-1 rounded-full bg-accent" />
+                  </div>
+                  {/* Concentric vinyl groove highlight */}
+                  <div className="absolute inset-0 rounded-full border border-white/10 pointer-events-none" />
+                </div>
+
+                <div className="absolute inset-0 rounded-full bg-black/40 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity z-30">
                   <Maximize2 className="w-4 h-4 text-white" />
                 </div>
               </div>

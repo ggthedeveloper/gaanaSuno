@@ -18,29 +18,6 @@ interface ThemeContextType {
   resetPreferences: () => void;
 }
 
-const playThemeChime = () => {
-  try {
-    const AudioCtx = window.AudioContext || (window as any).webkitAudioContext;
-    if (!AudioCtx) return;
-    const ctx = new AudioCtx();
-    const osc = ctx.createOscillator();
-    const gain = ctx.createGain();
-    osc.type = 'sine';
-    // Gentle melodic chime: 587Hz (D5) rising to 880Hz (A5)
-    osc.frequency.setValueAtTime(587.33, ctx.currentTime);
-    osc.frequency.exponentialRampToValueAtTime(880, ctx.currentTime + 0.1);
-    gain.gain.setValueAtTime(0.04, ctx.currentTime);
-    gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.22);
-    osc.connect(gain);
-    gain.connect(ctx.destination);
-    osc.start();
-    osc.stop(ctx.currentTime + 0.22);
-    setTimeout(() => ctx.close(), 260);
-  } catch {
-    // Graceful fallback if audio is not permitted or unavailable
-  }
-};
-
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
@@ -74,8 +51,6 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     theme: 'dark' | 'light' | 'system',
     event?: React.MouseEvent | { clientX: number; clientY: number }
   ) => {
-    playThemeChime();
-
     const doc = typeof document !== 'undefined' ? (document as any) : null;
     const isAppearanceTransition =
       doc &&
@@ -88,7 +63,7 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         doc.documentElement.classList.add('theme-transitioning');
         setTimeout(() => {
           doc.documentElement.classList.remove('theme-transitioning');
-        }, 450);
+        }, 180);
       }
       setPreferences((prev) => ({ ...prev, theme }));
       return;
@@ -125,8 +100,8 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
           clipPath: isTargetDark ? clipPath : [...clipPath].reverse(),
         },
         {
-          duration: 450,
-          easing: 'cubic-bezier(0.4, 0, 0.2, 1)',
+          duration: 180,
+          easing: 'cubic-bezier(0.16, 1, 0.3, 1)',
           pseudoElement: isTargetDark
             ? '::view-transition-new(root)'
             : '::view-transition-old(root)',

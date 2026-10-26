@@ -155,7 +155,7 @@ export const TrackDetailModal: React.FC<TrackDetailModalProps> = ({ track, onClo
               Audio Format
             </span>
             <span className="font-semibold text-foreground block mt-0.5">
-              {track.audioUrl.endsWith('.m4a') ? 'AAC 128kbps (YouTube)' : 'Lossless HD'}
+              {track.audioUrl.endsWith('.mp3') ? 'MP3 192kbps (Studio Audio)' : 'Lossless HD'}
             </span>
           </div>
         </div>
