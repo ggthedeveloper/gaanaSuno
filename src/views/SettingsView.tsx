@@ -83,14 +83,14 @@ export const SettingsView: React.FC = () => {
               <button
                 key={mode.id}
                 type="button"
-                onClick={() => setTheme(mode.id as any)}
-                className={`flex flex-col items-center gap-2 p-3.5 rounded-xl border transition-all ${
+                onClick={(e) => setTheme(mode.id as any, e)}
+                className={`flex flex-col items-center gap-2 p-3.5 rounded-xl border transition-all duration-300 cursor-pointer active:scale-95 ${
                   isSelected
-                    ? 'bg-accent/15 border-accent text-accent font-bold shadow-sm'
+                    ? 'bg-accent/15 border-accent text-accent font-bold shadow-md ring-1 ring-accent/30 scale-102'
                     : 'bg-surface hover:bg-surface-hover border-border/60 text-foreground-muted hover:text-foreground'
                 }`}
               >
-                <Icon className="w-5 h-5" />
+                <Icon className={`w-5 h-5 transition-transform duration-300 ${isSelected ? 'scale-110' : ''}`} />
                 <span className="text-xs">{mode.label}</span>
               </button>
             );

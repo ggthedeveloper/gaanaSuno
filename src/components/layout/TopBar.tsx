@@ -15,15 +15,15 @@ export const TopBar: React.FC<TopBarProps> = ({
   searchQuery,
   onSearchChange,
 }) => {
-  const { preferences, setTheme, setPreferredLanguage } = useTheme();
+  const { preferences, toggleTheme, setPreferredLanguage } = useTheme();
   const { currentTrack, isPlaying, setIsExpandedNowPlaying } = useAudio();
 
   const handleSearchFocus = () => {
     onNavigate('search');
   };
 
-  const toggleTheme = () => {
-    setTheme(preferences.theme === 'dark' ? 'light' : 'dark');
+  const handleThemeToggle = (e: React.MouseEvent<HTMLButtonElement>) => {
+    toggleTheme(e);
   };
 
   return (
@@ -84,18 +84,27 @@ export const TopBar: React.FC<TopBarProps> = ({
             </select>
           </div>
 
-          {/* Theme Toggle Button */}
+          {/* Interactive Theme Toggle Button */}
           <button
             type="button"
             aria-label={`Switch to ${preferences.theme === 'dark' ? 'light' : 'dark'} mode`}
-            onClick={toggleTheme}
-            className="p-1.5 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 text-foreground-muted hover:text-foreground transition-all cursor-pointer active:scale-90"
+            onClick={handleThemeToggle}
+            className="group relative w-8 h-8 rounded-full bg-surface-subtle hover:bg-surface-hover border border-border shadow-sm hover:shadow-md flex items-center justify-center transition-all duration-300 active:scale-90 hover:scale-105 cursor-pointer overflow-hidden"
           >
-            {preferences.theme === 'dark' ? (
-              <Sun className="w-4 h-4 text-amber-400" />
-            ) : (
-              <Moon className="w-4 h-4 text-indigo-400" />
-            )}
+            {/* Ambient inner glow */}
+            <span className="absolute inset-0 rounded-full bg-accent/10 opacity-0 group-hover:opacity-100 transition-opacity" />
+
+            <div
+              className={`relative transition-transform duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] ${
+                preferences.theme === 'dark' ? 'rotate-0' : 'rotate-180'
+              }`}
+            >
+              {preferences.theme === 'dark' ? (
+                <Sun className="w-4 h-4 text-amber-400 drop-shadow-[0_0_6px_rgba(251,191,36,0.5)] transition-transform group-hover:rotate-45" />
+              ) : (
+                <Moon className="w-4 h-4 text-indigo-500 drop-shadow-[0_0_6px_rgba(99,102,241,0.5)] transition-transform group-hover:-rotate-12" />
+              )}
+            </div>
           </button>
         </div>
       </div>
