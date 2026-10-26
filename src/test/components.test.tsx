@@ -64,4 +64,14 @@ describe('UI Components Rendering', () => {
     expect(screen.getAllByText(/Mood Discovery/i).length).toBeGreaterThan(0);
     expect(screen.getAllByText(/Search & Explore/i).length).toBeGreaterThan(0);
   });
+
+  it('renders audio player footer with theme-adaptive surface styling', () => {
+    render(<App />);
+    const playerFooters = screen.getAllByRole('region', { name: /player/i });
+    expect(playerFooters.length).toBeGreaterThan(0);
+    const desktopFooter = playerFooters.find((f) => f.getAttribute('aria-label') === 'Audio Player');
+    expect(desktopFooter).toBeDefined();
+    expect(desktopFooter?.className).toContain('bg-surface/90');
+    expect(desktopFooter?.className).not.toContain('bg-[#0a0c14]');
+  });
 });

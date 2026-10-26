@@ -91,14 +91,14 @@ export const PersistentPlayer: React.FC = () => {
       <footer
         role="region"
         aria-label="Mobile Audio Player"
-        className="sm:hidden fixed bottom-0 left-0 right-0 z-40 bg-surface/95 backdrop-blur-2xl border-t border-white/[0.08] shadow-[0_-12px_40px_rgba(0,0,0,0.6)] select-none"
+        className="sm:hidden fixed bottom-0 left-0 right-0 z-40 bg-surface/95 backdrop-blur-2xl border-t border-border shadow-[0_-8px_30px_rgba(0,0,0,0.08)] dark:shadow-[0_-12px_40px_rgba(0,0,0,0.6)] select-none"
       >
         <div
           className="flex items-center justify-between px-3.5 py-2.5 cursor-pointer"
           onClick={() => setIsExpandedNowPlaying(true)}
         >
           <div className="flex items-center gap-3 min-w-0 flex-1">
-            <div className="relative w-12 h-12 rounded-xl overflow-hidden shrink-0 border border-white/10 shadow-md">
+            <div className="relative w-12 h-12 rounded-xl overflow-hidden shrink-0 border border-border shadow-md">
               <img
                 src={currentTrack.coverUrl}
                 alt={currentTrack.title}
@@ -159,7 +159,7 @@ export const PersistentPlayer: React.FC = () => {
           aria-valuemin={0}
           aria-valuemax={duration}
           onClick={handleMobileSeekClick}
-          className="w-full bg-white/10 h-2.5 py-0.5 relative cursor-pointer"
+          className="w-full bg-foreground/10 h-2.5 py-0.5 relative cursor-pointer"
         >
           <div
             className="bg-gradient-to-r from-accent via-orange-500 to-accent h-1.5 rounded-full transition-all duration-100 shadow-[0_0_10px_var(--accent)]"
@@ -175,11 +175,11 @@ export const PersistentPlayer: React.FC = () => {
         <footer
           role="region"
           aria-label="Audio Player"
-          className="pointer-events-auto relative px-5 lg:px-8 py-3 rounded-full bg-[#0a0c14]/92 backdrop-blur-3xl border border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.8),inset_0_1px_1px_rgba(255,255,255,0.15)] ring-1 ring-white/5 transition-all duration-300"
+          className="pointer-events-auto relative px-5 lg:px-8 py-3 rounded-full bg-surface/90 backdrop-blur-3xl border border-border shadow-[0_16px_40px_rgba(0,0,0,0.08),inset_0_1px_1px_rgba(255,255,255,0.8)] dark:shadow-[0_20px_50px_rgba(0,0,0,0.8),inset_0_1px_1px_rgba(255,255,255,0.15)] ring-1 ring-border/50 transition-all duration-300"
         >
           {/* Subtle Ambient Rim Glow */}
           <div
-            className="absolute inset-0 rounded-full blur-xl -z-10 opacity-30 transition-opacity duration-700 pointer-events-none"
+            className="absolute inset-0 rounded-full blur-xl -z-10 opacity-20 dark:opacity-30 transition-opacity duration-700 pointer-events-none"
             style={{
               background: `radial-gradient(ellipse at center, var(--accent) 0%, transparent 70%)`,
             }}
@@ -193,7 +193,7 @@ export const PersistentPlayer: React.FC = () => {
                 tabIndex={0}
                 onClick={() => setIsExpandedNowPlaying(true)}
                 aria-label="Expand Now Playing"
-                className="group relative w-13 h-13 rounded-2xl overflow-hidden shrink-0 shadow-lg border border-white/10 cursor-pointer"
+                className="group relative w-13 h-13 rounded-2xl overflow-hidden shrink-0 shadow-md border border-border cursor-pointer"
               >
                 <img
                   src={currentTrack.coverUrl}
@@ -234,7 +234,7 @@ export const PersistentPlayer: React.FC = () => {
                 className={`p-2 rounded-xl transition-all active:scale-90 cursor-pointer ${
                   liked
                     ? 'text-rose-500 hover:text-rose-600 bg-rose-500/10'
-                    : 'text-foreground-muted hover:text-foreground hover:bg-white/5'
+                    : 'text-foreground-muted hover:text-foreground hover:bg-foreground/5'
                 }`}
               >
                 <Heart className={`w-4 h-4 ${liked ? 'fill-current' : ''}`} />
@@ -251,7 +251,7 @@ export const PersistentPlayer: React.FC = () => {
                   className={`p-1.5 rounded-full transition-all cursor-pointer ${
                     isShuffle
                       ? 'text-accent bg-accent/15 border border-accent/25'
-                      : 'text-foreground-muted hover:text-foreground hover:bg-white/5'
+                      : 'text-foreground-muted hover:text-foreground hover:bg-foreground/5'
                   }`}
                 >
                   <Shuffle className="w-3.5 h-3.5" />
@@ -261,7 +261,7 @@ export const PersistentPlayer: React.FC = () => {
                   type="button"
                   aria-label="Previous track"
                   onClick={previousTrack}
-                  className="p-1.5 rounded-full text-foreground-muted hover:text-foreground hover:bg-white/5 transition-all active:scale-95 cursor-pointer"
+                  className="p-1.5 rounded-full text-foreground-muted hover:text-foreground hover:bg-foreground/5 transition-all active:scale-95 cursor-pointer"
                 >
                   <SkipBack className="w-4 h-4 fill-current" />
                 </button>
@@ -283,7 +283,7 @@ export const PersistentPlayer: React.FC = () => {
                   type="button"
                   aria-label="Next track"
                   onClick={nextTrack}
-                  className="p-1.5 rounded-full text-foreground-muted hover:text-foreground hover:bg-white/5 transition-all active:scale-95 cursor-pointer"
+                  className="p-1.5 rounded-full text-foreground-muted hover:text-foreground hover:bg-foreground/5 transition-all active:scale-95 cursor-pointer"
                 >
                   <SkipForward className="w-4 h-4 fill-current" />
                 </button>
@@ -295,7 +295,7 @@ export const PersistentPlayer: React.FC = () => {
                   className={`p-1.5 rounded-full transition-all cursor-pointer ${
                     repeatMode !== 'off'
                       ? 'text-accent bg-accent/15 border border-accent/25'
-                      : 'text-foreground-muted hover:text-foreground hover:bg-white/5'
+                      : 'text-foreground-muted hover:text-foreground hover:bg-foreground/5'
                   }`}
                 >
                   {repeatMode === 'one' ? (
@@ -322,7 +322,7 @@ export const PersistentPlayer: React.FC = () => {
                   {/* Tooltip on hover */}
                   {hoverSeekTime !== null && (
                     <div
-                      className="absolute -top-6 -translate-x-1/2 px-2 py-0.5 rounded-md bg-black/90 text-white text-[10px] font-mono pointer-events-none border border-white/10 shadow-lg backdrop-blur-md"
+                      className="absolute -top-6 -translate-x-1/2 px-2 py-0.5 rounded-md bg-foreground text-background text-[10px] font-mono pointer-events-none border border-border shadow-lg backdrop-blur-md"
                       style={{
                         left: `${Math.max(4, Math.min(96, (hoverSeekTime / (duration || 1)) * 100))}%`,
                       }}
@@ -332,7 +332,7 @@ export const PersistentPlayer: React.FC = () => {
                   )}
 
                   {/* Visual Track Base */}
-                  <div className="w-full h-1.5 rounded-full bg-white/10 overflow-hidden relative group-hover:h-2 transition-all">
+                  <div className="w-full h-1.5 rounded-full bg-foreground/10 overflow-hidden relative group-hover:h-2 transition-all">
                     {/* Filled Progress Bar Track */}
                     <div
                       className="h-full rounded-full bg-gradient-to-r from-accent via-orange-500 to-accent transition-all duration-75 shadow-[0_0_10px_var(--accent)]"
@@ -378,7 +378,7 @@ export const PersistentPlayer: React.FC = () => {
                   value={isMuted ? 0 : volume}
                   onChange={handleVolumeChange}
                   aria-label="Volume slider"
-                  className="w-18 lg:w-22 h-1.5 bg-white/10 rounded-lg appearance-none cursor-pointer accent-accent focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+                  className="w-18 lg:w-22 h-1.5 bg-foreground/10 rounded-lg appearance-none cursor-pointer accent-accent focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
                 />
               </div>
 
@@ -389,7 +389,7 @@ export const PersistentPlayer: React.FC = () => {
                 className={`relative p-2 rounded-full transition-all cursor-pointer ${
                   isQueueDrawerOpen
                     ? 'text-accent bg-accent/15 border border-accent/30'
-                    : 'text-foreground-muted hover:text-foreground hover:bg-white/5'
+                    : 'text-foreground-muted hover:text-foreground hover:bg-foreground/5'
                 }`}
               >
                 <ListMusic className="w-4 h-4" />
@@ -404,7 +404,7 @@ export const PersistentPlayer: React.FC = () => {
                 type="button"
                 aria-label="Open immersive player"
                 onClick={() => setIsExpandedNowPlaying(true)}
-                className="p-2 rounded-full text-foreground-muted hover:text-foreground hover:bg-white/5 transition-colors cursor-pointer"
+                className="p-2 rounded-full text-foreground-muted hover:text-foreground hover:bg-foreground/5 transition-colors cursor-pointer"
               >
                 <Maximize2 className="w-4 h-4" />
               </button>

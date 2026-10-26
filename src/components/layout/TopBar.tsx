@@ -28,7 +28,7 @@ export const TopBar: React.FC<TopBarProps> = ({
 
   return (
     <header className="sticky top-3.5 z-20 px-3 sm:px-6 mb-2 pointer-events-none select-none">
-      <div className="pointer-events-auto flex items-center justify-between gap-3 px-4 sm:px-6 py-2.5 rounded-full bg-surface/75 backdrop-blur-2xl border border-white/10 shadow-[0_12px_32px_rgba(0,0,0,0.5),inset_0_1px_1px_rgba(255,255,255,0.12)] ring-1 ring-white/5 transition-all">
+      <div className="pointer-events-auto flex items-center justify-between gap-3 px-4 sm:px-6 py-2.5 rounded-full bg-surface/85 backdrop-blur-2xl border border-border shadow-[0_8px_24px_rgba(0,0,0,0.06)] dark:shadow-[0_12px_32px_rgba(0,0,0,0.5)] ring-1 ring-border/40 transition-all">
         {/* Left: Search Box */}
         <div className="relative flex-1 max-w-xs sm:max-w-md">
           <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-accent" />
@@ -39,7 +39,7 @@ export const TopBar: React.FC<TopBarProps> = ({
             onFocus={handleSearchFocus}
             placeholder="Search Bollywood, Ghazals, Arijit, Sufi, Lo-Fi..."
             aria-label="Search catalog"
-            className="w-full pl-10 pr-4 py-1.5 rounded-full bg-white/5 text-foreground placeholder:text-foreground-muted/60 text-xs sm:text-sm border border-white/5 focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/20 transition-all"
+            className="w-full pl-10 pr-4 py-1.5 rounded-full bg-foreground/5 text-foreground placeholder:text-foreground-muted/60 text-xs sm:text-sm border border-border/60 focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/20 transition-all"
           />
         </div>
 

@@ -283,7 +283,7 @@ export const NowPlayingModal: React.FC = () => {
             {/* Tooltip on hover */}
             {hoverSeekTime !== null && (
               <div
-                className="absolute -top-6 -translate-x-1/2 px-2.5 py-0.5 rounded-md bg-black/90 text-white text-xs font-mono pointer-events-none border border-white/10 shadow-xl backdrop-blur-md"
+                className="absolute -top-6 -translate-x-1/2 px-2.5 py-0.5 rounded-md bg-foreground text-background text-xs font-mono pointer-events-none border border-border shadow-xl backdrop-blur-md"
                 style={{
                   left: `${Math.max(6, Math.min(94, (hoverSeekTime / (duration || 1)) * 100))}%`,
                 }}
@@ -293,7 +293,7 @@ export const NowPlayingModal: React.FC = () => {
             )}
 
             {/* Visual Track Base */}
-            <div className="w-full h-2 rounded-full bg-white/10 overflow-hidden relative group-hover:h-2.5 transition-all">
+            <div className="w-full h-2 rounded-full bg-foreground/10 overflow-hidden relative group-hover:h-2.5 transition-all">
               {/* Filled Progress Bar Track */}
               <div
                 className="h-full rounded-full bg-gradient-to-r from-accent via-orange-500 to-accent transition-all duration-75 shadow-[0_0_12px_var(--accent)]"
@@ -400,13 +400,13 @@ export const NowPlayingModal: React.FC = () => {
             value={isMuted ? 0 : volume}
             onChange={(e) => setVolume(parseFloat(e.target.value))}
             aria-label="Volume"
-            className="w-full h-1.5 bg-white/10 rounded-lg appearance-none cursor-pointer accent-accent"
+            className="w-full h-1.5 bg-foreground/10 rounded-lg appearance-none cursor-pointer accent-accent"
           />
         </div>
       </main>
 
       {/* Bottom Legal & Attribution Footer */}
-      <footer className="relative z-10 px-6 py-4 border-t border-white/[0.08] max-w-4xl mx-auto w-full text-xs text-foreground-muted flex flex-col sm:flex-row items-center justify-between gap-3">
+      <footer className="relative z-10 px-6 py-4 border-t border-border/60 max-w-4xl mx-auto w-full text-xs text-foreground-muted flex flex-col sm:flex-row items-center justify-between gap-3">
         <div className="flex items-center gap-2">
           <Sparkles className="w-4 h-4 text-accent shrink-0" />
           <span>
