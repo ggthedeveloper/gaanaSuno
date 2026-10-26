@@ -200,10 +200,19 @@ export const HomeView: React.FC<HomeViewProps> = ({
 
                     <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between text-white">
                       <div>
-                        <p className="text-xs font-bold uppercase tracking-wider text-accent drop-shadow">
-                          {featuredTrack.genre}
-                        </p>
-                        <p className="text-[11px] text-white/80 font-mono">
+                        <div className="flex items-center gap-1.5">
+                          <p className="text-xs font-bold uppercase tracking-wider text-accent drop-shadow">
+                            {featuredTrack.genre}
+                          </p>
+                          {isFeaturedPlaying && (
+                            <span className="flex items-end gap-0.5 h-3 px-1.5 py-0.5 rounded-full bg-accent/20 border border-accent/30">
+                              <span className="w-0.5 bg-accent rounded-full animate-bounce h-3" />
+                              <span className="w-0.5 bg-accent rounded-full animate-bounce h-1.5 delay-100" />
+                              <span className="w-0.5 bg-accent rounded-full animate-bounce h-2.5 delay-200" />
+                            </span>
+                          )}
+                        </div>
+                        <p className="text-[11px] text-white/80 font-mono mt-0.5">
                           24-Bit Lossless Audio
                         </p>
                       </div>

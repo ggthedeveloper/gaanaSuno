@@ -113,12 +113,12 @@ export const HorizontalCarousel: React.FC<HorizontalCarouselProps> = ({
         </div>
       </div>
 
-      {/* Scroll Container */}
+      {/* Scroll Container with Fluid Edge Mask */}
       <div
         ref={scrollRef}
         tabIndex={0}
         aria-label={`${title} carousel`}
-        className="flex items-stretch gap-3.5 sm:gap-4 overflow-x-auto scroll-smooth pb-3 focus:outline-none focus-visible:ring-2 focus-visible:ring-accent rounded-2xl"
+        className="carousel-mask flex items-stretch gap-3.5 sm:gap-4 overflow-x-auto scroll-smooth py-2 px-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-accent rounded-2xl"
         style={{
           scrollbarWidth: 'none',
           msOverflowStyle: 'none',

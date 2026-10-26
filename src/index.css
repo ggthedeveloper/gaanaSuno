@@ -140,24 +140,111 @@
   }
 }
 
+/* Fluid Ambient Aura Float */
+@keyframes auraFloat1 {
+  0% {
+    transform: translate(0px, 0px) scale(1);
+  }
+  33% {
+    transform: translate(60px, -40px) scale(1.12);
+  }
+  66% {
+    transform: translate(-30px, 50px) scale(0.92);
+  }
+  100% {
+    transform: translate(0px, 0px) scale(1);
+  }
+}
+
+@keyframes auraFloat2 {
+  0% {
+    transform: translate(0px, 0px) scale(1);
+  }
+  33% {
+    transform: translate(-50px, 40px) scale(1.08);
+  }
+  66% {
+    transform: translate(40px, -30px) scale(0.95);
+  }
+  100% {
+    transform: translate(0px, 0px) scale(1);
+  }
+}
+
+/* Sound Wave Pulse */
+@keyframes wavePulse {
+  0% {
+    transform: scale(0.95);
+    opacity: 0.8;
+  }
+  50% {
+    transform: scale(1.12);
+    opacity: 0.3;
+  }
+  100% {
+    transform: scale(0.95);
+    opacity: 0.8;
+  }
+}
+
+/* Card Shimmer Reflection */
+@keyframes shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
+
 .animate-spin-slow {
   animation: spinSlow 18s linear infinite;
+}
+
+.animate-aura-1 {
+  animation: auraFloat1 22s ease-in-out infinite alternate;
+}
+
+.animate-aura-2 {
+  animation: auraFloat2 28s ease-in-out infinite alternate;
+}
+
+.animate-wave-pulse {
+  animation: wavePulse 3s ease-in-out infinite;
 }
 
 .paused {
   animation-play-state: paused !important;
 }
 
-/* Ambient glow & smooth blur backdrop */
+/* Glass & Specular Hardware Highlights */
 .glass-panel {
   background: var(--surface-glass);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
   border: 1px solid var(--border);
 }
 
+.glass-pill {
+  background: rgba(14, 16, 24, 0.75);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.15);
+}
+
+.glass-card {
+  background: rgba(18, 20, 30, 0.5);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 12px 28px -6px rgba(0, 0, 0, 0.6), inset 0 1px 1px rgba(255, 255, 255, 0.08);
+}
+
+.carousel-mask {
+  mask-image: linear-gradient(to right, transparent 0%, black 3%, black 97%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 3%, black 97%, transparent 100%);
+}
+
 .text-gradient-accent {
-  background: linear-gradient(135deg, var(--accent) 0%, #f97316 100%);
+  background: linear-gradient(135deg, var(--accent) 0%, #f97316 60%, #ec4899 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }

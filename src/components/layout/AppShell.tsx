@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Sidebar, NavRoute } from './Sidebar';
 import { TopBar } from './TopBar';
 import { MobileNav } from './MobileNav';
+import { AmbientAura } from './AmbientAura';
 import { PersistentPlayer } from '../player/PersistentPlayer';
 import { NowPlayingModal } from '../player/NowPlayingModal';
 import { QueueDrawer } from '../player/QueueDrawer';
@@ -64,7 +65,10 @@ export const AppShell: React.FC = () => {
   };
 
   return (
-    <div className="flex h-screen overflow-hidden bg-background text-foreground antialiased selection:bg-accent/30 selection:text-accent">
+    <div className="relative flex h-screen overflow-hidden bg-background text-foreground antialiased selection:bg-accent/30 selection:text-accent">
+      {/* Dynamic Fluid Ambient Lighting Aura */}
+      <AmbientAura />
+
       {/* Desktop Collapsible Sidebar */}
       <Sidebar
         currentRoute={currentRoute}
