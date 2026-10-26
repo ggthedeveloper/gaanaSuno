@@ -15,11 +15,6 @@ class AudioEngine {
   private analyser: AnalyserNode | null = null;
   private frequencyData: Uint8Array = new Uint8Array(64);
   private listeners: Set<AudioEventListener> = new Set();
-  private isSyntheticFallback = false;
-  private synthOscillator: OscillatorNode | null = null;
-  private synthGain: GainNode | null = null;
-  private synthInterval: number | null = null;
-
 
   private constructor() {
     if (typeof window !== 'undefined') {
@@ -110,10 +105,13 @@ class AudioEngine {
     if (!this.audio) this.initAudioElement();
     if (!this.audio) return false;
 
-    this.stopSynthetic();
+    // Immediately stop and reset any previous audio
+    this.audio.pause();
+    this.audio.currentTime = 0;
 
     try {
-      if (this.audio.src !== src) {
+      const currentSrc = this.audio.getAttribute('src') || this.audio.src || '';
+      if (currentSrc !== src && !this.audio.src.endsWith(src)) {
         this.audio.src = src;
         this.audio.load();
       }
@@ -121,39 +119,39 @@ class AudioEngine {
       await this.audio.play();
       return true;
     } catch (err: any) {
-      // If network fails or browser blocks external stream, start Indian raga harmonic synth fallback
-      if (err.name !== 'AbortError') {
-        this.startSyntheticIndianDrone();
-        return true;
+      if (err?.name === 'AbortError') {
+        // Interrupted by another track being chosen quickly; ignore cleanly
+        return false;
       }
+      console.warn('Playback error for:', src, err);
+      this.listeners.forEach((l) => l.onError?.('Unable to play audio'));
       return false;
     }
   }
 
   public async play(): Promise<boolean> {
-    if (this.isSyntheticFallback) {
-      this.startSyntheticIndianDrone();
-      return true;
-    }
     if (!this.audio) return false;
     try {
       this.ensureAudioContext();
       await this.audio.play();
       return true;
-    } catch {
-      this.startSyntheticIndianDrone();
-      return true;
+    } catch (err: any) {
+      if (err?.name === 'AbortError') return false;
+      console.warn('Play error:', err);
+      return false;
     }
   }
 
   public pause(): void {
-    if (this.isSyntheticFallback) {
-      this.stopSynthetic();
-      this.listeners.forEach((l) => l.onPause?.());
-      return;
-    }
     if (this.audio) {
       this.audio.pause();
+    }
+  }
+
+  public stop(): void {
+    if (this.audio) {
+      this.audio.pause();
+      this.audio.currentTime = 0;
     }
   }
 
@@ -194,28 +192,25 @@ class AudioEngine {
   }
 
   public isPaused(): boolean {
-    if (this.isSyntheticFallback) return !this.synthOscillator;
     return this.audio?.paused ?? true;
   }
 
   /**
    * Returns frequency data for visualizer. If real audio analyser is available,
-   * reads from AnalyserNode. Otherwise synthesizes active frequencies while playing.
+   * reads from AnalyserNode. Otherwise computes dynamic frequencies while playing.
    */
   public getFrequencyData(): Uint8Array {
     if (this.analyser && !this.isPaused()) {
       try {
         this.analyser.getByteFrequencyData(this.frequencyData as any);
-        // Check if analyser has non-zero data (not silenced by CORS)
         let sum = 0;
         for (let i = 0; i < 16; i++) sum += this.frequencyData[i];
         if (sum > 0) return this.frequencyData;
       } catch {
-        // Fallback to dynamic algorithmic frequency
+        // Fallback
       }
     }
 
-    // Dynamic wave simulation when playing
     if (!this.isPaused()) {
       const now = performance.now() * 0.005;
       for (let i = 0; i < this.frequencyData.length; i++) {
@@ -228,57 +223,6 @@ class AudioEngine {
     }
 
     return this.frequencyData;
-  }
-
-  // Harmonic Indian tanpura / sitar tone synthesizer fallback for offline or restricted network environments
-  private startSyntheticIndianDrone(): void {
-    this.stopSynthetic();
-    this.ensureAudioContext();
-    if (!this.audioContext) return;
-
-    try {
-      this.isSyntheticFallback = true;
-      const osc = this.audioContext.createOscillator();
-      const gain = this.audioContext.createGain();
-
-      // Sa (Tonic) harmonic drone around 138.59 Hz (C#3 Indian standard)
-      osc.type = 'sawtooth';
-      osc.frequency.setValueAtTime(138.59, this.audioContext.currentTime);
-
-      gain.gain.setValueAtTime(0.08, this.audioContext.currentTime);
-
-      osc.connect(gain);
-      gain.connect(this.audioContext.destination);
-      osc.start();
-
-      this.synthOscillator = osc;
-      this.synthGain = gain;
-
-      this.listeners.forEach((l) => l.onPlay?.());
-    } catch (e) {
-      console.warn('Synth fallback note:', e);
-    }
-  }
-
-  private stopSynthetic(): void {
-    if (this.synthOscillator) {
-      try {
-        this.synthOscillator.stop();
-        this.synthOscillator.disconnect();
-      } catch {}
-      this.synthOscillator = null;
-    }
-    if (this.synthGain) {
-      try {
-        this.synthGain.disconnect();
-      } catch {}
-      this.synthGain = null;
-    }
-    if (this.synthInterval) {
-      clearInterval(this.synthInterval);
-      this.synthInterval = null;
-    }
-    this.isSyntheticFallback = false;
   }
 }
 

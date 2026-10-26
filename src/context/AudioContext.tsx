@@ -120,6 +120,8 @@ export const AudioProvider: React.FC<{ children: React.ReactNode }> = ({ childre
 
   const playTrack = useCallback(
     async (track: Track, newQueue?: Track[]) => {
+      // Immediately stop any prior audio to prevent any overlapping playback
+      audioEngine.stop();
       setCurrentTrack(track);
       setCurrentTime(0);
       setDuration(track.duration || 65);

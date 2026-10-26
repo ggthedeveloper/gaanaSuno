@@ -54,4 +54,11 @@ describe('AudioEngine Unit Tests', () => {
 
     unsubscribe();
   });
+
+  it('stops and resets audio to prevent overlapping playback', () => {
+    expect(typeof audioEngine.stop).toBe('function');
+    audioEngine.stop();
+    expect(audioEngine.getCurrentTime()).toBe(0);
+    expect(audioEngine.isPaused()).toBe(true);
+  });
 });
