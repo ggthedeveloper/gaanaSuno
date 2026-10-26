@@ -23,3 +23,10 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Audio files (streamed legally via YouTube IFrame API)
+public/audio/*.mp3
+public/audio/*.m4a
+public/audio/*.wav
+public/audio/*.ogg
+public/audio/*.oga

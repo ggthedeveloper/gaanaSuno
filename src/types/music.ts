@@ -26,7 +26,8 @@ export interface Track {
   albumDevanagari?: string;
   duration: number; // in seconds
   coverUrl: string;
-  audioUrl: string;
+  audioUrl?: string;
+  youtubeId?: string;
   moods: MoodTag[];
   genre: string;
   year: number;

@@ -139,7 +139,7 @@ export const AudioProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       setQueueIndex(foundIdx >= 0 ? foundIdx : 0);
 
       setIsLoading(true);
-      await audioEngine.loadAndPlay(track.audioUrl);
+      await audioEngine.loadAndPlay(track.audioUrl, track.youtubeId);
       setIsLoading(false);
     },
     [queue, isShuffle]
@@ -176,7 +176,7 @@ export const AudioProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     const track = queue[nextIdx];
     setCurrentTrack(track);
     storage.addRecentlyPlayed(track.id);
-    audioEngine.loadAndPlay(track.audioUrl);
+    audioEngine.loadAndPlay(track.audioUrl, track.youtubeId);
   }, [queue, queueIndex, repeatMode]);
 
   const previousTrack = useCallback(() => {
@@ -201,7 +201,7 @@ export const AudioProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     const track = queue[prevIdx];
     setCurrentTrack(track);
     storage.addRecentlyPlayed(track.id);
-    audioEngine.loadAndPlay(track.audioUrl);
+    audioEngine.loadAndPlay(track.audioUrl, track.youtubeId);
   }, [queue, queueIndex, currentTime, repeatMode]);
 
   const seek = useCallback((seconds: number) => {
