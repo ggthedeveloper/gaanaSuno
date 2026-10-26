@@ -130,16 +130,6 @@
   background: rgba(148, 163, 184, 0.45);
 }
 
-/* Vinyl rotation animation */
-@keyframes spinSlow {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
 /* Fluid Ambient Aura Float */
 @keyframes auraFloat1 {
   0% {
@@ -192,10 +182,6 @@
   100% {
     transform: translateX(100%);
   }
-}
-
-.animate-spin-slow {
-  animation: spinSlow 18s linear infinite;
 }
 
 .animate-aura-1 {

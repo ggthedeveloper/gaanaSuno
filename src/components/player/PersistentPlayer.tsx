@@ -102,9 +102,7 @@ export const PersistentPlayer: React.FC = () => {
               <img
                 src={currentTrack.coverUrl}
                 alt={currentTrack.title}
-                className={`w-full h-full object-cover ${
-                  isPlaying ? 'animate-spin-slow' : ''
-                }`}
+                className="w-full h-full object-cover"
               />
             </div>
             <div className="min-w-0 flex-1">
@@ -200,9 +198,7 @@ export const PersistentPlayer: React.FC = () => {
                 <img
                   src={currentTrack.coverUrl}
                   alt={currentTrack.title}
-                  className={`w-full h-full object-cover transition-transform group-hover:scale-105 ${
-                    isPlaying ? 'animate-spin-slow' : ''
-                  }`}
+                  className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
                 />
                 <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity">
                   <Maximize2 className="w-4 h-4 text-white" />

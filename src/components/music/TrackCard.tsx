@@ -65,9 +65,7 @@ export const TrackCard: React.FC<TrackCardProps> = ({
 
         {/* Grooved vinyl disc sliding out on hover with center label */}
         <div
-          className={`absolute top-1.5 right-1.5 bottom-1.5 w-full rounded-full bg-[#0c0e14] border border-white/10 opacity-70 group-hover:translate-x-4 group-hover:opacity-100 transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] pointer-events-none flex items-center justify-center ${
-            isCardPlaying ? 'animate-spin-slow' : ''
-          }`}
+          className="absolute top-1.5 right-1.5 bottom-1.5 w-full rounded-full bg-[#0c0e14] border border-white/10 opacity-70 group-hover:translate-x-4 group-hover:opacity-100 transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] pointer-events-none flex items-center justify-center"
           style={{
             boxShadow: 'inset 0 0 16px rgba(0,0,0,0.95), 0 4px 16px rgba(0,0,0,0.7)',
           }}

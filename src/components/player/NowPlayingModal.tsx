@@ -158,9 +158,7 @@ export const NowPlayingModal: React.FC = () => {
               <img
                 src={currentTrack.coverUrl}
                 alt={currentTrack.title}
-                className={`w-full h-full object-cover transition-transform duration-700 ease-[cubic-bezier(0.32,0.72,0,1)] ${
-                  isPlaying ? 'animate-spin-slow' : ''
-                }`}
+                className="w-full h-full object-cover transition-transform duration-500 hover:scale-[1.02]"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent pointer-events-none" />
 
