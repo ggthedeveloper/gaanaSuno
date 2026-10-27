@@ -26,6 +26,7 @@ import {
 
 interface HomeViewProps {
   onNavigateToSearch: () => void;
+  onNavigateToMehfil?: () => void;
   onNavigateToMoods: (mood?: MoodOption) => void;
   onSelectPlaylist: (playlist: Playlist) => void;
   onSelectArtist: (artist: Artist) => void;
@@ -33,6 +34,7 @@ interface HomeViewProps {
 }
 
 export const HomeView: React.FC<HomeViewProps> = ({
+  onNavigateToMehfil,
   onNavigateToMoods,
   onSelectPlaylist,
   onSelectArtist,
@@ -154,6 +156,17 @@ export const HomeView: React.FC<HomeViewProps> = ({
                 <Radio className="w-4 h-4 text-accent" />
                 <span>Explore Vibe Radios</span>
               </button>
+
+              {onNavigateToMehfil && (
+                <button
+                  type="button"
+                  onClick={onNavigateToMehfil}
+                  className="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-gradient-to-r from-amber-600/30 via-orange-600/25 to-amber-700/30 hover:from-amber-600/40 hover:to-amber-700/40 border border-amber-500/40 text-xs font-bold text-amber-300 transition-all hover:scale-105 active:scale-[0.98] cursor-pointer shadow-lg"
+                >
+                  <Flame className="w-4 h-4 text-amber-400" />
+                  <span>🪔 Enter Mehfil Lounge (Vinyl & Cassette)</span>
+                </button>
+              )}
             </div>
 
             {/* Quick Vibe Selector Pills */}
@@ -291,6 +304,46 @@ export const HomeView: React.FC<HomeViewProps> = ({
           </div>
         </div>
       </section>
+
+      {/* ============================================================== */}
+      {/* MEHFIL BAITHAK SANCTUARY PROMO BANNER                          */}
+      {/* ============================================================== */}
+      {onNavigateToMehfil && (
+        <section
+          onClick={onNavigateToMehfil}
+          className="relative overflow-hidden rounded-[2rem] p-6 sm:p-8 bg-gradient-to-r from-amber-950/60 via-stone-900 to-rose-950/60 border border-amber-500/30 shadow-2xl cursor-pointer group hover:border-amber-400/50 transition-all"
+        >
+          <div className="absolute top-0 right-0 w-80 h-80 rounded-full bg-amber-500/10 blur-[100px] pointer-events-none" />
+          <div className="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+            <div className="space-y-2 max-w-xl">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/20 text-amber-300 text-xs font-bold uppercase tracking-wider">
+                <Flame className="w-3.5 h-3.5" />
+                <span>Novel Indian Acoustic Experience</span>
+              </div>
+              <h2 className="text-2xl sm:text-3xl font-black text-amber-100 tracking-tight">
+                Enter the Mehfil Baithak (महफ़िल बैठक)
+              </h2>
+              <p className="text-xs sm:text-sm text-stone-300 font-medium">
+                Step into a tactile listening sanctuary with our 90s Magnetic Cassette Deck, Gharana Sitar Turntable, Procedural Tanpura Drone, and Navarasa Emotional Compass.
+              </p>
+            </div>
+
+            <div className="flex items-center gap-3">
+              <div className="hidden sm:flex items-center gap-2 text-xs font-mono text-amber-300 bg-black/40 px-3.5 py-2 rounded-xl border border-amber-500/20">
+                <span>🪔 Tanpura Synthesizer</span>
+                <span>•</span>
+                <span>📻 Vintage Decks</span>
+              </div>
+              <button
+                type="button"
+                className="px-5 py-3 rounded-xl bg-amber-500 hover:bg-amber-400 text-stone-950 font-black text-xs uppercase tracking-wider transition-all shadow-lg group-hover:scale-105 active:scale-95 cursor-pointer"
+              >
+                Enter Lounge →
+              </button>
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* ============================================================== */}
       {/* CONTINUE LISTENING / RECENTLY PLAYED CAROUSEL                  */}

@@ -10,6 +10,7 @@ import { CreatePlaylistModal } from '../modals/CreatePlaylistModal';
 import { TrackDetailModal } from '../modals/TrackDetailModal';
 
 import { HomeView } from '../../views/HomeView';
+import { MehfilView } from '../../views/MehfilView';
 import { SearchView } from '../../views/SearchView';
 import { MoodDiscoveryView } from '../../views/MoodDiscoveryView';
 import { LibraryView } from '../../views/LibraryView';
@@ -100,11 +101,16 @@ export const AppShell: React.FC = () => {
             {currentRoute === 'home' && (
               <HomeView
                 onNavigateToSearch={() => handleNavigate('search')}
+                onNavigateToMehfil={() => handleNavigate('mehfil')}
                 onNavigateToMoods={handleNavigateToMoods}
                 onSelectPlaylist={handleSelectPlaylist}
                 onSelectArtist={handleSelectArtist}
                 onSelectTrack={setSelectedTrackForDetail}
               />
+            )}
+
+            {currentRoute === 'mehfil' && (
+              <MehfilView onSelectTrack={setSelectedTrackForDetail} />
             )}
 
             {currentRoute === 'search' && (

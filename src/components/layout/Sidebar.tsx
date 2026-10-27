@@ -10,11 +10,13 @@ import {
   ChevronLeft,
   ChevronRight,
   Music,
+  Flame,
 } from 'lucide-react';
 import { useLibrary } from '../../context/LibraryContext';
 
 export type NavRoute =
   | 'home'
+  | 'mehfil'
   | 'search'
   | 'moods'
   | 'library'
@@ -45,6 +47,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
 
   const navItems = [
     { id: 'home' as NavRoute, label: 'Home', icon: Home },
+    { id: 'mehfil' as NavRoute, label: 'Mehfil Lounge', icon: Flame, badge: 'NEW' },
     { id: 'search' as NavRoute, label: 'Search & Explore', icon: Compass },
     { id: 'moods' as NavRoute, label: 'Mood Discovery', icon: Sparkles },
     { id: 'library' as NavRoute, label: 'Your Library', icon: Library },
@@ -123,11 +126,13 @@ export const Sidebar: React.FC<SidebarProps> = ({
                 {!isCollapsed && (
                   <div className="flex items-center justify-between flex-1 min-w-0 text-left">
                     <span className="truncate">{item.label}</span>
-                    {typeof item.badge === 'number' && item.badge > 0 && (
+                    {item.badge && (
                       <span
                         className={`text-[10px] font-bold px-1.5 py-0.5 rounded-full ${
                           isActive
                             ? 'bg-accent-foreground/20 text-accent-foreground'
+                            : item.badge === 'NEW'
+                            ? 'bg-amber-500/20 text-amber-400 border border-amber-500/30'
                             : 'bg-surface-active text-foreground-muted'
                         }`}
                       >

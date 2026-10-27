@@ -10,6 +10,24 @@ export type MoodTag =
   | 'monsoon'
   | 'spiritual';
 
+export type IndianPrahar =
+  | 'prabhat'      // 4am - 8am: Morning Raag (Bhairav, Todi)
+  | 'madhyan'      // 8am - 4pm: Daylight Raag (Bilawal, Sarang)
+  | 'godhuli'      // 4pm - 8pm: Twilight Sunset (Marwa, Purvi)
+  | 'ratri'        // 8pm - 12am: Night Romance & Mehfil (Kalyan, Bageshri)
+  | 'madhyaratri';  // 12am - 4am: Midnight Mystique (Malkauns, Darbari)
+
+export type NavarasaId =
+  | 'shringara'  // Romance / इश्क़
+  | 'hasya'      // Joy & Celebration / उल्लास
+  | 'karuna'     // Longing & Pathos / विरह व दर्द
+  | 'shanta'     // Peace & Meditation / शांति व सुकून
+  | 'adbhuta'    // Wonder & Indie / हैरत व जादू
+  | 'veera'      // Energy & Power / जोश व वीर
+  | 'bhakti';    // Devotion & Surrender / भक्ति व साधना
+
+export type DeckMode = 'turntable' | 'cassette' | 'mandala';
+
 export interface LyricLine {
   time: number; // in seconds
   text: string;

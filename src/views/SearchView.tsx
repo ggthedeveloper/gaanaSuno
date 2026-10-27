@@ -5,7 +5,29 @@ import { ARTISTS, MOOD_OPTIONS } from '../data/catalog';
 import { TrackRow } from '../components/music/TrackRow';
 import { PlaylistCard } from '../components/music/PlaylistCard';
 import { ArtistCard } from '../components/music/ArtistCard';
-import { Search, Sparkles, X, Music, Disc, User, Command } from 'lucide-react';
+import { useAudio } from '../context/AudioContext';
+import {
+  Search,
+  Sparkles,
+  X,
+  Music,
+  Disc,
+  User,
+  Command,
+  Play,
+  Plus,
+} from 'lucide-react';
+
+const YouTubeIcon: React.FC<{ className?: string }> = ({ className = 'w-4 h-4' }) => (
+  <svg
+    viewBox="0 0 24 24"
+    fill="currentColor"
+    className={className}
+    aria-hidden="true"
+  >
+    <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
+  </svg>
+);
 
 interface SearchViewProps {
   searchQuery: string;
@@ -14,6 +36,23 @@ interface SearchViewProps {
   onSelectArtist: (artist: Artist) => void;
   onSelectTrack: (track: Track) => void;
 }
+
+export function extractYouTubeId(urlOrId: string): string | null {
+  const clean = urlOrId.trim();
+  if (/^[a-zA-Z0-9_-]{11}$/.test(clean)) return clean;
+  const match = clean.match(
+    /(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))([\w-]{11})/
+  );
+  return match ? match[1] : null;
+}
+
+const YOUTUBE_PRESETS = [
+  { title: 'Tum Hi Ho', artist: 'Arijit Singh', id: 'IJq0ywW283o' },
+  { title: 'Pasoori', artist: 'Ali Sethi & Shae Gill', id: '5Eqb_-j3FDA' },
+  { title: 'Kun Faya Kun', artist: 'A.R. Rahman', id: 'T94PHkuydcw' },
+  { title: 'Kalank Title Track', artist: 'Arijit Singh', id: 'Grr0Exhy-lQ' },
+  { title: 'Chaiyya Chaiyya', artist: 'Sukhwinder Singh', id: 'PQmrmVs10X8' },
+];
 
 const POPULAR_SUGGESTIONS = [
   'Arijit Singh',
@@ -33,8 +72,94 @@ export const SearchView: React.FC<SearchViewProps> = ({
   onSelectArtist,
   onSelectTrack,
 }) => {
+  const { playTrack, addToQueue } = useAudio();
   const [selectedMoodFilter, setSelectedMoodFilter] = useState<MoodTag | 'all'>('all');
+  const [ytMetadata, setYtMetadata] = useState<{ title: string; author: string } | null>(null);
+  const [ytLoading, setYtLoading] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
+
+  const detectedYtId = useMemo(() => extractYouTubeId(searchQuery), [searchQuery]);
+
+  useEffect(() => {
+    if (!detectedYtId) {
+      setYtMetadata(null);
+      return;
+    }
+    let active = true;
+    setYtLoading(true);
+    fetch(`https://noembed.com/embed?url=https://www.youtube.com/watch?v=${detectedYtId}`)
+      .then((res) => res.json())
+      .then((data) => {
+        if (!active) return;
+        if (data && data.title) {
+          setYtMetadata({
+            title: data.title,
+            author: data.author_name || 'YouTube Audio',
+          });
+        } else {
+          setYtMetadata({
+            title: `YouTube Stream (${detectedYtId})`,
+            author: 'Direct YouTube Stream',
+          });
+        }
+      })
+      .catch(() => {
+        if (!active) return;
+        setYtMetadata({
+          title: `YouTube Stream (${detectedYtId})`,
+          author: 'Direct YouTube Stream',
+        });
+      })
+      .finally(() => {
+        if (active) setYtLoading(false);
+      });
+
+    return () => {
+      active = false;
+    };
+  }, [detectedYtId]);
+
+  const handlePlayDetectedYt = (id: string, customTitle?: string, customArtist?: string) => {
+    const trackObj: Track = {
+      id: `yt-stream-${id}`,
+      title: customTitle || ytMetadata?.title || `YouTube Audio (${id})`,
+      titleDevanagari: customTitle || ytMetadata?.title || 'यूट्यूब ऑडियो',
+      artist: customArtist || ytMetadata?.author || 'YouTube Stream',
+      artistDevanagari: customArtist || ytMetadata?.author || 'यूट्यूब स्ट्रीम',
+      album: 'YouTube Magic Portal',
+      duration: 260,
+      coverUrl: `https://img.youtube.com/vi/${id}/hqdefault.jpg`,
+      youtubeId: id,
+      audioUrl: `https://www.youtube.com/watch?v=${id}`,
+      moods: ['chill'],
+      genre: 'YouTube Direct',
+      year: new Date().getFullYear(),
+      language: 'Hindi',
+      licenseNote: 'Direct YouTube Stream via Official Player',
+    };
+    playTrack(trackObj);
+  };
+
+  const handleQueueDetectedYt = (id: string, customTitle?: string, customArtist?: string) => {
+    const trackObj: Track = {
+      id: `yt-stream-${id}`,
+      title: customTitle || ytMetadata?.title || `YouTube Audio (${id})`,
+      titleDevanagari: customTitle || ytMetadata?.title || 'यूट्यूब ऑडियो',
+      artist: customArtist || ytMetadata?.author || 'YouTube Stream',
+      artistDevanagari: customArtist || ytMetadata?.author || 'यूट्यूब स्ट्रीम',
+      album: 'YouTube Magic Portal',
+      duration: 260,
+      coverUrl: `https://img.youtube.com/vi/${id}/hqdefault.jpg`,
+      youtubeId: id,
+      audioUrl: `https://www.youtube.com/watch?v=${id}`,
+      moods: ['chill'],
+      genre: 'YouTube Direct',
+      year: new Date().getFullYear(),
+      language: 'Hindi',
+      licenseNote: 'Direct YouTube Stream via Official Player',
+    };
+    addToQueue(trackObj);
+  };
 
   // Global `/` keyboard shortcut to focus search input
   useEffect(() => {
@@ -164,6 +289,98 @@ export const SearchView: React.FC<SearchViewProps> = ({
               </button>
             ))}
           </div>
+        </div>
+      </div>
+
+      {/* ============================================================== */}
+      {/* YOUTUBE MAGIC PORTAL CARD (DIRECT LINK DETECTION & PRESETS)   */}
+      {/* ============================================================== */}
+      {detectedYtId && (
+        <div className="relative overflow-hidden rounded-[2rem] p-6 sm:p-7 bg-gradient-to-r from-red-950/50 via-surface to-amber-950/40 border-2 border-red-500/40 shadow-2xl animate-fade-in">
+          <div className="flex flex-col sm:flex-row items-center gap-6">
+            <div className="relative w-36 h-24 sm:w-44 sm:h-28 shrink-0 rounded-2xl overflow-hidden shadow-lg border border-white/10 bg-black">
+              <img
+                src={`https://img.youtube.com/vi/${detectedYtId}/hqdefault.jpg`}
+                alt="YouTube Preview"
+                className="w-full h-full object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex items-end p-2">
+                <span className="text-[10px] font-mono text-red-400 font-bold flex items-center gap-1">
+                  <YouTubeIcon className="w-3.5 h-3.5" />
+                  YouTube Link
+                </span>
+              </div>
+            </div>
+
+            <div className="flex-1 min-w-0 text-center sm:text-left space-y-1.5">
+              <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-red-500/20 text-red-300 text-[10px] font-bold uppercase tracking-wider">
+                <Sparkles className="w-3 h-3" />
+                <span>YouTube Magic Stream Ready</span>
+              </div>
+
+              <h3 className="text-lg sm:text-xl font-black text-foreground truncate">
+                {ytLoading ? 'Fetching video information...' : ytMetadata?.title || `YouTube Audio (${detectedYtId})`}
+              </h3>
+              <p className="text-xs text-foreground-muted truncate">
+                {ytMetadata?.author || 'YouTube Channel'} • Lossless Web Streaming
+              </p>
+
+              <div className="flex flex-wrap items-center justify-center sm:justify-start gap-3 pt-2">
+                <button
+                  type="button"
+                  onClick={() => handlePlayDetectedYt(detectedYtId)}
+                  className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-red-600 hover:bg-red-500 text-white font-extrabold text-xs uppercase tracking-wider transition-all shadow-lg hover:scale-105 active:scale-95 cursor-pointer"
+                >
+                  <Play className="w-3.5 h-3.5 fill-current" />
+                  <span>Stream on Player</span>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => handleQueueDetectedYt(detectedYtId)}
+                  className="flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-surface-subtle hover:bg-surface-hover border border-white/10 text-foreground font-bold text-xs uppercase tracking-wider transition-all cursor-pointer"
+                >
+                  <Plus className="w-3.5 h-3.5" />
+                  <span>Add to Queue</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* YouTube Magic Portal Drawer / Quick Presets */}
+      <div className="rounded-2xl p-4 sm:p-5 bg-surface/60 border border-white/5 space-y-3">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <YouTubeIcon className="w-4 h-4 text-red-500" />
+            <span className="text-xs font-bold uppercase tracking-wider text-foreground">
+              YouTube Magic Portal (जादुई पोर्टल)
+            </span>
+          </div>
+          <span className="text-[11px] text-foreground-muted hidden sm:inline">
+            Paste any YouTube URL in search to stream instantly
+          </span>
+        </div>
+
+        <div className="flex flex-wrap items-center gap-2">
+          <span className="text-[10px] font-bold uppercase tracking-wider text-foreground-muted mr-1">
+            Tap to Stream:
+          </span>
+          {YOUTUBE_PRESETS.map((preset) => (
+            <button
+              key={preset.id}
+              type="button"
+              onClick={() => handlePlayDetectedYt(preset.id, preset.title, preset.artist)}
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold bg-surface-subtle hover:bg-surface-hover text-foreground-muted hover:text-foreground border border-white/5 hover:border-red-500/30 transition-all cursor-pointer group"
+            >
+              <Play className="w-3 h-3 text-red-400 group-hover:scale-110 transition-transform fill-current" />
+              <span>{preset.title}</span>
+              <span className="text-[10px] text-foreground-subtle hidden sm:inline">
+                ({preset.artist})
+              </span>
+            </button>
+          ))}
         </div>
       </div>
 
