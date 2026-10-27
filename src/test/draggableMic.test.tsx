@@ -36,7 +36,7 @@ describe('DraggableMicButton Component', () => {
     expect(handleClick).toHaveBeenCalledTimes(1);
   });
 
-  it('does NOT trigger onClick when dragged (distance > 5px)', () => {
+  it('does NOT trigger onClick when dragged (distance > 5px) and updates position in session', () => {
     const handleClick = vi.fn();
     render(<DraggableMicButton onClick={handleClick} />);
 
@@ -53,12 +53,13 @@ describe('DraggableMicButton Component', () => {
     // Should NOT have triggered click
     expect(handleClick).not.toHaveBeenCalled();
 
-    // Should have saved new position in localStorage
+    // Does NOT persist in localStorage across page refreshes
     const saved = localStorage.getItem('gaanasuno_mic_position');
-    expect(saved).not.toBeNull();
+    expect(saved).toBeNull();
   });
 
-  it('restores position from localStorage on mount', () => {
+  it('resets to original default position on refresh / initial mount', () => {
+    // Even if legacy storage had a value, it clears it and resets to default position
     localStorage.setItem(
       'gaanasuno_mic_position',
       JSON.stringify({ x: 340, y: 420 })
@@ -68,7 +69,28 @@ describe('DraggableMicButton Component', () => {
     render(<DraggableMicButton onClick={handleClick} />);
 
     const button = screen.getByRole('button', { name: /activate ai voice assistant/i });
-    expect(button.parentElement?.style.transform).toContain('translate3d(340px, 420px, 0)');
+    // Default position on 1024x768 screen: x = 1024 - 52 - 20 = 952, y = 768 - 52 - 120 = 596
+    expect(button.parentElement?.style.transform).toContain('translate3d(952px, 596px, 0)');
+    // Legacy storage should be removed
+    expect(localStorage.getItem('gaanasuno_mic_position')).toBeNull();
+  });
+
+  it('resets to default position on double click', () => {
+    const handleClick = vi.fn();
+    render(<DraggableMicButton onClick={handleClick} />);
+
+    const button = screen.getByRole('button', { name: /activate ai voice assistant/i });
+    button.setPointerCapture = vi.fn();
+    button.releasePointerCapture = vi.fn();
+
+    // Drag to new position
+    fireEvent.pointerDown(button, { pointerId: 1, clientX: 200, clientY: 200 });
+    fireEvent.pointerMove(button, { pointerId: 1, clientX: 300, clientY: 300 });
+    fireEvent.pointerUp(button, { pointerId: 1, clientX: 300, clientY: 300 });
+
+    // Double click resets to original default
+    fireEvent.doubleClick(button);
+    expect(button.parentElement?.style.transform).toContain('translate3d(952px, 596px, 0)');
   });
 
   it('does NOT render on mobile screens (< 768px) or mobile devices', () => {

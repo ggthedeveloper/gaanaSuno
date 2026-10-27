@@ -63,27 +63,17 @@ export const DraggableMicButton: React.FC<DraggableMicButtonProps> = ({ onClick,
     };
   };
 
-  // Initialize position from localStorage or calculate responsive default
+  // Always initialize to original default position on page load / refresh
   useEffect(() => {
     const calculateDefaultPosition = () => {
-      const isMobile = window.innerWidth < 768;
       const defaultX = window.innerWidth - BUTTON_SIZE - 20;
-      // On mobile, sit well above the mini-player (80px) and bottom nav (60px)
-      const defaultY = isMobile
-        ? window.innerHeight - BUTTON_SIZE - 150
-        : window.innerHeight - BUTTON_SIZE - 120;
+      const defaultY = window.innerHeight - BUTTON_SIZE - 120;
       return getClampedPosition(defaultX, defaultY);
     };
 
+    // Clear any legacy persisted position so refresh always resets to original default position
     try {
-      const saved = localStorage.getItem(STORAGE_KEY);
-      if (saved) {
-        const parsed = JSON.parse(saved);
-        if (typeof parsed?.x === 'number' && typeof parsed?.y === 'number') {
-          setPosition(getClampedPosition(parsed.x, parsed.y));
-          return;
-        }
-      }
+      localStorage.removeItem(STORAGE_KEY);
     } catch {}
 
     setPosition(calculateDefaultPosition());
@@ -162,15 +152,12 @@ export const DraggableMicButton: React.FC<DraggableMicButtonProps> = ({ onClick,
     const clientY = e.clientY ?? drag.startY;
 
     if (drag.hasMoved) {
-      // User dragged it — save final position to localStorage
+      // User dragged it — update position in state without saving to localStorage so refresh resets to default
       const finalPos = getClampedPosition(
         drag.initialX + (clientX - drag.startX),
         drag.initialY + (clientY - drag.startY)
       );
       setPosition(finalPos);
-      try {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(finalPos));
-      } catch {}
 
       setTimeout(() => {
         wasDraggingRef.current = false;
@@ -190,6 +177,13 @@ export const DraggableMicButton: React.FC<DraggableMicButtonProps> = ({ onClick,
       return;
     }
     onClick();
+  };
+
+  const handleDoubleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation();
+    const defaultX = window.innerWidth - BUTTON_SIZE - 20;
+    const defaultY = window.innerHeight - BUTTON_SIZE - 120;
+    setPosition(getClampedPosition(defaultX, defaultY));
   };
 
   const handlePointerCancel = (e: React.PointerEvent<HTMLButtonElement>) => {
@@ -217,12 +211,13 @@ export const DraggableMicButton: React.FC<DraggableMicButtonProps> = ({ onClick,
       <button
         type="button"
         onClick={handleClick}
+        onDoubleClick={handleDoubleClick}
         onPointerDown={handlePointerDown}
         onPointerMove={handlePointerMove}
         onPointerUp={handlePointerUp}
         onPointerCancel={handlePointerCancel}
         aria-label="Activate AI Voice Assistant (Draggable anywhere on screen)"
-        title="Voice Assistant (Drag anywhere or tap to speak)"
+        title="Voice Assistant (Drag anywhere or double-click to reset position)"
         className={`relative w-full h-full rounded-full bg-gradient-to-tr from-amber-500 via-orange-500 to-rose-600 text-white shadow-[0_8px_25px_rgba(245,158,11,0.4)] hover:shadow-[0_12px_32px_rgba(245,158,11,0.6)] flex items-center justify-center border-2 border-amber-300/80 transition-all select-none ${
           isDragging
             ? 'cursor-grabbing shadow-[0_16px_40px_rgba(245,158,11,0.7)]'
