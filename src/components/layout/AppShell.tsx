@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { App as CapApp } from '@capacitor/app';
+import { StatusBar, Style } from '@capacitor/status-bar';
 import { Sidebar, NavRoute } from './Sidebar';
 import { TopBar } from './TopBar';
 import { MobileNav } from './MobileNav';
@@ -34,6 +36,36 @@ export const AppShell: React.FC = () => {
   const [selectedMoodFilter, setSelectedMoodFilter] = useState<MoodOption | undefined>(undefined);
 
   const { allPlaylists } = useLibrary();
+
+  // Native Android hardware back button & status bar integration
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      try {
+        StatusBar.setStyle({ style: Style.Dark }).catch(() => {});
+        StatusBar.setBackgroundColor({ color: '#0c0a09' }).catch(() => {});
+      } catch {}
+
+      const listenerPromise = CapApp.addListener('backButton', () => {
+        if (selectedTrackForDetail) {
+          setSelectedTrackForDetail(null);
+          return;
+        }
+        if (isCreatePlaylistOpen) {
+          setIsCreatePlaylistOpen(false);
+          return;
+        }
+        if (currentRoute !== 'home') {
+          setCurrentRoute('home');
+          return;
+        }
+        CapApp.exitApp();
+      });
+
+      return () => {
+        listenerPromise.then((h) => h.remove()).catch(() => {});
+      };
+    }
+  }, [currentRoute, selectedTrackForDetail, isCreatePlaylistOpen]);
 
   const handleNavigate = (route: NavRoute) => {
     setCurrentRoute(route);

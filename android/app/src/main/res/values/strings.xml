@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">GaanaSuno</string>
+    <string name="title_activity_main">GaanaSuno</string>
+    <string name="package_name">com.gaanasuno.app</string>
+    <string name="custom_url_scheme">com.gaanasuno.app</string>
+</resources>

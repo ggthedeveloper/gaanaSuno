@@ -1,0 +1,36 @@
+{
+  "name": "GaanaSuno — Hindi Music & Mehfil",
+  "short_name": "GaanaSuno",
+  "description": "Indian Hindi music listening sanctuary with Tanpura drone, 90s cassette deck, Sitar turntable and YouTube magic streaming.",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0c0a09",
+  "theme_color": "#d97706",
+  "scope": "/",
+  "categories": ["music", "entertainment", "culture"],
+  "icons": [
+    {
+      "src": "/logo.svg",
+      "sizes": "192x192 512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Mehfil Lounge",
+      "short_name": "Mehfil",
+      "description": "Enter the classical Indian listening lounge",
+      "url": "/?route=mehfil",
+      "icons": [{ "src": "/logo.svg", "sizes": "96x96" }]
+    },
+    {
+      "name": "Search & Stream",
+      "short_name": "Search",
+      "description": "Search songs or paste YouTube links",
+      "url": "/?route=search",
+      "icons": [{ "src": "/logo.svg", "sizes": "96x96" }]
+    }
+  ]
+}
