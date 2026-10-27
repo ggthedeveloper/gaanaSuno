@@ -12,11 +12,15 @@ import {
   Music,
   Flame,
   X,
+  Timer,
+  Search,
 } from 'lucide-react';
 import { useLibrary } from '../../context/LibraryContext';
 
 export type NavRoute =
   | 'home'
+  | 'beyond-taste'
+  | 'moment-mix'
   | 'mehfil'
   | 'search'
   | 'moods'
@@ -52,8 +56,10 @@ export const Sidebar: React.FC<SidebarProps> = ({
 
   const navItems = [
     { id: 'home' as NavRoute, label: 'Home', icon: Home },
-    { id: 'mehfil' as NavRoute, label: 'Lounge', icon: Flame, badge: 'NEW' },
-    { id: 'search' as NavRoute, label: 'Search & Explore', icon: Compass },
+    { id: 'beyond-taste' as NavRoute, label: 'Beyond Taste', icon: Compass, badge: 'NOVEL' },
+    { id: 'moment-mix' as NavRoute, label: 'Moment Mixes', icon: Timer, badge: 'NEW' },
+    { id: 'mehfil' as NavRoute, label: 'Lounge', icon: Flame, badge: 'TACTILE' },
+    { id: 'search' as NavRoute, label: 'Search & Explore', icon: Search },
     { id: 'moods' as NavRoute, label: 'Mood Discovery', icon: Sparkles },
     { id: 'library' as NavRoute, label: 'Your Library', icon: Library },
     {

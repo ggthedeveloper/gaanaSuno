@@ -24,10 +24,12 @@ import {
   Coffee,
   Music,
   ShieldCheck,
+  Compass,
 } from 'lucide-react';
 
 interface HomeViewProps {
   onNavigateToSearch: () => void;
+  onNavigateToBeyondTaste?: () => void;
   onNavigateToMehfil?: () => void;
   onNavigateToMoods: (mood?: MoodOption) => void;
   onOpenMomentMix?: (momentId?: MomentId) => void;
@@ -37,6 +39,7 @@ interface HomeViewProps {
 }
 
 export const HomeView: React.FC<HomeViewProps> = ({
+  onNavigateToBeyondTaste,
   onNavigateToMehfil,
   onNavigateToMoods,
   onOpenMomentMix,
@@ -160,6 +163,17 @@ export const HomeView: React.FC<HomeViewProps> = ({
                 <Radio className="w-4 h-4 text-accent" />
                 <span>Explore Vibe Radios</span>
               </button>
+
+              {onNavigateToBeyondTaste && (
+                <button
+                  type="button"
+                  onClick={onNavigateToBeyondTaste}
+                  className="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-gradient-to-r from-amber-500/20 to-orange-500/20 hover:from-amber-500/30 hover:to-orange-500/30 border border-amber-500/40 text-xs font-black text-amber-300 transition-all hover:scale-105 active:scale-[0.98] cursor-pointer shadow-sm"
+                >
+                  <Compass className="w-4 h-4 text-amber-400" />
+                  <span>🎚️ Beyond Taste Slider</span>
+                </button>
+              )}
 
               {onOpenMomentMix && (
                 <button
@@ -316,46 +330,6 @@ export const HomeView: React.FC<HomeViewProps> = ({
       </section>
 
       {/* ============================================================== */}
-      {/* MEHFIL BAITHAK SANCTUARY PROMO BANNER                          */}
-      {/* ============================================================== */}
-      {onNavigateToMehfil && (
-        <section
-          onClick={onNavigateToMehfil}
-          className="relative overflow-hidden rounded-[2rem] p-6 sm:p-8 bg-gradient-to-r from-amber-950/60 via-stone-900 to-rose-950/60 border border-amber-500/30 shadow-2xl cursor-pointer group hover:border-amber-400/50 transition-all"
-        >
-          <div className="absolute top-0 right-0 w-80 h-80 rounded-full bg-amber-500/10 blur-[100px] pointer-events-none" />
-          <div className="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
-            <div className="space-y-2 max-w-xl">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/20 text-amber-300 text-xs font-bold uppercase tracking-wider">
-                <Flame className="w-3.5 h-3.5" />
-                <span>Tactile Acoustic Experience</span>
-              </div>
-              <h2 className="text-2xl sm:text-3xl font-black text-amber-100 tracking-tight">
-                Enter the Listening Lounge
-              </h2>
-              <p className="text-xs sm:text-sm text-stone-300 font-medium">
-                Step into a tactile listening sanctuary with our 90s Magnetic Cassette Deck, Sitar Turntable, Procedural Tanpura Drone, and Emotional Sound Compass.
-              </p>
-            </div>
-
-            <div className="flex items-center gap-3">
-              <div className="hidden sm:flex items-center gap-2 text-xs font-mono text-amber-300 bg-black/40 px-3.5 py-2 rounded-xl border border-amber-500/20">
-                <span>🪔 Tanpura Synthesizer</span>
-                <span>•</span>
-                <span>📻 Vintage Decks</span>
-              </div>
-              <button
-                type="button"
-                className="px-5 py-3 rounded-xl bg-amber-500 hover:bg-amber-400 text-stone-950 font-black text-xs uppercase tracking-wider transition-all shadow-lg group-hover:scale-105 active:scale-95 cursor-pointer"
-              >
-                Enter Lounge →
-              </button>
-            </div>
-          </div>
-        </section>
-      )}
-
-      {/* ============================================================== */}
       {/* BEYOND YOUR TASTE — SIGNATURE TASTE HORIZON DISCOVERY          */}
       {/* ============================================================== */}
       <BeyondTasteDiscovery onSelectTrack={onSelectTrack} />
@@ -400,6 +374,46 @@ export const HomeView: React.FC<HomeViewProps> = ({
           );
         })}
       </HorizontalCarousel>
+
+      {/* ============================================================== */}
+      {/* MEHFIL BAITHAK SANCTUARY PROMO BANNER                          */}
+      {/* ============================================================== */}
+      {onNavigateToMehfil && (
+        <section
+          onClick={onNavigateToMehfil}
+          className="relative overflow-hidden rounded-[2rem] p-6 sm:p-8 bg-gradient-to-r from-amber-950/60 via-stone-900 to-rose-950/60 border border-amber-500/30 shadow-2xl cursor-pointer group hover:border-amber-400/50 transition-all"
+        >
+          <div className="absolute top-0 right-0 w-80 h-80 rounded-full bg-amber-500/10 blur-[100px] pointer-events-none" />
+          <div className="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+            <div className="space-y-2 max-w-xl">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/20 text-amber-300 text-xs font-bold uppercase tracking-wider">
+                <Flame className="w-3.5 h-3.5" />
+                <span>Tactile Acoustic Experience</span>
+              </div>
+              <h2 className="text-2xl sm:text-3xl font-black text-amber-100 tracking-tight">
+                Enter the Listening Lounge
+              </h2>
+              <p className="text-xs sm:text-sm text-stone-300 font-medium">
+                Step into a tactile listening sanctuary with our 90s Magnetic Cassette Deck, Sitar Turntable, Procedural Tanpura Drone, and Emotional Sound Compass.
+              </p>
+            </div>
+
+            <div className="flex items-center gap-3">
+              <div className="hidden sm:flex items-center gap-2 text-xs font-mono text-amber-300 bg-black/40 px-3.5 py-2 rounded-xl border border-amber-500/20">
+                <span>🪔 Tanpura Synthesizer</span>
+                <span>•</span>
+                <span>📻 Vintage Decks</span>
+              </div>
+              <button
+                type="button"
+                className="px-5 py-3 rounded-xl bg-amber-500 hover:bg-amber-400 text-stone-950 font-black text-xs uppercase tracking-wider transition-all shadow-lg group-hover:scale-105 active:scale-95 cursor-pointer"
+              >
+                Enter Lounge →
+              </button>
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* ============================================================== */}
       {/* CONTINUE LISTENING / RECENTLY PLAYED CAROUSEL                  */}

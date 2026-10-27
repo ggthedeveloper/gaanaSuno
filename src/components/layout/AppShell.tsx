@@ -12,12 +12,15 @@ import { CreatePlaylistModal } from '../modals/CreatePlaylistModal';
 import { TrackDetailModal } from '../modals/TrackDetailModal';
 import { VoiceAssistantModal } from '../voice/VoiceAssistantModal';
 import { MomentMixModal } from '../music/MomentMixModal';
+import { SessionTimerModal } from '../player/SessionTimerModal';
 import { MomentId } from '../../services/sessionMixService';
 import { OnboardingScreen } from '../onboarding/OnboardingScreen';
 import { useTheme } from '../../context/ThemeContext';
 import { Mic } from 'lucide-react';
 
 import { HomeView } from '../../views/HomeView';
+import { BeyondTasteView } from '../../views/BeyondTasteView';
+import { MomentMixView } from '../../views/MomentMixView';
 import { MehfilView } from '../../views/MehfilView';
 import { SearchView } from '../../views/SearchView';
 import { MoodDiscoveryView } from '../../views/MoodDiscoveryView';
@@ -43,6 +46,7 @@ export const AppShell: React.FC = () => {
   const [isVoiceModalOpen, setIsVoiceModalOpen] = useState(false);
   const [isMomentMixOpen, setIsMomentMixOpen] = useState(false);
   const [selectedMomentForMix, setSelectedMomentForMix] = useState<MomentId>('unwind');
+  const [isSessionTimerOpen, setIsSessionTimerOpen] = useState(false);
   const [selectedTrackForDetail, setSelectedTrackForDetail] = useState<Track | null>(null);
 
   const [selectedPlaylist, setSelectedPlaylist] = useState<Playlist | null>(null);
@@ -144,6 +148,7 @@ export const AppShell: React.FC = () => {
           }}
           onOpenVoice={() => setIsVoiceModalOpen(true)}
           onOpenMobileSidebar={() => setIsMobileSidebarOpen(true)}
+          onOpenSessionTimer={() => setIsSessionTimerOpen(true)}
         />
 
         {/* Scrollable Page Body */}
@@ -155,6 +160,7 @@ export const AppShell: React.FC = () => {
             {currentRoute === 'home' && (
               <HomeView
                 onNavigateToSearch={() => handleNavigate('search')}
+                onNavigateToBeyondTaste={() => handleNavigate('beyond-taste')}
                 onNavigateToMehfil={() => handleNavigate('mehfil')}
                 onNavigateToMoods={handleNavigateToMoods}
                 onOpenMomentMix={(mId) => {
@@ -165,6 +171,14 @@ export const AppShell: React.FC = () => {
                 onSelectArtist={handleSelectArtist}
                 onSelectTrack={setSelectedTrackForDetail}
               />
+            )}
+
+            {currentRoute === 'beyond-taste' && (
+              <BeyondTasteView onSelectTrack={setSelectedTrackForDetail} />
+            )}
+
+            {currentRoute === 'moment-mix' && (
+              <MomentMixView onSelectTrack={setSelectedTrackForDetail} />
             )}
 
             {currentRoute === 'mehfil' && (
@@ -271,6 +285,12 @@ export const AppShell: React.FC = () => {
         initialMoment={selectedMomentForMix}
         onClose={() => setIsMomentMixOpen(false)}
         onSelectTrack={setSelectedTrackForDetail}
+      />
+
+      {/* Global Sleep & Session Timer Modal */}
+      <SessionTimerModal
+        isOpen={isSessionTimerOpen}
+        onClose={() => setIsSessionTimerOpen(false)}
       />
 
       {/* Onboarding Preferences Welcome Screen */}

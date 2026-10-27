@@ -1,5 +1,5 @@
 import React from 'react';
-import { Home, Compass, Sparkles, Library, Flame } from 'lucide-react';
+import { Home, Compass, Search, Library, Timer } from 'lucide-react';
 import { NavRoute } from './Sidebar';
 
 interface MobileNavProps {
@@ -10,9 +10,9 @@ interface MobileNavProps {
 export const MobileNav: React.FC<MobileNavProps> = ({ currentRoute, onNavigate }) => {
   const tabs = [
     { id: 'home' as NavRoute, label: 'Home', icon: Home },
-    { id: 'mehfil' as NavRoute, label: 'Lounge', icon: Flame },
-    { id: 'search' as NavRoute, label: 'Search', icon: Compass },
-    { id: 'moods' as NavRoute, label: 'Vibes', icon: Sparkles },
+    { id: 'beyond-taste' as NavRoute, label: 'Discovery', icon: Compass },
+    { id: 'moment-mix' as NavRoute, label: 'Moments', icon: Timer },
+    { id: 'search' as NavRoute, label: 'Search', icon: Search },
     { id: 'library' as NavRoute, label: 'Library', icon: Library },
   ];
 

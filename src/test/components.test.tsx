@@ -61,6 +61,8 @@ describe('UI Components Rendering', () => {
   it('renders full GaanaSuno application in English without crashing', () => {
     render(<App />);
     expect(screen.getAllByText(/GaanaSuno/i).length).toBeGreaterThan(0);
+    expect(screen.getAllByText(/Beyond Taste/i).length).toBeGreaterThan(0);
+    expect(screen.getAllByText(/Moment Mix/i).length).toBeGreaterThan(0);
     expect(screen.getAllByText(/Mood Discovery/i).length).toBeGreaterThan(0);
     expect(screen.getAllByText(/Search & Explore/i).length).toBeGreaterThan(0);
   });

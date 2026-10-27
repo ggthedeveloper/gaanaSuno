@@ -1,7 +1,9 @@
-import React from 'react';
-import { Search, Sun, Moon, Sparkles, Mic, Menu } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { Search, Sun, Moon, Sparkles, Mic, Menu, Timer } from 'lucide-react';
 import { useTheme } from '../../context/ThemeContext';
 import { useAudio } from '../../context/AudioContext';
+import { sessionTimer } from '../../services/sessionMixService';
+import { formatTime } from '../../utils/formatters';
 import { NavRoute } from './Sidebar';
 
 interface TopBarProps {
@@ -10,6 +12,7 @@ interface TopBarProps {
   onSearchChange: (query: string) => void;
   onOpenVoice?: () => void;
   onOpenMobileSidebar?: () => void;
+  onOpenSessionTimer?: () => void;
 }
 
 export const TopBar: React.FC<TopBarProps> = ({
@@ -18,9 +21,20 @@ export const TopBar: React.FC<TopBarProps> = ({
   onSearchChange,
   onOpenVoice,
   onOpenMobileSidebar,
+  onOpenSessionTimer,
 }) => {
   const { preferences, toggleTheme } = useTheme();
   const { currentTrack, isPlaying, setIsExpandedNowPlaying } = useAudio();
+  const [timerRemaining, setTimerRemaining] = useState<number | null>(() => sessionTimer.getRemainingSeconds());
+  const [isEndOfTrack, setIsEndOfTrack] = useState<boolean>(() => sessionTimer.isEndOfTrackActive());
+
+  useEffect(() => {
+    const unsub = sessionTimer.subscribe((rem, endOfTrack) => {
+      setTimerRemaining(rem);
+      setIsEndOfTrack(endOfTrack);
+    });
+    return unsub;
+  }, []);
 
   const handleSearchFocus = () => {
     onNavigate('search');
@@ -94,8 +108,34 @@ export const TopBar: React.FC<TopBarProps> = ({
           </button>
         )}
 
-        {/* Right Controls: Theme Toggle */}
+        {/* Right Controls: Timer & Theme Toggle */}
         <div className="flex items-center gap-2 shrink-0">
+          {onOpenSessionTimer && (
+            <button
+              type="button"
+              onClick={onOpenSessionTimer}
+              title={
+                timerRemaining !== null
+                  ? `Sleep timer active: ${formatTime(timerRemaining)} remaining`
+                  : isEndOfTrack
+                  ? 'Pausing at end of this track'
+                  : 'Set Sleep & Session Timer'
+              }
+              aria-label="Sleep and Session Timer"
+              className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-full border text-xs font-bold transition-all active:scale-95 cursor-pointer shadow-sm ${
+                timerRemaining !== null || isEndOfTrack
+                  ? 'bg-accent text-accent-foreground border-accent shadow-md animate-pulse'
+                  : 'bg-surface-subtle hover:bg-surface-hover text-foreground-muted hover:text-foreground border-border'
+              }`}
+            >
+              <Timer className="w-3.5 h-3.5" />
+              {timerRemaining !== null && (
+                <span className="font-mono text-[11px]">{formatTime(timerRemaining)}</span>
+              )}
+              {isEndOfTrack && <span className="text-[10px] uppercase font-bold">End of Track</span>}
+            </button>
+          )}
+
           <button
             type="button"
             aria-label={`Switch to ${preferences.theme === 'dark' ? 'light' : 'dark'} mode`}
