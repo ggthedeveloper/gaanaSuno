@@ -68,6 +68,6 @@ describe('DraggableMicButton Component', () => {
     render(<DraggableMicButton onClick={handleClick} />);
 
     const button = screen.getByRole('button', { name: /activate ai voice assistant/i });
-    expect(button.style.transform).toContain('translate3d(340px, 420px, 0)');
+    expect(button.parentElement?.style.transform).toContain('translate3d(340px, 420px, 0)');
   });
 });

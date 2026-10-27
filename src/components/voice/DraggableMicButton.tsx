@@ -107,8 +107,8 @@ export const DraggableMicButton: React.FC<DraggableMicButtonProps> = ({ onClick,
     const deltaX = clientX - drag.startX;
     const deltaY = clientY - drag.startY;
 
-    // Only mark as moved if dragged more than 5px (prevents jitter on simple clicks)
-    if (!drag.hasMoved && Math.hypot(deltaX, deltaY) > 5) {
+    // Only mark as moved if dragged more than 10px (prevents jitter on simple clicks or finger placement)
+    if (!drag.hasMoved && Math.hypot(deltaX, deltaY) > 10) {
       drag.hasMoved = true;
       wasDraggingRef.current = true;
     }
@@ -149,7 +149,7 @@ export const DraggableMicButton: React.FC<DraggableMicButtonProps> = ({ onClick,
         wasDraggingRef.current = false;
       }, 150);
     } else {
-      // It was a tap!
+      // It was a tap/click!
       lastPointerTapTimeRef.current = Date.now();
       onClick();
     }
@@ -177,36 +177,36 @@ export const DraggableMicButton: React.FC<DraggableMicButtonProps> = ({ onClick,
   if (!position) return null;
 
   return (
-    <button
-      type="button"
-      onClick={handleClick}
-      onPointerDown={handlePointerDown}
-      onPointerMove={handlePointerMove}
-      onPointerUp={handlePointerUp}
-      onPointerCancel={handlePointerCancel}
-      aria-label="Activate AI Voice Assistant (Draggable anywhere on screen)"
-      title="Voice Assistant (Drag anywhere or tap to speak)"
+    <div
       style={{
         transform: `translate3d(${position.x}px, ${position.y}px, 0)`,
         touchAction: 'none',
         width: `${BUTTON_SIZE}px`,
         height: `${BUTTON_SIZE}px`,
       }}
-      className={`fixed top-0 left-0 z-50 rounded-full bg-gradient-to-tr from-amber-500 via-orange-500 to-rose-600 text-white shadow-[0_8px_25px_rgba(245,158,11,0.45)] hover:shadow-[0_12px_35px_rgba(245,158,11,0.65)] flex items-center justify-center border-2 border-amber-300/70 select-none group transition-transform ${
-        isDragging
-          ? 'scale-110 cursor-grabbing shadow-[0_16px_40px_rgba(245,158,11,0.8)] opacity-95 duration-0'
-          : 'cursor-grab hover:scale-105 active:scale-95 duration-200'
-      } ${className}`}
+      className={`fixed top-0 left-0 z-50 select-none ${className}`}
     >
-      {/* Ambient Pulsing Aura Glow */}
-      <span className="absolute inset-0 rounded-full bg-amber-400/30 animate-ping opacity-60 pointer-events-none" />
-
-      {/* Center Microphone Icon */}
-      <Mic
-        className={`relative z-10 w-5 h-5 pointer-events-none transition-transform ${
-          isDragging ? 'scale-110 text-white' : 'group-hover:scale-110'
+      <button
+        type="button"
+        onClick={handleClick}
+        onPointerDown={handlePointerDown}
+        onPointerMove={handlePointerMove}
+        onPointerUp={handlePointerUp}
+        onPointerCancel={handlePointerCancel}
+        aria-label="Activate AI Voice Assistant (Draggable anywhere on screen)"
+        title="Voice Assistant (Drag anywhere or tap to speak)"
+        className={`relative w-full h-full rounded-full bg-gradient-to-tr from-amber-500 via-orange-500 to-rose-600 text-white shadow-[0_8px_25px_rgba(245,158,11,0.4)] hover:shadow-[0_12px_32px_rgba(245,158,11,0.6)] flex items-center justify-center border-2 border-amber-300/80 transition-all select-none ${
+          isDragging
+            ? 'cursor-grabbing shadow-[0_16px_40px_rgba(245,158,11,0.7)]'
+            : 'cursor-grab hover:scale-105 active:scale-95 duration-150'
         }`}
-      />
-    </button>
+      >
+        {/* Soft Static Ambient Aura Glow (Zero vibration/ping) */}
+        <span className="absolute -inset-1 rounded-full bg-amber-500/25 blur-md pointer-events-none -z-10" />
+
+        {/* Center Microphone Icon */}
+        <Mic className="relative z-10 w-5 h-5 pointer-events-none" />
+      </button>
+    </div>
   );
 };

@@ -81,7 +81,7 @@ export const TopBar: React.FC<TopBarProps> = ({
             title="Ask Voice Assistant"
             className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-accent/15 hover:bg-accent/25 border border-accent/30 text-accent text-xs font-bold transition-all hover:scale-105 active:scale-95 cursor-pointer shadow-sm group shrink-0"
           >
-            <Mic className="w-3.5 h-3.5 text-accent group-hover:animate-pulse" />
+            <Mic className="w-3.5 h-3.5 text-accent group-hover:scale-110 transition-transform duration-150" />
             <span className="hidden sm:inline font-bold">Voice AI</span>
           </button>
         )}
