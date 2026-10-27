@@ -56,4 +56,24 @@ if (typeof window !== 'undefined') {
       dispatchEvent: () => false,
     }),
   });
+
+  // Mock PointerEvent and pointer capture in jsdom
+  if (!window.PointerEvent) {
+    class FakePointerEvent extends MouseEvent {
+      pointerId: number;
+      constructor(type: string, params: any = {}) {
+        super(type, params);
+        this.pointerId = params.pointerId ?? 0;
+      }
+    }
+    window.PointerEvent = FakePointerEvent as any;
+    (globalThis as any).PointerEvent = FakePointerEvent as any;
+  }
+
+  if (!window.Element.prototype.setPointerCapture) {
+    window.Element.prototype.setPointerCapture = () => {};
+  }
+  if (!window.Element.prototype.releasePointerCapture) {
+    window.Element.prototype.releasePointerCapture = () => {};
+  }
 }

@@ -219,13 +219,13 @@ export const Sidebar: React.FC<SidebarProps> = ({
       </div>
 
       {/* Footer Settings Link */}
-      <div className="p-4 border-t border-border/50" style={{ paddingBottom: isMobileDrawer ? 'calc(1rem + env(safe-area-inset-bottom, 0px))' : undefined }}>
+      <div className="p-3 border-t border-border/60 bg-surface/80 backdrop-blur-md" style={{ paddingBottom: isMobileDrawer ? 'calc(1rem + env(safe-area-inset-bottom, 0px))' : undefined }}>
         <button
           type="button"
           onClick={() => (isMobileDrawer ? handleMobileNav('settings') : onNavigate('settings'))}
-          className={`w-full flex items-center gap-3.5 px-3 py-2.5 rounded-xl font-medium text-sm transition-all duration-200 ${
+          className={`w-full flex items-center gap-3.5 px-3 py-2.5 rounded-xl font-medium text-sm transition-all duration-200 cursor-pointer ${
             currentRoute === 'settings'
-              ? 'bg-accent text-accent-foreground font-bold'
+              ? 'bg-accent text-accent-foreground font-bold shadow-sm'
               : 'text-foreground-muted hover:text-foreground hover:bg-surface-hover'
           } ${isCollapsed && !isMobileDrawer ? 'justify-center px-0' : ''}`}
           title="Settings & Themes"
@@ -241,7 +241,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
     <>
       {/* Desktop / Tablet Sidebar */}
       <aside
-        className={`hidden md:flex flex-col justify-between shrink-0 h-screen sticky top-0 bg-surface/40 backdrop-blur-2xl border-r border-border/60 transition-all duration-300 z-30 select-none ${
+        className={`hidden md:flex flex-col justify-between shrink-0 h-screen sticky top-0 bg-surface/40 backdrop-blur-2xl border-r border-border/60 transition-all duration-300 z-40 select-none ${
           isCollapsed ? 'w-20' : 'w-64'
         }`}
       >

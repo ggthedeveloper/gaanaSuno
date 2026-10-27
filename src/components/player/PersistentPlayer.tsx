@@ -18,7 +18,13 @@ import {
   Maximize2,
 } from 'lucide-react';
 
-export const PersistentPlayer: React.FC = () => {
+interface PersistentPlayerProps {
+  isSidebarCollapsed?: boolean;
+}
+
+export const PersistentPlayer: React.FC<PersistentPlayerProps> = ({
+  isSidebarCollapsed = false,
+}) => {
   const {
     currentTrack,
     isPlaying,
@@ -194,7 +200,14 @@ export const PersistentPlayer: React.FC = () => {
       {/* ============================================================== */}
       {/* DESKTOP & TABLET FLOATING ISLAND DOCK (>= 640px)               */}
       {/* ============================================================== */}
-      <div className="hidden sm:block fixed bottom-5 left-4 right-4 lg:left-8 lg:right-8 z-40 max-w-5xl mx-auto pointer-events-none select-none">
+      <div
+        className={`hidden sm:block fixed bottom-5 z-30 pointer-events-none select-none transition-all duration-300 ${
+          isSidebarCollapsed
+            ? 'left-4 sm:left-4 md:left-24 right-4 sm:right-4 md:right-6'
+            : 'left-4 sm:left-4 md:left-72 right-4 sm:right-4 md:right-8'
+        }`}
+      >
+        <div className="max-w-4xl mx-auto">
         <footer
           role="region"
           aria-label="Audio Player"
@@ -455,6 +468,7 @@ export const PersistentPlayer: React.FC = () => {
             </div>
           </div>
         </footer>
+        </div>
       </div>
     </>
   );
