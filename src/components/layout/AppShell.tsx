@@ -10,6 +10,8 @@ import { NowPlayingModal } from '../player/NowPlayingModal';
 import { QueueDrawer } from '../player/QueueDrawer';
 import { CreatePlaylistModal } from '../modals/CreatePlaylistModal';
 import { TrackDetailModal } from '../modals/TrackDetailModal';
+import { VoiceAssistantModal } from '../voice/VoiceAssistantModal';
+import { Mic } from 'lucide-react';
 
 import { HomeView } from '../../views/HomeView';
 import { MehfilView } from '../../views/MehfilView';
@@ -29,6 +31,7 @@ export const AppShell: React.FC = () => {
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [isCreatePlaylistOpen, setIsCreatePlaylistOpen] = useState(false);
+  const [isVoiceModalOpen, setIsVoiceModalOpen] = useState(false);
   const [selectedTrackForDetail, setSelectedTrackForDetail] = useState<Track | null>(null);
 
   const [selectedPlaylist, setSelectedPlaylist] = useState<Playlist | null>(null);
@@ -46,6 +49,10 @@ export const AppShell: React.FC = () => {
       } catch {}
 
       const listenerPromise = CapApp.addListener('backButton', () => {
+        if (isVoiceModalOpen) {
+          setIsVoiceModalOpen(false);
+          return;
+        }
         if (selectedTrackForDetail) {
           setSelectedTrackForDetail(null);
           return;
@@ -65,7 +72,7 @@ export const AppShell: React.FC = () => {
         listenerPromise.then((h) => h.remove()).catch(() => {});
       };
     }
-  }, [currentRoute, selectedTrackForDetail, isCreatePlaylistOpen]);
+  }, [currentRoute, selectedTrackForDetail, isCreatePlaylistOpen, isVoiceModalOpen]);
 
   const handleNavigate = (route: NavRoute) => {
     setCurrentRoute(route);
@@ -122,6 +129,7 @@ export const AppShell: React.FC = () => {
             setSearchQuery(q);
             if (currentRoute !== 'search') setCurrentRoute('search');
           }}
+          onOpenVoice={() => setIsVoiceModalOpen(true)}
         />
 
         {/* Scrollable Page Body */}
@@ -218,6 +226,25 @@ export const AppShell: React.FC = () => {
       <TrackDetailModal
         track={selectedTrackForDetail}
         onClose={() => setSelectedTrackForDetail(null)}
+      />
+
+      {/* Floating Sur-Vaani Voice Assistant Button */}
+      <button
+        type="button"
+        onClick={() => setIsVoiceModalOpen(true)}
+        aria-label="Activate Sur-Vaani Voice Assistant"
+        className="fixed bottom-[135px] md:bottom-28 right-5 z-40 w-12 h-12 rounded-full bg-gradient-to-tr from-amber-500 via-orange-500 to-rose-600 text-white shadow-[0_8px_25px_rgba(245,158,11,0.4)] hover:shadow-[0_12px_32px_rgba(245,158,11,0.6)] flex items-center justify-center transition-all duration-300 hover:scale-110 active:scale-95 cursor-pointer border-2 border-amber-300/60 group"
+        title="Sur-Vaani Voice Assistant (सुर-वाणी)"
+      >
+        <span className="absolute inset-0 rounded-full bg-amber-400/30 animate-ping opacity-60" />
+        <Mic className="relative z-10 w-5 h-5 group-hover:scale-110 transition-transform" />
+      </button>
+
+      {/* Sur-Vaani Voice Assistant Modal */}
+      <VoiceAssistantModal
+        isOpen={isVoiceModalOpen}
+        onClose={() => setIsVoiceModalOpen(false)}
+        onNavigate={handleNavigate}
       />
     </div>
   );

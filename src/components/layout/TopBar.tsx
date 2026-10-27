@@ -1,5 +1,5 @@
 import React from 'react';
-import { Search, Sun, Moon, Globe, Sparkles } from 'lucide-react';
+import { Search, Sun, Moon, Globe, Sparkles, Mic } from 'lucide-react';
 import { useTheme } from '../../context/ThemeContext';
 import { useAudio } from '../../context/AudioContext';
 import { NavRoute } from './Sidebar';
@@ -8,12 +8,14 @@ interface TopBarProps {
   onNavigate: (route: NavRoute) => void;
   searchQuery: string;
   onSearchChange: (query: string) => void;
+  onOpenVoice?: () => void;
 }
 
 export const TopBar: React.FC<TopBarProps> = ({
   onNavigate,
   searchQuery,
   onSearchChange,
+  onOpenVoice,
 }) => {
   const { preferences, toggleTheme, setPreferredLanguage } = useTheme();
   const { currentTrack, isPlaying, setIsExpandedNowPlaying } = useAudio();
@@ -42,6 +44,20 @@ export const TopBar: React.FC<TopBarProps> = ({
             className="w-full pl-10 pr-4 py-1.5 rounded-full bg-foreground/5 text-foreground placeholder:text-foreground-muted/60 text-xs sm:text-sm border border-border/60 focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/20 transition-all"
           />
         </div>
+
+        {/* Voice Assistant Mic Button */}
+        {onOpenVoice && (
+          <button
+            type="button"
+            onClick={onOpenVoice}
+            title="Ask Sur-Vaani Voice AI (सुर-वाणी)"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-gradient-to-r from-amber-500/20 to-orange-500/20 hover:from-amber-500/30 hover:to-orange-500/30 border border-amber-500/40 text-amber-300 text-xs font-bold transition-all hover:scale-105 active:scale-95 cursor-pointer shadow-sm group shrink-0"
+          >
+            <Mic className="w-3.5 h-3.5 text-amber-400 group-hover:animate-pulse" />
+            <span className="hidden sm:inline font-devanagari">सुर-वाणी</span>
+            <span className="text-[10px] bg-amber-400 text-black px-1.5 py-0.2 rounded font-mono font-black">AI</span>
+          </button>
+        )}
 
         {/* Center: Live Sound Aura Pill (Desktop only) */}
         {currentTrack && (
