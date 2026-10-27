@@ -14,7 +14,9 @@ interface ThemeContextType {
   setAnimationIntensity: (intensity: AnimationIntensity) => void;
   setEnableAmbientGlow: (enabled: boolean) => void;
   setEnableVisualizer: (enabled: boolean) => void;
-  setPreferredLanguage: (lang: 'all' | 'Hindi' | 'Urdu' | 'Punjabi') => void;
+  setPreferredLanguage: (lang: string) => void;
+  setMusicPreferences: (languages: string[], genres: string[]) => void;
+  completeOnboarding: () => void;
   resetPreferences: () => void;
 }
 
@@ -135,8 +137,21 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     setPreferences((prev) => ({ ...prev, enableVisualizer }));
   };
 
-  const setPreferredLanguage = (preferredLanguage: 'all' | 'Hindi' | 'Urdu' | 'Punjabi') => {
+  const setPreferredLanguage = (preferredLanguage: string) => {
     setPreferences((prev) => ({ ...prev, preferredLanguage }));
+  };
+
+  const setMusicPreferences = (preferredLanguages: string[], preferredGenres: string[]) => {
+    setPreferences((prev) => ({
+      ...prev,
+      preferredLanguages,
+      preferredGenres,
+      hasCompletedOnboarding: true,
+    }));
+  };
+
+  const completeOnboarding = () => {
+    setPreferences((prev) => ({ ...prev, hasCompletedOnboarding: true }));
   };
 
   const resetPreferences = () => {
@@ -155,6 +170,8 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       setEnableAmbientGlow,
       setEnableVisualizer,
       setPreferredLanguage,
+      setMusicPreferences,
+      completeOnboarding,
       resetPreferences,
     }),
     [preferences]

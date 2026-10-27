@@ -48,15 +48,15 @@ export const HomeView: React.FC<HomeViewProps> = ({
   const greeting = useMemo(() => {
     const hour = new Date().getHours();
     if (hour >= 4 && hour < 12) {
-      return { time: 'Subha Savera 🌅', sub: 'Good Morning, start your day with tranquil ragas' };
+      return { time: 'Good Morning 🌅', sub: 'Start your day with uplifting melodies and serene acoustics' };
     }
     if (hour >= 12 && hour < 17) {
-      return { time: 'Dopahar Ki Chai ☕', sub: 'Good Afternoon, ease into soothing Hindi melodies' };
+      return { time: 'Good Afternoon ☀️', sub: 'Ease into smooth rhythms, lo-fi, and acoustic hits' };
     }
     if (hour >= 17 && hour < 22) {
-      return { time: 'Shaam Ki Mehfil 🪔', sub: 'Good Evening, immerse in romance and ghazals' };
+      return { time: 'Good Evening 🪔', sub: 'Immerse in soulful music and timeless melodies' };
     }
-    return { time: 'Midnight Raag 🌙', sub: 'Late Night Chill, peaceful lo-fi and classical solace' };
+    return { time: 'Late Night Chill 🌙', sub: 'Peaceful lo-fi, soothing acoustics and solace' };
   }, []);
 
   const featuredTrack = TRACKS[0]; // Kesariya Ishq
@@ -104,7 +104,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
       {/* ============================================================== */}
       {/* CINEMATIC MASTER HERO SECTION                                 */}
       {/* ============================================================== */}
-      <section className="relative overflow-hidden rounded-[2rem] p-6 sm:p-10 lg:p-12 bg-gradient-to-br from-surface/80 via-surface-subtle/60 to-surface/90 border border-white/[0.08] shadow-[0_20px_50px_rgba(0,0,0,0.4)] backdrop-blur-xl">
+      <section className="relative overflow-hidden rounded-[2rem] p-6 sm:p-10 lg:p-12 bg-gradient-to-br from-surface/80 via-surface-subtle/60 to-surface/90 border border-border shadow-[0_20px_50px_rgba(0,0,0,0.08)] dark:shadow-[0_20px_50px_rgba(0,0,0,0.4)] backdrop-blur-xl">
         {/* Ambient mesh lighting orbs */}
         <div className="absolute top-0 right-1/4 -mt-24 w-96 h-96 rounded-full bg-accent/20 blur-[130px] pointer-events-none" />
         <div className="absolute bottom-0 right-0 -mr-20 w-80 h-80 rounded-full bg-rose-600/15 blur-[120px] pointer-events-none" />
@@ -119,11 +119,11 @@ export const HomeView: React.FC<HomeViewProps> = ({
             </div>
 
             <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black text-foreground tracking-tight leading-[1.08]">
-              Discover the soul of <span className="text-gradient-accent">Indian Music</span>
+              Discover the soul of <span className="text-gradient-accent">Global & Indian Music</span>
             </h1>
 
             <p className="mt-3.5 text-sm sm:text-base text-foreground-muted leading-relaxed max-w-xl font-medium">
-              Handpicked Bollywood romances, mystical Sufi kalams, midnight Delhi lo-fi, and timeless classical raga heritage — streaming in lossless sound.
+              Stream Bollywood hits, Punjabi anthems, Indie acoustics, Lo-Fi beats, and timeless melodies in lossless sound.
             </p>
 
             {/* Nested CTA & Play Pill Button Architecture */}
@@ -151,7 +151,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
               <button
                 type="button"
                 onClick={() => onNavigateToMoods()}
-                className="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-surface-subtle hover:bg-surface-hover border border-white/10 hover:border-white/20 text-xs font-bold text-foreground transition-all active:scale-[0.98] cursor-pointer"
+                className="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-surface-subtle hover:bg-surface-hover border border-border text-xs font-bold text-foreground transition-all active:scale-[0.98] cursor-pointer"
               >
                 <Radio className="w-4 h-4 text-accent" />
                 <span>Explore Vibe Radios</span>
@@ -161,16 +161,16 @@ export const HomeView: React.FC<HomeViewProps> = ({
                 <button
                   type="button"
                   onClick={onNavigateToMehfil}
-                  className="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-gradient-to-r from-amber-600/30 via-orange-600/25 to-amber-700/30 hover:from-amber-600/40 hover:to-amber-700/40 border border-amber-500/40 text-xs font-bold text-amber-300 transition-all hover:scale-105 active:scale-[0.98] cursor-pointer shadow-lg"
+                  className="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-accent/15 hover:bg-accent/25 border border-accent/30 text-xs font-bold text-accent transition-all hover:scale-105 active:scale-[0.98] cursor-pointer shadow-lg"
                 >
-                  <Flame className="w-4 h-4 text-amber-400" />
-                  <span>🪔 Enter Mehfil Lounge (Vinyl & Cassette)</span>
+                  <Flame className="w-4 h-4 text-accent" />
+                  <span>The Listening Lounge (Vinyl & Cassette)</span>
                 </button>
               )}
             </div>
 
             {/* Quick Vibe Selector Pills */}
-            <div className="mt-7 pt-5 border-t border-white/[0.06]">
+            <div className="mt-7 pt-5 border-t border-border/60">
               <span className="text-[11px] font-bold uppercase tracking-wider text-foreground-muted block mb-2.5">
                 Instant Mood Tuner
               </span>
@@ -180,7 +180,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
                     key={mood.id}
                     type="button"
                     onClick={() => onNavigateToMoods(mood)}
-                    className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-surface-subtle/80 hover:bg-surface-hover border border-white/[0.08] hover:border-accent/40 text-xs font-semibold text-foreground transition-all hover:scale-105 active:scale-95 shadow-sm cursor-pointer"
+                    className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-surface-subtle/80 hover:bg-surface-hover border border-border hover:border-accent/40 text-xs font-semibold text-foreground transition-all hover:scale-105 active:scale-95 shadow-sm cursor-pointer"
                   >
                     <span>{mood.emoji}</span>
                     <span>{mood.label}</span>
@@ -195,11 +195,11 @@ export const HomeView: React.FC<HomeViewProps> = ({
             <div className="w-full lg:w-[22rem] shrink-0">
               <div className="relative group">
                 {/* Background Layer 2: Adjacent track peek with tilt */}
-                <div className="absolute -top-3 -right-3 w-full h-full rounded-3xl bg-surface/40 border border-white/5 shadow-lg transform rotate-3 pointer-events-none opacity-60 group-hover:rotate-6 transition-transform duration-500" />
+                <div className="absolute -top-3 -right-3 w-full h-full rounded-3xl bg-surface/40 border border-border shadow-lg transform rotate-3 pointer-events-none opacity-60 group-hover:rotate-6 transition-transform duration-500" />
 
                 {/* Main Card: Spotlight */}
-                <div className="relative z-10 bg-surface/90 backdrop-blur-2xl p-5 rounded-[1.75rem] border border-white/[0.12] shadow-[0_20px_40px_rgba(0,0,0,0.6)] overflow-hidden">
-                  <div className="relative aspect-square w-full rounded-2xl overflow-hidden shadow-xl mb-4 bg-surface-subtle border border-white/10">
+                <div className="relative z-10 bg-surface/90 backdrop-blur-2xl p-5 rounded-[1.75rem] border border-border shadow-[0_20px_40px_rgba(0,0,0,0.1)] dark:shadow-[0_20px_40px_rgba(0,0,0,0.6)] overflow-hidden">
+                  <div className="relative aspect-square w-full rounded-2xl overflow-hidden shadow-xl mb-4 bg-surface-subtle border border-border">
                     <img
                       src={featuredTrack.coverUrl}
                       alt={featuredTrack.title}
@@ -260,11 +260,6 @@ export const HomeView: React.FC<HomeViewProps> = ({
                       >
                         {featuredTrack.title}
                       </h3>
-                      {featuredTrack.titleDevanagari && (
-                        <p className="text-xs text-foreground-subtle font-hindi truncate">
-                          {featuredTrack.titleDevanagari}
-                        </p>
-                      )}
                       <p className="text-xs text-foreground-muted font-medium truncate mt-0.5">
                         {featuredTrack.artist}
                       </p>
@@ -285,20 +280,20 @@ export const HomeView: React.FC<HomeViewProps> = ({
         </div>
 
         {/* Feature Badges Strip */}
-        <div className="relative z-10 mt-8 pt-6 border-t border-white/[0.06] grid grid-cols-2 sm:grid-cols-4 gap-4 text-center">
-          <div className="p-2 rounded-xl bg-surface/30 border border-white/[0.04]">
+        <div className="relative z-10 mt-8 pt-6 border-t border-border/60 grid grid-cols-2 sm:grid-cols-4 gap-4 text-center">
+          <div className="p-2 rounded-xl bg-surface/30 border border-border">
             <p className="text-base sm:text-lg font-black text-foreground">{TRACKS.length} Songs</p>
-            <p className="text-[11px] text-foreground-muted">Handpicked Hindi Catalog</p>
+            <p className="text-[11px] text-foreground-muted">Handpicked Catalog</p>
           </div>
-          <div className="p-2 rounded-xl bg-surface/30 border border-white/[0.04]">
+          <div className="p-2 rounded-xl bg-surface/30 border border-border">
             <p className="text-base sm:text-lg font-black text-accent">{heritageTracks.length} Heritage</p>
             <p className="text-[11px] text-foreground-muted">Non-Copyright & Public Domain</p>
           </div>
-          <div className="p-2 rounded-xl bg-surface/30 border border-white/[0.04]">
+          <div className="p-2 rounded-xl bg-surface/30 border border-border">
             <p className="text-base sm:text-lg font-black text-foreground">{PLAYLISTS.length} Playlists</p>
             <p className="text-[11px] text-foreground-muted">Mood & Genre Curations</p>
           </div>
-          <div className="p-2 rounded-xl bg-surface/30 border border-white/[0.04]">
+          <div className="p-2 rounded-xl bg-surface/30 border border-border">
             <p className="text-base sm:text-lg font-black text-foreground">0ms Latency</p>
             <p className="text-[11px] text-foreground-muted">Instant Offline Playback</p>
           </div>
@@ -318,13 +313,13 @@ export const HomeView: React.FC<HomeViewProps> = ({
             <div className="space-y-2 max-w-xl">
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/20 text-amber-300 text-xs font-bold uppercase tracking-wider">
                 <Flame className="w-3.5 h-3.5" />
-                <span>Novel Indian Acoustic Experience</span>
+                <span>Tactile Acoustic Experience</span>
               </div>
               <h2 className="text-2xl sm:text-3xl font-black text-amber-100 tracking-tight">
-                Enter the Mehfil Baithak (महफ़िल बैठक)
+                Enter the Listening Lounge
               </h2>
               <p className="text-xs sm:text-sm text-stone-300 font-medium">
-                Step into a tactile listening sanctuary with our 90s Magnetic Cassette Deck, Gharana Sitar Turntable, Procedural Tanpura Drone, and Navarasa Emotional Compass.
+                Step into a tactile listening sanctuary with our 90s Magnetic Cassette Deck, Sitar Turntable, Procedural Tanpura Drone, and Emotional Sound Compass.
               </p>
             </div>
 
@@ -366,11 +361,10 @@ export const HomeView: React.FC<HomeViewProps> = ({
       )}
 
       {/* ============================================================== */}
-      {/* YOUTUBE TRENDING HINDI & BOLLYWOOD HITS                        */}
+      {/* YOUTUBE TRENDING HITS                                         */}
       {/* ============================================================== */}
       <HorizontalCarousel
-        title="YouTube Trending — Hindi & Bollywood Hits"
-        devanagariTitle="यूट्यूब ट्रेंडिंग गाने"
+        title="YouTube Trending — Global & Bollywood Hits"
         subtitle="The definitive chart-topping hits by Arijit Singh, Anuv Jain, Pritam, The Local Train & Vishal Mishra"
         icon={
           <div className="w-5 h-5 rounded-md bg-red-600 flex items-center justify-center text-white shadow-sm">
@@ -393,7 +387,6 @@ export const HomeView: React.FC<HomeViewProps> = ({
       {/* ============================================================== */}
       <HorizontalCarousel
         title="Sanskriti — Non-Copyright Indian Heritage"
-        devanagariTitle="संस्कृति धरोहर"
         subtitle="Public domain classical ragas, Amir Khusro Sufi kalams, and Sant Kabir bhajans"
         icon={<ShieldCheck className="w-5 h-5 text-accent" />}
       >
@@ -408,11 +401,10 @@ export const HomeView: React.FC<HomeViewProps> = ({
       </HorizontalCarousel>
 
       {/* ============================================================== */}
-      {/* BOLLYWOOD ROMANTIC EVENINGS CAROUSEL                           */}
+      {/* ROMANTIC EVENINGS CAROUSEL                                     */}
       {/* ============================================================== */}
       <HorizontalCarousel
-        title="Ishq Wala Love — Hindi Romance"
-        devanagariTitle="इश्क़ और मोहब्बत"
+        title="Soulful Romance & Love"
         subtitle="Heartfelt Bollywood ballads, soulful duets, and timeless love melodies"
         icon={<Heart className="w-5 h-5 text-rose-500" />}
       >
@@ -431,7 +423,6 @@ export const HomeView: React.FC<HomeViewProps> = ({
       {/* ============================================================== */}
       <HorizontalCarousel
         title="Browse by Mood & Emotion"
-        devanagariTitle="मन की तरंगें"
         subtitle="Let your current feeling guide your listening journey"
         icon={<Radio className="w-5 h-5 text-accent" />}
         actionText="Explore All Vibes →"
@@ -452,7 +443,6 @@ export const HomeView: React.FC<HomeViewProps> = ({
       {/* ============================================================== */}
       <HorizontalCarousel
         title="Ruhaniyat — Sufi & Devotional Peace"
-        devanagariTitle="रूहानियत और सुकून"
         subtitle="Transcendental qawwalis, bamboo bansuri, and morning stotrams"
         icon={<Sparkles className="w-5 h-5 text-amber-500" />}
       >
@@ -471,7 +461,6 @@ export const HomeView: React.FC<HomeViewProps> = ({
       {/* ============================================================== */}
       <HorizontalCarousel
         title="Chai, Baarish & Lo-Fi Beats"
-        devanagariTitle="चाय और बारिश"
         subtitle="Midnight Delhi vibes, warm vinyl crackle, and acoustic fingerpicking"
         icon={<Coffee className="w-5 h-5 text-cyan-500" />}
       >
@@ -486,11 +475,10 @@ export const HomeView: React.FC<HomeViewProps> = ({
       </HorizontalCarousel>
 
       {/* ============================================================== */}
-      {/* FEATURED HINDI PLAYLISTS                                      */}
+      {/* FEATURED PLAYLISTS                                             */}
       {/* ============================================================== */}
       <HorizontalCarousel
-        title="Featured Hindi Playlists"
-        devanagariTitle="खास प्लेलिस्ट"
+        title="Featured Curated Playlists"
         subtitle="Curated collections crafted for every moment"
         icon={<Disc className="w-5 h-5 text-accent" />}
       >
@@ -504,11 +492,10 @@ export const HomeView: React.FC<HomeViewProps> = ({
       </HorizontalCarousel>
 
       {/* ============================================================== */}
-      {/* DESI PARTY & BHANGRA CAROUSEL                                  */}
+      {/* PARTY & GROOVE CAROUSEL                                        */}
       {/* ============================================================== */}
       <HorizontalCarousel
         title="Desi Party & Dholak Groove"
-        devanagariTitle="जोश और जश्न"
         subtitle="High-octane Punjabi beats and wedding dancefloor anthems"
         icon={<Music className="w-5 h-5 text-emerald-500" />}
       >
@@ -523,9 +510,9 @@ export const HomeView: React.FC<HomeViewProps> = ({
       </HorizontalCarousel>
 
       {/* ============================================================== */}
-      {/* TOP TRENDING HINDI SONGS (LIST VIEW)                           */}
+      {/* TOP TRENDING SONGS (LIST VIEW)                                 */}
       {/* ============================================================== */}
-      <section className="bg-surface/40 p-5 sm:p-7 rounded-[1.75rem] border border-white/[0.07] shadow-xl backdrop-blur-md">
+      <section className="bg-surface/40 p-5 sm:p-7 rounded-[1.75rem] border border-border shadow-xl backdrop-blur-md">
         <div className="flex items-center justify-between mb-5">
           <div>
             <h2 className="text-xl sm:text-2xl font-black text-foreground tracking-tight flex items-center gap-2">
@@ -533,12 +520,12 @@ export const HomeView: React.FC<HomeViewProps> = ({
               <span>Top Trending Songs</span>
             </h2>
             <p className="text-xs text-foreground-muted mt-0.5 font-medium">
-              Most loved Bollywood hits and timeless indie melodies
+              Most loved hits and timeless indie melodies
             </p>
           </div>
         </div>
 
-        <div className="rounded-2xl border border-white/[0.05] divide-y divide-white/[0.05] overflow-hidden bg-surface/30">
+        <div className="rounded-2xl border border-border divide-y divide-border/60 overflow-hidden bg-surface/30">
           {filteredTracks.slice(0, 8).map((track, idx) => (
             <TrackRow
               key={track.id}
@@ -552,11 +539,10 @@ export const HomeView: React.FC<HomeViewProps> = ({
       </section>
 
       {/* ============================================================== */}
-      {/* LEGENDARY INDIAN ARTISTS & MAESTROS                            */}
+      {/* LEGENDARY ARTISTS & MAESTROS                                   */}
       {/* ============================================================== */}
       <HorizontalCarousel
         title="Legendary Indian Artists & Maestros"
-        devanagariTitle="महान संगीतकार"
         subtitle="Iconic voices and virtuosos who shaped Indian musical history"
         icon={<Sparkles className="w-5 h-5 text-accent" />}
       >

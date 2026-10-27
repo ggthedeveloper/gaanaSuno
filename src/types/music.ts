@@ -118,7 +118,10 @@ export interface UserPreferences {
   animationIntensity: AnimationIntensity;
   enableAmbientGlow: boolean;
   enableVisualizer: boolean;
-  preferredLanguage: 'all' | 'Hindi' | 'Urdu' | 'Punjabi';
+  preferredLanguage: string;
+  preferredLanguages?: string[];
+  preferredGenres?: string[];
+  hasCompletedOnboarding?: boolean;
 }
 
 export interface MoodOption {

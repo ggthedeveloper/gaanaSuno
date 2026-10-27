@@ -17,10 +17,10 @@ export const ArtistCard: React.FC<ArtistCardProps> = ({ artist, onSelect, classN
         if (e.key === 'Enter') onSelect(artist);
       }}
       onClick={() => onSelect(artist)}
-      className={`group flex flex-col items-center p-3 sm:p-3.5 rounded-[1.25rem] bg-surface/40 hover:bg-surface-hover/80 border border-white/[0.07] hover:border-accent/40 shadow-sm hover:shadow-[0_12px_28px_-6px_rgba(0,0,0,0.5)] transition-all duration-300 hover:-translate-y-1.5 cursor-pointer select-none text-center shrink-0 w-40 sm:w-44 lg:w-48 focus:outline-none focus-visible:ring-2 focus-visible:ring-accent ${className}`}
+      className={`group flex flex-col items-center p-3 sm:p-3.5 rounded-[1.25rem] bg-surface/40 hover:bg-surface-hover/80 border border-border hover:border-accent/40 shadow-sm hover:shadow-[0_12px_28px_-6px_rgba(0,0,0,0.12)] dark:hover:shadow-[0_12px_28px_-6px_rgba(0,0,0,0.5)] transition-all duration-300 hover:-translate-y-1.5 cursor-pointer select-none text-center shrink-0 w-40 sm:w-44 lg:w-48 focus:outline-none focus-visible:ring-2 focus-visible:ring-accent ${className}`}
     >
       {/* Outer circular shell */}
-      <div className="relative w-28 h-28 sm:w-32 sm:h-32 rounded-full p-1 bg-surface-subtle border border-white/10 group-hover:border-accent group-hover:shadow-[0_0_30px_rgba(245,158,11,0.3)] transition-all duration-500 shadow-xl">
+      <div className="relative w-28 h-28 sm:w-32 sm:h-32 rounded-full p-1 bg-surface-subtle border border-border group-hover:border-accent group-hover:shadow-[0_0_30px_rgba(245,158,11,0.3)] transition-all duration-500 shadow-xl">
         <div className="w-full h-full rounded-full overflow-hidden">
           <img
             src={artist.imageUrl}
@@ -39,17 +39,11 @@ export const ArtistCard: React.FC<ArtistCardProps> = ({ artist, onSelect, classN
           <CheckCircle2 className="w-3.5 h-3.5 text-accent shrink-0" />
         </div>
 
-        {artist.nameDevanagari && (
-          <p className="text-[11px] text-foreground-subtle font-hindi truncate mt-0.5">
-            {artist.nameDevanagari}
-          </p>
-        )}
-
-        <p className="text-xs text-foreground-muted font-medium truncate mt-0.5">
+        <p className="text-xs text-foreground-muted font-medium truncate mt-1">
           {artist.role}
         </p>
 
-        <span className="inline-block mt-1.5 text-[10px] font-semibold text-foreground-subtle bg-white/5 px-2 py-0.5 rounded-full border border-white/[0.04]">
+        <span className="inline-block mt-2 text-[10px] font-semibold text-foreground-muted bg-surface-subtle px-2.5 py-0.5 rounded-full border border-border/60">
           {artist.monthlyListeners} monthly
         </span>
       </div>

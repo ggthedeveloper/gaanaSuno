@@ -15,13 +15,13 @@ interface VoiceAssistantModalProps {
 }
 
 const VOICE_PROMPT_SUGGESTIONS = [
-  { label: 'केसरिया बजाओ', query: 'Kesariya bajao' },
-  { label: 'Arijit Singh ke gaane', query: 'Arijit Singh ke gaane chalao' },
-  { label: 'तानपुरा शुरू करो', query: 'Tanpura shuru karo' },
-  { label: 'रोमांटिक गाने लगाओ', query: 'Romantic gaane lagao' },
-  { label: 'महफ़िल लाउंज खोलो', query: 'Mehfil kholo' },
-  { label: 'कोई शेर सुनाओ', query: 'Shayari sunao' },
-  { label: 'Next song', query: 'Next song' },
+  { label: 'Play Kesariya', query: 'Play Kesariya' },
+  { label: 'Play Arijit Singh', query: 'Play Arijit Singh' },
+  { label: 'Start Tanpura Drone', query: 'Start Tanpura' },
+  { label: 'Play Romantic Songs', query: 'Play romantic songs' },
+  { label: 'Open Lounge', query: 'Open Lounge' },
+  { label: 'Next Song', query: 'Next song' },
+  { label: 'Volume Up', query: 'Volume up' },
 ];
 
 export const VoiceAssistantModal: React.FC<VoiceAssistantModalProps> = ({
@@ -44,7 +44,7 @@ export const VoiceAssistantModal: React.FC<VoiceAssistantModalProps> = ({
   const [isListening, setIsListening] = useState(false);
   const [transcript, setTranscript] = useState('');
   const [lastResponse, setLastResponse] = useState<VoiceCommandResult | null>(null);
-  const [selectedLang, setSelectedLang] = useState<'hi-IN' | 'en-IN'>('hi-IN');
+  const [selectedLang, setSelectedLang] = useState<'en-IN' | 'hi-IN'>('en-IN');
   const [isSpeechSupported, setIsSpeechSupported] = useState(true);
   const [manualInput, setManualInput] = useState('');
 
@@ -187,32 +187,21 @@ export const VoiceAssistantModal: React.FC<VoiceAssistantModalProps> = ({
 
         {/* Assistant Header */}
         <div className="text-center space-y-1.5">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/15 border border-amber-500/30 text-amber-400 text-xs font-bold uppercase tracking-wider">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/15 border border-amber-500/30 text-amber-500 dark:text-amber-400 text-xs font-bold uppercase tracking-wider">
             <Sparkles className="w-3.5 h-3.5" />
-            <span>सुर-वाणी • Sur-Vaani Voice AI</span>
+            <span>Sur-Vaani • Voice AI Assistant</span>
           </div>
 
           <h2 className="text-2xl sm:text-3xl font-black text-foreground tracking-tight">
             How can I serenade you today?
           </h2>
-          <p className="text-xs sm:text-sm text-foreground-muted font-devanagari">
-            कहिए, कौन सा गीत या राग बजाएं?
+          <p className="text-xs sm:text-sm text-foreground-muted font-medium">
+            Ask to play any song, artist, mood, or control playback.
           </p>
         </div>
 
         {/* Language Toggle */}
         <div className="mt-4 flex justify-center gap-2">
-          <button
-            type="button"
-            onClick={() => setSelectedLang('hi-IN')}
-            className={`px-3 py-1 rounded-full text-xs font-bold transition-all cursor-pointer ${
-              selectedLang === 'hi-IN'
-                ? 'bg-amber-500 text-black shadow-md'
-                : 'bg-surface-subtle text-foreground-muted hover:text-foreground'
-            }`}
-          >
-            हिंदी (Hindi)
-          </button>
           <button
             type="button"
             onClick={() => setSelectedLang('en-IN')}
@@ -222,7 +211,18 @@ export const VoiceAssistantModal: React.FC<VoiceAssistantModalProps> = ({
                 : 'bg-surface-subtle text-foreground-muted hover:text-foreground'
             }`}
           >
-            English (Hinglish)
+            English (Global & Indian)
+          </button>
+          <button
+            type="button"
+            onClick={() => setSelectedLang('hi-IN')}
+            className={`px-3 py-1 rounded-full text-xs font-bold transition-all cursor-pointer ${
+              selectedLang === 'hi-IN'
+                ? 'bg-amber-500 text-black shadow-md'
+                : 'bg-surface-subtle text-foreground-muted hover:text-foreground'
+            }`}
+          >
+            Hindi (Hinglish)
           </button>
         </div>
 
@@ -246,7 +246,7 @@ export const VoiceAssistantModal: React.FC<VoiceAssistantModalProps> = ({
               className={`relative z-10 w-24 h-24 rounded-full flex items-center justify-center transition-all duration-300 shadow-2xl cursor-pointer hover:scale-105 active:scale-95 ${
                 isListening
                   ? 'bg-gradient-to-tr from-amber-500 via-orange-500 to-rose-600 text-white shadow-amber-500/50 ring-4 ring-amber-400'
-                  : 'bg-surface-subtle border-2 border-amber-500/40 text-amber-400 hover:border-amber-400'
+                  : 'bg-surface-subtle border-2 border-amber-500/40 text-amber-500 dark:text-amber-400 hover:border-amber-400'
               }`}
             >
               {isListening ? (
@@ -258,33 +258,30 @@ export const VoiceAssistantModal: React.FC<VoiceAssistantModalProps> = ({
           </div>
 
           {/* Status Label */}
-          <p className="mt-4 text-xs font-mono font-bold tracking-widest uppercase text-amber-400">
+          <p className="mt-4 text-xs font-mono font-bold tracking-widest uppercase text-amber-500 dark:text-amber-400">
             {!isSpeechSupported
               ? 'Voice recognition unavailable in this browser (use text below)'
               : isListening
-              ? 'सुन रहे हैं... (Listening...)'
-              : 'Tap microphone to speak (माइक दबाएं)'}
+              ? 'Listening...'
+              : 'Tap microphone to speak'}
           </p>
         </div>
 
         {/* Transcript or Assistant Response */}
-        <div className="min-h-[70px] p-4 rounded-2xl bg-surface-subtle/80 border border-white/5 flex flex-col items-center justify-center text-center">
+        <div className="min-h-[70px] p-4 rounded-2xl bg-surface-subtle/80 border border-border flex flex-col items-center justify-center text-center">
           {transcript ? (
             <p className="text-sm sm:text-base font-semibold text-foreground italic">
               "{transcript}"
             </p>
           ) : lastResponse ? (
             <div className="space-y-1">
-              <p className="text-sm font-bold text-amber-300 font-devanagari">
-                {lastResponse.speechResponseDevanagari}
-              </p>
-              <p className="text-xs text-foreground-muted">
+              <p className="text-sm font-bold text-foreground">
                 {lastResponse.speechResponse}
               </p>
             </div>
           ) : (
-            <p className="text-xs text-foreground-muted">
-              Say e.g. "Kesariya bajao", "Arijit Singh", "Romantic gaane", or "Tanpura chalao"
+            <p className="text-xs text-foreground-muted font-medium">
+              Say e.g. "Play Kesariya", "Play Arijit Singh", "Romantic songs", or "Start Tanpura"
             </p>
           )}
         </div>
@@ -292,7 +289,7 @@ export const VoiceAssistantModal: React.FC<VoiceAssistantModalProps> = ({
         {/* Quick Suggestion Chips */}
         <div className="mt-5 space-y-2">
           <span className="text-[10px] font-bold uppercase tracking-wider text-foreground-muted block">
-            Try saying (बोलकर देखें):
+            Try saying:
           </span>
           <div className="flex flex-wrap gap-2">
             {VOICE_PROMPT_SUGGESTIONS.map((sug) => (
@@ -303,7 +300,7 @@ export const VoiceAssistantModal: React.FC<VoiceAssistantModalProps> = ({
                   setTranscript(sug.query);
                   executeCommand(sug.query);
                 }}
-                className="px-2.5 py-1 rounded-xl text-xs font-semibold bg-surface hover:bg-surface-hover border border-white/5 hover:border-amber-500/40 text-foreground-muted hover:text-foreground transition-all cursor-pointer"
+                className="px-2.5 py-1 rounded-xl text-xs font-semibold bg-surface hover:bg-surface-hover border border-border hover:border-amber-500/40 text-foreground-muted hover:text-foreground transition-all cursor-pointer"
               >
                 🎙️ {sug.label}
               </button>

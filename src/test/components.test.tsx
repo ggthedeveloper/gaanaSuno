@@ -47,14 +47,14 @@ describe('UI Components Rendering', () => {
 
   it('renders HorizontalCarousel with title and controls', () => {
     render(
-      <HorizontalCarousel title="Test Carousel" devanagariTitle="टेस्ट">
+      <HorizontalCarousel title="Test Carousel" subtitle="Curated hits">
         <div>Item 1</div>
         <div>Item 2</div>
       </HorizontalCarousel>
     );
 
     expect(screen.getByText('Test Carousel')).toBeInTheDocument();
-    expect(screen.getByText('टेस्ट')).toBeInTheDocument();
+    expect(screen.getByText('Curated hits')).toBeInTheDocument();
     expect(screen.getByText('Item 1')).toBeInTheDocument();
   });
 

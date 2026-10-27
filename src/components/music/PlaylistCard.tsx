@@ -32,7 +32,7 @@ export const PlaylistCard: React.FC<PlaylistCardProps> = ({ playlist, onSelect, 
         if (e.key === 'Enter') onSelect(playlist);
       }}
       onClick={() => onSelect(playlist)}
-      className={`group relative flex flex-col p-2 sm:p-2.5 rounded-[1.25rem] bg-surface/40 hover:bg-surface-hover/80 border border-white/[0.07] hover:border-accent/40 shadow-sm hover:shadow-[0_12px_28px_-6px_rgba(0,0,0,0.5)] transition-all duration-300 hover:-translate-y-1.5 cursor-pointer select-none shrink-0 w-48 sm:w-52 lg:w-56 focus:outline-none focus-visible:ring-2 focus-visible:ring-accent ${className}`}
+      className={`group relative flex flex-col p-2 sm:p-2.5 rounded-[1.25rem] bg-surface/40 hover:bg-surface-hover/80 border border-border hover:border-accent/40 shadow-sm hover:shadow-[0_12px_28px_-6px_rgba(0,0,0,0.12)] dark:hover:shadow-[0_12px_28px_-6px_rgba(0,0,0,0.5)] transition-all duration-300 hover:-translate-y-1.5 cursor-pointer select-none shrink-0 w-48 sm:w-52 lg:w-56 focus:outline-none focus-visible:ring-2 focus-visible:ring-accent ${className}`}
     >
       <div className="relative aspect-square w-full rounded-2xl overflow-hidden shadow-inner bg-surface-subtle">
         <img
@@ -71,17 +71,11 @@ export const PlaylistCard: React.FC<PlaylistCardProps> = ({ playlist, onSelect, 
           {playlist.title}
         </h4>
 
-        {playlist.titleDevanagari && (
-          <p className="text-[11px] text-foreground-subtle font-hindi truncate">
-            {playlist.titleDevanagari}
-          </p>
-        )}
-
         <p className="text-xs text-foreground-muted line-clamp-1 mt-0.5 font-medium">
           {playlist.description}
         </p>
 
-        <div className="flex items-center gap-1.5 text-[10px] text-foreground-subtle mt-1.5 pt-1 border-t border-white/[0.04]">
+        <div className="flex items-center gap-1.5 text-[10px] text-foreground-subtle mt-1.5 pt-1 border-t border-border/60">
           <span className="truncate">{playlist.curator}</span>
         </div>
       </div>

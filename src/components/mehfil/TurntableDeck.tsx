@@ -50,7 +50,7 @@ export const TurntableDeck: React.FC<TurntableDeckProps> = ({ track }) => {
       {/* Brass Ornamental Inlay Border */}
       <div className="absolute inset-2.5 rounded-[2.2rem] border border-amber-600/25 pointer-events-none" />
       <div className="absolute top-4 left-4 text-amber-500/30 text-xs font-serif tracking-widest pointer-events-none">
-        ✦ GHARANA SITAR VINYL DECK • घराना टर्नटेबल ✦
+        ✦ VINTAGE ACOUSTIC VINYL DECK ✦
       </div>
 
       <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center mt-3">
@@ -144,12 +144,8 @@ export const TurntableDeck: React.FC<TurntableDeckProps> = ({ track }) => {
             <h2 className="text-2xl sm:text-3xl font-black text-amber-100 tracking-tight leading-tight">
               {track ? track.title : 'Select a Song'}
             </h2>
-            <p className="text-base text-amber-300/80 font-medium font-devanagari mt-0.5">
-              {track ? track.titleDevanagari : 'गीत चुनें'}
-            </p>
-
-            <p className="text-sm text-amber-200/60 mt-2 font-medium">
-              {track ? `${track.artist} • ${track.album}` : 'No track loaded'}
+            <p className="text-sm text-amber-200/70 mt-1 font-medium">
+              {track ? `${track.artist} • ${track.album || track.genre}` : 'No track loaded'}
             </p>
           </div>
 

@@ -11,6 +11,7 @@ import {
   ChevronRight,
   Music,
   Flame,
+  X,
 } from 'lucide-react';
 import { useLibrary } from '../../context/LibraryContext';
 
@@ -33,6 +34,8 @@ interface SidebarProps {
   onToggleCollapse: () => void;
   onOpenCreatePlaylist: () => void;
   onSelectPlaylist: (playlistId: string) => void;
+  isMobileOpen?: boolean;
+  onCloseMobile?: () => void;
 }
 
 export const Sidebar: React.FC<SidebarProps> = ({
@@ -42,12 +45,14 @@ export const Sidebar: React.FC<SidebarProps> = ({
   onToggleCollapse,
   onOpenCreatePlaylist,
   onSelectPlaylist,
+  isMobileOpen = false,
+  onCloseMobile,
 }) => {
   const { likedTrackIds, customPlaylists } = useLibrary();
 
   const navItems = [
     { id: 'home' as NavRoute, label: 'Home', icon: Home },
-    { id: 'mehfil' as NavRoute, label: 'Mehfil Lounge', icon: Flame, badge: 'NEW' },
+    { id: 'mehfil' as NavRoute, label: 'Lounge', icon: Flame, badge: 'NEW' },
     { id: 'search' as NavRoute, label: 'Search & Explore', icon: Compass },
     { id: 'moods' as NavRoute, label: 'Mood Discovery', icon: Sparkles },
     { id: 'library' as NavRoute, label: 'Your Library', icon: Library },
@@ -59,12 +64,18 @@ export const Sidebar: React.FC<SidebarProps> = ({
     },
   ];
 
-  return (
-    <aside
-      className={`hidden md:flex flex-col justify-between shrink-0 h-screen sticky top-0 bg-surface/40 backdrop-blur-2xl border-r border-border/60 transition-all duration-300 z-30 select-none ${
-        isCollapsed ? 'w-20' : 'w-64'
-      }`}
-    >
+  const handleMobileNav = (route: NavRoute) => {
+    onNavigate(route);
+    onCloseMobile?.();
+  };
+
+  const handleMobileSelectPlaylist = (id: string) => {
+    onSelectPlaylist(id);
+    onCloseMobile?.();
+  };
+
+  const sidebarContent = (isMobileDrawer: boolean) => (
+    <>
       {/* Top Branding & Main Navigation */}
       <div className="flex flex-col flex-1 overflow-hidden p-4">
         {/* Brand Header */}
@@ -72,37 +83,45 @@ export const Sidebar: React.FC<SidebarProps> = ({
           <div
             role="button"
             tabIndex={0}
-            onClick={() => onNavigate('home')}
+            onClick={() => (isMobileDrawer ? handleMobileNav('home') : onNavigate('home'))}
             className="flex items-center gap-3 cursor-pointer group"
           >
             <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-amber-500 via-orange-500 to-rose-600 flex items-center justify-center shadow-md group-hover:scale-105 transition-transform">
               <Music className="w-5 h-5 text-white" />
             </div>
 
-            {!isCollapsed && (
+            {(!isCollapsed || isMobileDrawer) && (
               <div>
                 <h1 className="font-extrabold text-base tracking-tight text-foreground flex items-center gap-1.5">
                   GaanaSuno
-                  <span className="text-[10px] font-bold text-accent uppercase tracking-wider bg-accent/15 px-1.5 py-0.5 rounded">
-                    Hindi
-                  </span>
                 </h1>
-                <p className="text-[11px] text-foreground-muted">
-                  Hindi & Indian Music
+                <p className="text-[11px] text-foreground-muted font-medium">
+                  Music Sanctuary
                 </p>
               </div>
             )}
           </div>
 
-          {/* Collapse Toggle Button */}
-          <button
-            type="button"
-            aria-label={isCollapsed ? 'Expand sidebar' : 'Collapse sidebar'}
-            onClick={onToggleCollapse}
-            className="p-1.5 rounded-lg text-foreground-muted hover:text-foreground hover:bg-surface-active transition-colors hidden lg:flex"
-          >
-            {isCollapsed ? <ChevronRight className="w-4 h-4" /> : <ChevronLeft className="w-4 h-4" />}
-          </button>
+          {/* Close button for mobile or collapse for desktop */}
+          {isMobileDrawer ? (
+            <button
+              type="button"
+              aria-label="Close menu"
+              onClick={onCloseMobile}
+              className="p-2 rounded-xl text-foreground-muted hover:text-foreground hover:bg-surface-hover transition-colors"
+            >
+              <X className="w-5 h-5" />
+            </button>
+          ) : (
+            <button
+              type="button"
+              aria-label={isCollapsed ? 'Expand sidebar' : 'Collapse sidebar'}
+              onClick={onToggleCollapse}
+              className="p-1.5 rounded-lg text-foreground-muted hover:text-foreground hover:bg-surface-active transition-colors hidden lg:flex"
+            >
+              {isCollapsed ? <ChevronRight className="w-4 h-4" /> : <ChevronLeft className="w-4 h-4" />}
+            </button>
+          )}
         </div>
 
         {/* Primary Navigation Links */}
@@ -114,16 +133,16 @@ export const Sidebar: React.FC<SidebarProps> = ({
               <button
                 key={item.id}
                 type="button"
-                onClick={() => onNavigate(item.id)}
+                onClick={() => (isMobileDrawer ? handleMobileNav(item.id) : onNavigate(item.id))}
                 className={`w-full flex items-center gap-3.5 px-3 py-2.5 rounded-xl font-medium text-sm transition-all duration-200 ${
                   isActive
                     ? 'bg-accent text-accent-foreground shadow-md shadow-accent/20 font-bold'
                     : 'text-foreground-muted hover:text-foreground hover:bg-surface-hover'
-                } ${isCollapsed ? 'justify-center px-0' : ''}`}
+                } ${isCollapsed && !isMobileDrawer ? 'justify-center px-0' : ''}`}
                 title={item.label}
               >
                 <Icon className={`w-5 h-5 shrink-0 ${isActive ? 'text-accent-foreground' : ''}`} />
-                {!isCollapsed && (
+                {(!isCollapsed || isMobileDrawer) && (
                   <div className="flex items-center justify-between flex-1 min-w-0 text-left">
                     <span className="truncate">{item.label}</span>
                     {item.badge && (
@@ -147,7 +166,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
         </nav>
 
         {/* Playlists Section */}
-        {!isCollapsed && (
+        {(!isCollapsed || isMobileDrawer) && (
           <div className="mt-8 flex-1 flex flex-col min-h-0 border-t border-border/50 pt-4">
             <div className="flex items-center justify-between px-3 mb-2">
               <span className="text-[11px] font-bold uppercase tracking-wider text-foreground-muted">
@@ -156,7 +175,10 @@ export const Sidebar: React.FC<SidebarProps> = ({
               <button
                 type="button"
                 aria-label="Create new playlist"
-                onClick={onOpenCreatePlaylist}
+                onClick={() => {
+                  onOpenCreatePlaylist();
+                  if (isMobileDrawer) onCloseMobile?.();
+                }}
                 className="p-1 rounded text-foreground-muted hover:text-accent hover:bg-surface-active transition-colors"
                 title="Create Playlist"
               >
@@ -174,7 +196,11 @@ export const Sidebar: React.FC<SidebarProps> = ({
                   <button
                     key={pl.id}
                     type="button"
-                    onClick={() => onSelectPlaylist(pl.id)}
+                    onClick={() =>
+                      isMobileDrawer
+                        ? handleMobileSelectPlaylist(pl.id)
+                        : onSelectPlaylist(pl.id)
+                    }
                     className="w-full text-left px-3 py-2 rounded-lg text-foreground-muted hover:text-foreground hover:bg-surface-hover truncate transition-colors"
                   >
                     {pl.title}
@@ -187,21 +213,52 @@ export const Sidebar: React.FC<SidebarProps> = ({
       </div>
 
       {/* Footer Settings Link */}
-      <div className="p-4 border-t border-border/50">
+      <div className="p-4 border-t border-border/50" style={{ paddingBottom: isMobileDrawer ? 'calc(1rem + env(safe-area-inset-bottom, 0px))' : undefined }}>
         <button
           type="button"
-          onClick={() => onNavigate('settings')}
+          onClick={() => (isMobileDrawer ? handleMobileNav('settings') : onNavigate('settings'))}
           className={`w-full flex items-center gap-3.5 px-3 py-2.5 rounded-xl font-medium text-sm transition-all duration-200 ${
             currentRoute === 'settings'
               ? 'bg-accent text-accent-foreground font-bold'
               : 'text-foreground-muted hover:text-foreground hover:bg-surface-hover'
-          } ${isCollapsed ? 'justify-center px-0' : ''}`}
+          } ${isCollapsed && !isMobileDrawer ? 'justify-center px-0' : ''}`}
           title="Settings & Themes"
         >
           <Settings className="w-5 h-5 shrink-0" />
-          {!isCollapsed && <span>Settings & Style</span>}
+          {(!isCollapsed || isMobileDrawer) && <span>Settings & Style</span>}
         </button>
       </div>
-    </aside>
+    </>
+  );
+
+  return (
+    <>
+      {/* Desktop / Tablet Sidebar */}
+      <aside
+        className={`hidden md:flex flex-col justify-between shrink-0 h-screen sticky top-0 bg-surface/40 backdrop-blur-2xl border-r border-border/60 transition-all duration-300 z-30 select-none ${
+          isCollapsed ? 'w-20' : 'w-64'
+        }`}
+      >
+        {sidebarContent(false)}
+      </aside>
+
+      {/* Mobile Slide-Over Drawer (< 768px) */}
+      {isMobileOpen && (
+        <div className="fixed inset-0 z-50 md:hidden select-none">
+          {/* Backdrop Blur Overlay */}
+          <div
+            className="fixed inset-0 bg-black/60 backdrop-blur-sm transition-opacity"
+            onClick={onCloseMobile}
+          />
+          {/* Slide-in Drawer */}
+          <aside
+            className="fixed inset-y-0 left-0 z-50 w-72 max-w-[85vw] bg-surface border-r border-border shadow-2xl flex flex-col justify-between"
+            style={{ paddingTop: 'env(safe-area-inset-top, 0px)' }}
+          >
+            {sidebarContent(true)}
+          </aside>
+        </div>
+      )}
+    </>
   );
 };

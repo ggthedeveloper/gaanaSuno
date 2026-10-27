@@ -10,9 +10,9 @@ interface MobileNavProps {
 export const MobileNav: React.FC<MobileNavProps> = ({ currentRoute, onNavigate }) => {
   const tabs = [
     { id: 'home' as NavRoute, label: 'Home', icon: Home },
-    { id: 'mehfil' as NavRoute, label: 'Mehfil 🪔', icon: Flame },
+    { id: 'mehfil' as NavRoute, label: 'Lounge', icon: Flame },
     { id: 'search' as NavRoute, label: 'Search', icon: Compass },
-    { id: 'moods' as NavRoute, label: 'Moods', icon: Sparkles },
+    { id: 'moods' as NavRoute, label: 'Vibes', icon: Sparkles },
     { id: 'library' as NavRoute, label: 'Library', icon: Library },
   ];
 
@@ -20,7 +20,8 @@ export const MobileNav: React.FC<MobileNavProps> = ({ currentRoute, onNavigate }
     <nav
       role="navigation"
       aria-label="Mobile navigation"
-      className="md:hidden fixed bottom-[68px] left-0 right-0 z-30 bg-surface/95 backdrop-blur-xl border-t border-border/80 px-2 py-1.5 flex items-center justify-around select-none"
+      className="md:hidden fixed bottom-0 left-0 right-0 z-30 bg-surface/95 backdrop-blur-xl border-t border-border px-2 py-1.5 flex items-center justify-around select-none shadow-[0_-4px_20px_rgba(0,0,0,0.06)]"
+      style={{ paddingBottom: 'calc(0.35rem + env(safe-area-inset-bottom, 0px))' }}
     >
       {tabs.map((tab) => {
         const Icon = tab.icon;

@@ -104,7 +104,7 @@ export const TrackRow: React.FC<TrackRowProps> = ({
         </div>
 
         {/* Thumbnail Artwork */}
-        <div className="relative w-11 h-11 rounded-xl overflow-hidden shrink-0 shadow-md border border-white/10 bg-surface-subtle">
+        <div className="relative w-11 h-11 rounded-xl overflow-hidden shrink-0 shadow-md border border-border bg-surface-subtle">
           <img
             src={track.coverUrl}
             alt={track.title}

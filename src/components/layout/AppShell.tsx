@@ -11,6 +11,8 @@ import { QueueDrawer } from '../player/QueueDrawer';
 import { CreatePlaylistModal } from '../modals/CreatePlaylistModal';
 import { TrackDetailModal } from '../modals/TrackDetailModal';
 import { VoiceAssistantModal } from '../voice/VoiceAssistantModal';
+import { OnboardingScreen } from '../onboarding/OnboardingScreen';
+import { useTheme } from '../../context/ThemeContext';
 import { Mic } from 'lucide-react';
 
 import { HomeView } from '../../views/HomeView';
@@ -27,8 +29,13 @@ import { useLibrary } from '../../context/LibraryContext';
 import { PLAYLISTS } from '../../data/catalog';
 
 export const AppShell: React.FC = () => {
+  const { preferences, completeOnboarding } = useTheme();
+  const [showOnboarding, setShowOnboarding] = useState(
+    () => !preferences.hasCompletedOnboarding
+  );
   const [currentRoute, setCurrentRoute] = useState<NavRoute>('home');
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
+  const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [isCreatePlaylistOpen, setIsCreatePlaylistOpen] = useState(false);
   const [isVoiceModalOpen, setIsVoiceModalOpen] = useState(false);
@@ -109,7 +116,7 @@ export const AppShell: React.FC = () => {
       {/* Dynamic Fluid Ambient Lighting Aura */}
       <AmbientAura />
 
-      {/* Desktop Collapsible Sidebar */}
+      {/* Desktop Sidebar & Mobile Slide-Over Drawer */}
       <Sidebar
         currentRoute={currentRoute}
         onNavigate={handleNavigate}
@@ -117,6 +124,8 @@ export const AppShell: React.FC = () => {
         onToggleCollapse={() => setIsSidebarCollapsed(!isSidebarCollapsed)}
         onOpenCreatePlaylist={() => setIsCreatePlaylistOpen(true)}
         onSelectPlaylist={handleSelectPlaylistById}
+        isMobileOpen={isMobileSidebarOpen}
+        onCloseMobile={() => setIsMobileSidebarOpen(false)}
       />
 
       {/* Main Content Area */}
@@ -130,6 +139,7 @@ export const AppShell: React.FC = () => {
             if (currentRoute !== 'search') setCurrentRoute('search');
           }}
           onOpenVoice={() => setIsVoiceModalOpen(true)}
+          onOpenMobileSidebar={() => setIsMobileSidebarOpen(true)}
         />
 
         {/* Scrollable Page Body */}
@@ -228,13 +238,13 @@ export const AppShell: React.FC = () => {
         onClose={() => setSelectedTrackForDetail(null)}
       />
 
-      {/* Floating Sur-Vaani Voice Assistant Button */}
+      {/* Floating Voice Assistant Button (Adjusted for mobile tab bar + mini player) */}
       <button
         type="button"
         onClick={() => setIsVoiceModalOpen(true)}
-        aria-label="Activate Sur-Vaani Voice Assistant"
-        className="fixed bottom-[135px] md:bottom-28 right-5 z-40 w-12 h-12 rounded-full bg-gradient-to-tr from-amber-500 via-orange-500 to-rose-600 text-white shadow-[0_8px_25px_rgba(245,158,11,0.4)] hover:shadow-[0_12px_32px_rgba(245,158,11,0.6)] flex items-center justify-center transition-all duration-300 hover:scale-110 active:scale-95 cursor-pointer border-2 border-amber-300/60 group"
-        title="Sur-Vaani Voice Assistant (सुर-वाणी)"
+        aria-label="Activate AI Voice Assistant"
+        className="fixed bottom-[calc(130px+env(safe-area-inset-bottom,0px))] md:bottom-28 right-4 sm:right-6 z-40 w-12 h-12 rounded-full bg-gradient-to-tr from-amber-500 via-orange-500 to-rose-600 text-white shadow-[0_8px_25px_rgba(245,158,11,0.4)] hover:shadow-[0_12px_32px_rgba(245,158,11,0.6)] flex items-center justify-center transition-all duration-300 hover:scale-110 active:scale-95 cursor-pointer border-2 border-amber-300/60 group"
+        title="AI Voice Assistant"
       >
         <span className="absolute inset-0 rounded-full bg-amber-400/30 animate-ping opacity-60" />
         <Mic className="relative z-10 w-5 h-5 group-hover:scale-110 transition-transform" />
@@ -246,6 +256,16 @@ export const AppShell: React.FC = () => {
         onClose={() => setIsVoiceModalOpen(false)}
         onNavigate={handleNavigate}
       />
+
+      {/* Onboarding Preferences Welcome Screen */}
+      {showOnboarding && (
+        <OnboardingScreen
+          onComplete={() => {
+            completeOnboarding();
+            setShowOnboarding(false);
+          }}
+        />
+      )}
     </div>
   );
 };

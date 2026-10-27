@@ -83,7 +83,7 @@ export const MoodDiscoveryView: React.FC<MoodDiscoveryViewProps> = ({
       </div>
 
       {/* Mood Selector Question */}
-      <section className="bg-surface/50 backdrop-blur-xl p-6 rounded-3xl border border-white/8 shadow-xl">
+      <section className="bg-surface/50 backdrop-blur-xl p-6 rounded-3xl border border-border shadow-xl">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4">
           <div>
             <h3 className="font-extrabold text-base text-foreground flex items-center gap-2">
@@ -127,7 +127,7 @@ export const MoodDiscoveryView: React.FC<MoodDiscoveryViewProps> = ({
                 className={`flex items-center gap-3 p-3.5 rounded-2xl border text-left transition-all hover:scale-[1.02] active:scale-95 ${
                   isSelected
                     ? 'bg-accent/15 border-accent text-accent shadow-lg shadow-accent/10'
-                    : 'bg-surface hover:bg-surface-hover border-white/5 text-foreground hover:border-white/15'
+                    : 'bg-surface hover:bg-surface-hover border-border text-foreground hover:border-accent/40'
                 }`}
               >
                 <span className="text-2xl filter drop-shadow">{mood.emoji}</span>

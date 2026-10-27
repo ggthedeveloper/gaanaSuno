@@ -52,7 +52,7 @@ export const TrackCard: React.FC<TrackCardProps> = ({
         if (e.key === 'Enter') onOpenDetail?.(track);
       }}
       onClick={() => onOpenDetail?.(track)}
-      className={`group relative flex flex-col p-2.5 rounded-[1.5rem] bg-surface/40 hover:bg-surface-hover/80 border border-white/[0.08] hover:border-accent/40 shadow-[0_8px_24px_rgba(0,0,0,0.4)] hover:shadow-[0_16px_36px_-6px_rgba(0,0,0,0.6)] transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:-translate-y-2 cursor-pointer select-none shrink-0 w-44 sm:w-48 lg:w-52 focus:outline-none focus-visible:ring-2 focus-visible:ring-accent backdrop-blur-xl ${
+      className={`group relative flex flex-col p-2.5 rounded-[1.5rem] bg-surface/40 hover:bg-surface-hover/80 border border-border hover:border-accent/40 shadow-[0_8px_24px_rgba(0,0,0,0.06)] dark:shadow-[0_8px_24px_rgba(0,0,0,0.4)] hover:shadow-[0_16px_36px_-6px_rgba(0,0,0,0.12)] dark:hover:shadow-[0_16px_36px_-6px_rgba(0,0,0,0.6)] transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:-translate-y-2 cursor-pointer select-none shrink-0 w-44 sm:w-48 lg:w-52 focus:outline-none focus-visible:ring-2 focus-visible:ring-accent backdrop-blur-xl ${
         isCurrent ? 'ring-1 ring-accent/50 bg-surface/75 shadow-accent/20' : ''
       } ${className}`}
     >
@@ -160,7 +160,7 @@ export const TrackCard: React.FC<TrackCardProps> = ({
         </div>
       </div>
 
-      {/* Track Metadata with Devanagari Touch */}
+      {/* Track Metadata */}
       <div className="mt-3 px-1 relative z-10">
         <h4
           className={`font-black text-sm tracking-tight truncate ${
@@ -170,17 +170,11 @@ export const TrackCard: React.FC<TrackCardProps> = ({
           {track.title}
         </h4>
 
-        {track.titleDevanagari && (
-          <p className="text-[11px] text-foreground-subtle font-hindi truncate mt-0.5">
-            {track.titleDevanagari}
-          </p>
-        )}
-
         <p className="text-xs text-foreground-muted truncate mt-0.5 font-medium">
           {track.artist}
         </p>
 
-        <div className="flex items-center justify-between text-[10px] text-foreground-subtle mt-1.5 pt-1.5 border-t border-white/[0.05]">
+        <div className="flex items-center justify-between text-[10px] text-foreground-subtle mt-1.5 pt-1.5 border-t border-border/60">
           <span className="truncate max-w-[100px] font-medium">{track.genre}</span>
           <span className="font-mono">{track.year}</span>
         </div>

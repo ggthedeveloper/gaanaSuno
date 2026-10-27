@@ -71,12 +71,6 @@ export const PlaylistDetailView: React.FC<PlaylistDetailViewProps> = ({
             {playlist.title}
           </h2>
 
-          {playlist.titleDevanagari && (
-            <p className="text-base sm:text-lg font-hindi text-foreground-muted mt-0.5">
-              {playlist.titleDevanagari}
-            </p>
-          )}
-
           <p className="text-xs sm:text-sm text-foreground-muted mt-2 max-w-xl leading-relaxed">
             {playlist.description}
           </p>

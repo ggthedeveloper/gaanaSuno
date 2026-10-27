@@ -86,12 +86,14 @@ export const PersistentPlayer: React.FC = () => {
   return (
     <>
       {/* ============================================================== */}
-      {/* MOBILE PLAYER DOCK (< 640px)                                   */}
+      {/* MOBILE FLOATING MINI-PLAYER PILL (< 640px)                     */}
+      {/* Docked above mobile bottom navigation bar                     */}
       {/* ============================================================== */}
       <footer
         role="region"
         aria-label="Mobile Audio Player"
-        className="sm:hidden fixed bottom-0 left-0 right-0 z-40 bg-surface/95 backdrop-blur-2xl border-t border-border shadow-[0_-8px_30px_rgba(0,0,0,0.08)] dark:shadow-[0_-12px_40px_rgba(0,0,0,0.6)] select-none"
+        className="sm:hidden fixed left-2.5 right-2.5 z-35 bg-surface/95 backdrop-blur-2xl border border-border rounded-2xl shadow-[0_8px_30px_rgba(0,0,0,0.12)] dark:shadow-[0_12px_40px_rgba(0,0,0,0.7)] select-none overflow-hidden transition-all duration-300"
+        style={{ bottom: 'calc(58px + env(safe-area-inset-bottom, 0px))' }}
       >
         <div
           className="flex items-center justify-between px-3.5 py-2.5 cursor-pointer"

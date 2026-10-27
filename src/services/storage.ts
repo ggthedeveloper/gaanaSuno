@@ -16,6 +16,9 @@ export const DEFAULT_PREFERENCES: UserPreferences = {
   enableAmbientGlow: true,
   enableVisualizer: true,
   preferredLanguage: 'all',
+  preferredLanguages: ['all'],
+  preferredGenres: ['all'],
+  hasCompletedOnboarding: false,
 };
 
 export const storage = {

@@ -3,7 +3,7 @@ import { Track } from '../../types/music';
 import { useAudio } from '../../context/AudioContext';
 import { audioEngine } from '../../services/audioEngine';
 import { formatTime } from '../../utils/formatters';
-import { Play, Pause, SkipBack, SkipForward, Sparkles } from 'lucide-react';
+import { Play, Pause, SkipBack, SkipForward, Sparkles, Music } from 'lucide-react';
 
 interface MandalaVisualizerProps {
   track: Track | null;
@@ -147,7 +147,7 @@ export const MandalaVisualizer: React.FC<MandalaVisualizerProps> = ({ track }) =
               />
             ) : (
               <div className="w-full h-full bg-gradient-to-tr from-amber-600 to-rose-700 flex items-center justify-center text-white font-black text-2xl">
-                ॐ
+                <Music className="w-8 h-8 text-white/90" />
               </div>
             )}
           </div>
@@ -158,17 +158,14 @@ export const MandalaVisualizer: React.FC<MandalaVisualizerProps> = ({ track }) =
           <div>
             <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-500/15 border border-amber-500/30 text-amber-300 text-xs font-bold uppercase tracking-wider mb-2">
               <Sparkles className="w-3.5 h-3.5 text-amber-400" />
-              <span>Sur-Tarang Sacred Mandala</span>
+              <span>Sacred Mandala Soundwave</span>
             </div>
 
             <h2 className="text-2xl sm:text-3xl font-black text-amber-100 tracking-tight leading-tight">
-              {track ? track.title : 'Sur Tarang Waves'}
+              {track ? track.title : 'Harmonic Resonance'}
             </h2>
-            <p className="text-base text-amber-300/80 font-medium font-devanagari mt-0.5">
-              {track ? track.titleDevanagari : 'सुर-तरंग नाद'}
-            </p>
-            <p className="text-sm text-purple-200/60 mt-1">
-              {track ? `${track.artist} • ${track.genre}` : 'Harmonic sacred visualization'}
+            <p className="text-sm text-purple-200/70 mt-1 font-medium">
+              {track ? `${track.artist} • ${track.genre}` : 'Harmonic visual frequency'}
             </p>
           </div>
 

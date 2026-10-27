@@ -153,9 +153,12 @@ export const AudioProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       return;
     }
 
+    // Instant optimistic toggle for 0ms lag-free touch interaction
     if (isPlaying) {
+      setIsPlaying(false);
       audioEngine.pause();
     } else {
+      setIsPlaying(true);
       audioEngine.play();
     }
   }, [isPlaying, currentTrack, playTrack]);

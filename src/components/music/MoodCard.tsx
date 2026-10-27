@@ -42,16 +42,9 @@ export const MoodCard: React.FC<MoodCardProps> = ({
         </div>
 
         <div>
-          <div className="flex items-baseline gap-1.5">
-            <h3 className="text-base sm:text-lg font-black text-white tracking-tight drop-shadow-sm">
-              {mood.label}
-            </h3>
-            {mood.labelDevanagari && (
-              <span className="text-[11px] font-hindi text-white/80 font-medium">
-                {mood.labelDevanagari}
-              </span>
-            )}
-          </div>
+          <h3 className="text-base sm:text-lg font-black text-white tracking-tight drop-shadow-sm">
+            {mood.label}
+          </h3>
           <p className="text-xs font-medium text-white/90 line-clamp-1 mt-0.5">
             {mood.tagline}
           </p>

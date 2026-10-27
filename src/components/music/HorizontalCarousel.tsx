@@ -4,7 +4,6 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
 interface HorizontalCarouselProps {
   title: string;
   subtitle?: string;
-  devanagariTitle?: string;
   icon?: React.ReactNode;
   actionText?: string;
   onAction?: () => void;
@@ -15,7 +14,6 @@ interface HorizontalCarouselProps {
 export const HorizontalCarousel: React.FC<HorizontalCarouselProps> = ({
   title,
   subtitle,
-  devanagariTitle,
   icon,
   actionText,
   onAction,
@@ -65,11 +63,6 @@ export const HorizontalCarousel: React.FC<HorizontalCarouselProps> = ({
             <h2 className="text-xl sm:text-2xl font-black text-foreground tracking-tight">
               {title}
             </h2>
-            {devanagariTitle && (
-              <span className="hidden sm:inline-block text-xs font-semibold px-2 py-0.5 rounded-full bg-surface-subtle text-foreground-muted border border-white/5 font-hindi">
-                {devanagariTitle}
-              </span>
-            )}
           </div>
           {subtitle && (
             <p className="text-xs text-foreground-muted mt-0.5 font-medium">
@@ -90,7 +83,7 @@ export const HorizontalCarousel: React.FC<HorizontalCarouselProps> = ({
           )}
 
           {/* Navigation Arrows */}
-          <div className="hidden sm:flex items-center gap-1 bg-surface/50 p-1 rounded-full border border-white/5 backdrop-blur-md">
+          <div className="hidden sm:flex items-center gap-1 bg-surface/50 p-1 rounded-full border border-border backdrop-blur-md">
             <button
               type="button"
               aria-label={`Scroll ${title} left`}

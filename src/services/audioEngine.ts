@@ -327,6 +327,8 @@ class AudioEngine {
         try {
           this.ytPlayer.playVideo();
           this.isYtPlaying = true;
+          this.startYtTicker();
+          this.listeners.forEach((l) => l.onPlay?.());
           return true;
         } catch (e) {
           console.warn('YouTube play error:', e);
@@ -338,6 +340,7 @@ class AudioEngine {
     if (!this.audio) return false;
     try {
       this.ensureAudioContext();
+      this.listeners.forEach((l) => l.onPlay?.());
       await this.audio.play();
       return true;
     } catch (err: any) {
@@ -362,6 +365,7 @@ class AudioEngine {
 
     if (this.audio) {
       this.audio.pause();
+      this.listeners.forEach((l) => l.onPause?.());
     }
   }
 
