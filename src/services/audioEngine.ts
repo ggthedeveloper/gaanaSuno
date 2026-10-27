@@ -147,19 +147,21 @@ class AudioEngine {
             container = document.createElement('div');
             container.id = 'gaanasuno-yt-player';
             container.style.position = 'fixed';
-            container.style.bottom = '-9999px';
-            container.style.left = '-9999px';
-            container.style.width = '1px';
-            container.style.height = '1px';
+            container.style.bottom = '90px';
+            container.style.right = '12px';
+            container.style.width = '240px';
+            container.style.height = '135px';
             container.style.opacity = '0.001';
             container.style.pointerEvents = 'none';
-            container.style.zIndex = '-9999';
+            container.style.zIndex = '-1';
+            container.style.overflow = 'hidden';
+            container.style.borderRadius = '12px';
             document.body.appendChild(container);
           }
 
           this.ytPlayer = new window.YT.Player('gaanasuno-yt-player', {
-            height: '1',
-            width: '1',
+            height: '135',
+            width: '240',
             playerVars: {
               autoplay: 1,
               controls: 0,

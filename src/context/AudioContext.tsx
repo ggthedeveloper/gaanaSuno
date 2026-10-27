@@ -72,14 +72,14 @@ export const AudioProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       const next = queue[nextIdx];
       setCurrentTrack(next);
       storage.addRecentlyPlayed(next.id);
-      audioEngine.loadAndPlay(next.audioUrl);
+      audioEngine.loadAndPlay(next.audioUrl, next.youtubeId);
     } else if (repeatMode === 'all') {
       const nextIdx = 0;
       setQueueIndex(nextIdx);
       const next = queue[nextIdx];
       setCurrentTrack(next);
       storage.addRecentlyPlayed(next.id);
-      audioEngine.loadAndPlay(next.audioUrl);
+      audioEngine.loadAndPlay(next.audioUrl, next.youtubeId);
     } else {
       setIsPlaying(false);
       audioEngine.seek(0);

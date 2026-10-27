@@ -1,4 +1,4 @@
-import { Playlist, UserPreferences } from '../types/music';
+import { Playlist, UserPreferences, Track } from '../types/music';
 
 const STORAGE_KEYS = {
   LIKES: 'gaanasuno_liked_tracks_v1',
@@ -6,6 +6,7 @@ const STORAGE_KEYS = {
   RECENTLY_PLAYED: 'gaanasuno_recent_history_v1',
   PREFERENCES: 'gaanasuno_user_preferences_v1',
   LAST_PLAYBACK: 'gaanasuno_last_playback_v1',
+  CACHED_TRACKS: 'gaanasuno_cached_dynamic_tracks_v1',
 };
 
 export const DEFAULT_PREFERENCES: UserPreferences = {
@@ -101,5 +102,34 @@ export const storage = {
     } catch (e) {
       console.warn('Preferences save error:', e);
     }
+  },
+
+  getDynamicTracks(): Record<string, Track> {
+    try {
+      const data = localStorage.getItem(STORAGE_KEYS.CACHED_TRACKS);
+      return data ? JSON.parse(data) : {};
+    } catch {
+      return {};
+    }
+  },
+
+  saveDynamicTrack(track: Track): void {
+    try {
+      const existing = this.getDynamicTracks();
+      existing[track.id] = track;
+      // Cap at 200 dynamic tracks to keep localStorage compact
+      const keys = Object.keys(existing);
+      if (keys.length > 200) {
+        delete existing[keys[0]];
+      }
+      localStorage.setItem(STORAGE_KEYS.CACHED_TRACKS, JSON.stringify(existing));
+    } catch (e) {
+      console.warn('Dynamic track cache error:', e);
+    }
+  },
+
+  getDynamicTrack(id: string): Track | null {
+    const existing = this.getDynamicTracks();
+    return existing[id] || null;
   },
 };

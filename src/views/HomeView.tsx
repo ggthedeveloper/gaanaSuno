@@ -440,7 +440,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
       {/* ============================================================== */}
       <HorizontalCarousel
         title="YouTube Trending — Global & Bollywood Hits"
-        subtitle="The definitive chart-topping hits by Arijit Singh, Anuv Jain, Pritam, The Local Train & Vishal Mishra"
+        subtitle="The definitive chart-topping hits by Arijit Singh, Diljit Dosanjh, Shreya Ghoshal, A.R. Rahman & Anuv Jain"
         icon={
           <div className="w-5 h-5 rounded-md bg-red-600 flex items-center justify-center text-white shadow-sm">
             <Play className="w-2.5 h-2.5 fill-current ml-0.5" />

@@ -23,6 +23,12 @@ import {
   ListMusic,
   Timer,
 } from 'lucide-react';
+
+const YouTubeIcon: React.FC<{ className?: string }> = ({ className = 'w-4 h-4' }) => (
+  <svg viewBox="0 0 24 24" fill="currentColor" className={className} aria-hidden="true">
+    <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
+  </svg>
+);
 import { SessionTimerModal } from './SessionTimerModal';
 import { sessionTimer } from '../../services/sessionMixService';
 
@@ -50,7 +56,7 @@ export const NowPlayingModal: React.FC = () => {
   } = useAudio();
 
   const { isLiked, toggleLike } = useLibrary();
-  const [activeTab, setActiveTab] = useState<'visualizer' | 'lyrics'>('visualizer');
+  const [activeTab, setActiveTab] = useState<'visualizer' | 'lyrics' | 'video'>('visualizer');
   const [isTimerModalOpen, setIsTimerModalOpen] = useState(false);
   const progressBarRef = useRef<HTMLDivElement>(null);
   const [hoverSeekTime, setHoverSeekTime] = useState<number | null>(null);
@@ -126,6 +132,20 @@ export const NowPlayingModal: React.FC = () => {
             <FileText className="w-3.5 h-3.5" />
             <span>Lyrics ({currentTrack.lyrics?.length || 0})</span>
           </button>
+          {currentTrack.youtubeId && (
+            <button
+              type="button"
+              onClick={() => setActiveTab('video')}
+              className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl transition-all cursor-pointer ${
+                activeTab === 'video'
+                  ? 'bg-accent text-accent-foreground shadow-sm font-bold'
+                  : 'text-foreground-muted hover:text-foreground'
+              }`}
+            >
+              <YouTubeIcon className="w-3.5 h-3.5 text-red-500" />
+              <span>Official Video</span>
+            </button>
+          )}
         </div>
 
         <div className="flex items-center gap-2">
@@ -215,6 +235,28 @@ export const NowPlayingModal: React.FC = () => {
             {/* Studio Canvas Audio Visualizer */}
             <div className="w-full px-2 mb-4">
               <AudioVisualizer mode="bars" height={56} className="w-full" />
+            </div>
+          </div>
+        ) : activeTab === 'video' && currentTrack.youtubeId ? (
+          /* Official YouTube HD Video View */
+          <div className="w-full max-w-xl flex flex-col items-center animate-fade-in">
+            <div className="relative w-full aspect-video rounded-2xl overflow-hidden shadow-2xl border-2 border-accent/40 bg-black">
+              <iframe
+                src={`https://www.youtube.com/embed/${currentTrack.youtubeId}?autoplay=1&playsinline=1&rel=0&modestbranding=1`}
+                title={currentTrack.title}
+                className="w-full h-full"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              />
+            </div>
+            <div className="mt-2.5 flex items-center justify-between w-full text-xs text-foreground-muted px-2">
+              <span className="flex items-center gap-1.5 font-bold text-foreground">
+                <YouTubeIcon className="w-4 h-4 text-red-500" />
+                <span>Official YouTube Music Video</span>
+              </span>
+              <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-accent/15 text-accent font-bold">
+                HD Stereo
+              </span>
             </div>
           </div>
         ) : (

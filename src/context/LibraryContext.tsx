@@ -109,13 +109,13 @@ export const LibraryProvider: React.FC<{ children: React.ReactNode }> = ({ child
 
   const likedTracks = useMemo(() => {
     return likedTrackIds
-      .map((id) => TRACKS.find((t) => t.id === id))
+      .map((id) => TRACKS.find((t) => t.id === id) || storage.getDynamicTrack(id))
       .filter((t): t is Track => Boolean(t));
   }, [likedTrackIds]);
 
   const recentlyPlayedTracks = useMemo(() => {
     return recentlyPlayedIds
-      .map((id) => TRACKS.find((t) => t.id === id))
+      .map((id) => TRACKS.find((t) => t.id === id) || storage.getDynamicTrack(id))
       .filter((t): t is Track => Boolean(t));
   }, [recentlyPlayedIds]);
 
