@@ -33,21 +33,21 @@
     --surface: #ffffff;
     --surface-hover: #f1f5f9;
     --surface-active: #e2e8f0;
-    --surface-glass: rgba(255, 255, 255, 0.92);
+    --surface-glass: rgba(255, 255, 255, 0.94);
 
     --border: #cbd5e1;
     --border-subtle: #e2e8f0;
 
-    --foreground: #020617;
-    --foreground-muted: #334155;
-    --foreground-subtle: #475569;
+    --foreground: #090d16;
+    --foreground-muted: #1e293b;
+    --foreground-subtle: #334155;
 
-    /* Saffron Gold Default Accent */
-    --accent: #f59e0b;
-    --accent-hover: #d97706;
+    /* Saffron Gold Default Accent (Light mode: deep rich amber-700 for high text contrast) */
+    --accent: #b45309;
+    --accent-hover: #92400e;
     --accent-light: #fef3c7;
     --accent-foreground: #ffffff;
-    --accent-glow: rgba(245, 158, 11, 0.25);
+    --accent-glow: rgba(180, 83, 9, 0.25);
 
     --radius-sm: 6px;
     --radius-md: 10px;
@@ -76,44 +76,186 @@
     --foreground-muted: #94a3b8;
     --foreground-subtle: #64748b;
 
+    /* Saffron Gold Default Accent (Dark mode: glowing bright amber-500) */
     --accent: #f59e0b;
     --accent-hover: #fbbf24;
-    --accent-light: rgba(245, 158, 11, 0.15);
+    --accent-light: rgba(245, 158, 11, 0.18);
     --accent-foreground: #08090d;
     --accent-glow: rgba(245, 158, 11, 0.35);
   }
 
-  /* Accent Color Variants */
+  /* ============================================================== */
+  /* SIGNATURE ACCENT PALETTES (CALIBRATED FOR LIGHT & DARK MODES)  */
+  /* ============================================================== */
+
+  /* 1. Saffron Gold (केसरिया सुनहरी) */
+  [data-accent="saffron"] {
+    --accent: #b45309;
+    --accent-hover: #92400e;
+    --accent-light: #fef3c7;
+    --accent-foreground: #ffffff;
+    --accent-glow: rgba(180, 83, 9, 0.25);
+  }
+  .dark[data-accent="saffron"],
+  .dark [data-accent="saffron"] {
+    --accent: #f59e0b;
+    --accent-hover: #fbbf24;
+    --accent-light: rgba(245, 158, 11, 0.18);
+    --accent-foreground: #08090d;
+    --accent-glow: rgba(245, 158, 11, 0.35);
+  }
+
+  /* 2. Rose Romance (गुलाबी इश्क़) */
   [data-accent="rose"] {
+    --accent: #be123c;
+    --accent-hover: #9f1239;
+    --accent-light: #ffe4e6;
+    --accent-foreground: #ffffff;
+    --accent-glow: rgba(190, 18, 60, 0.25);
+  }
+  .dark[data-accent="rose"],
+  .dark [data-accent="rose"] {
     --accent: #f43f5e;
     --accent-hover: #fb7185;
-    --accent-light: rgba(244, 63, 94, 0.15);
-    --accent-foreground: #ffffff;
+    --accent-light: rgba(244, 63, 94, 0.18);
+    --accent-foreground: #08090d;
     --accent-glow: rgba(244, 63, 94, 0.35);
   }
 
+  /* 3. Royal Indigo (शाही नील) */
   [data-accent="indigo"] {
+    --accent: #4338ca;
+    --accent-hover: #3730a3;
+    --accent-light: #e0e7ff;
+    --accent-foreground: #ffffff;
+    --accent-glow: rgba(67, 56, 202, 0.25);
+  }
+  .dark[data-accent="indigo"],
+  .dark [data-accent="indigo"] {
     --accent: #6366f1;
     --accent-hover: #818cf8;
-    --accent-light: rgba(99, 102, 241, 0.15);
+    --accent-light: rgba(99, 102, 241, 0.18);
     --accent-foreground: #ffffff;
     --accent-glow: rgba(99, 102, 241, 0.35);
   }
 
+  /* 4. Emerald Sufi (ज़मुर्रद सूफ़ी) */
   [data-accent="emerald"] {
+    --accent: #047857;
+    --accent-hover: #065f46;
+    --accent-light: #d1fae5;
+    --accent-foreground: #ffffff;
+    --accent-glow: rgba(4, 120, 87, 0.25);
+  }
+  .dark[data-accent="emerald"],
+  .dark [data-accent="emerald"] {
     --accent: #10b981;
     --accent-hover: #34d399;
-    --accent-light: rgba(16, 185, 129, 0.15);
-    --accent-foreground: #ffffff;
+    --accent-light: rgba(16, 185, 129, 0.18);
+    --accent-foreground: #08090d;
     --accent-glow: rgba(16, 185, 129, 0.35);
   }
 
+  /* 5. Electric Violet (बैंगनी धुन) */
   [data-accent="violet"] {
+    --accent: #6d28d9;
+    --accent-hover: #5b21b6;
+    --accent-light: #ede9fe;
+    --accent-foreground: #ffffff;
+    --accent-glow: rgba(109, 40, 217, 0.25);
+  }
+  .dark[data-accent="violet"],
+  .dark [data-accent="violet"] {
     --accent: #8b5cf6;
     --accent-hover: #a78bfa;
-    --accent-light: rgba(139, 92, 246, 0.15);
+    --accent-light: rgba(139, 92, 246, 0.18);
     --accent-foreground: #ffffff;
     --accent-glow: rgba(139, 92, 246, 0.35);
+  }
+
+  /* 6. Sindoor Ruby (सिंदूरी लाल) */
+  [data-accent="ruby"] {
+    --accent: #b91c1c;
+    --accent-hover: #991b1b;
+    --accent-light: #fee2e2;
+    --accent-foreground: #ffffff;
+    --accent-glow: rgba(185, 28, 28, 0.25);
+  }
+  .dark[data-accent="ruby"],
+  .dark [data-accent="ruby"] {
+    --accent: #ef4444;
+    --accent-hover: #f87171;
+    --accent-light: rgba(239, 68, 68, 0.18);
+    --accent-foreground: #08090d;
+    --accent-glow: rgba(239, 68, 68, 0.35);
+  }
+
+  /* 7. Marigold Sunset (गेंदा पीतांबर) */
+  [data-accent="amber"] {
+    --accent: #c2410c;
+    --accent-hover: #9a3412;
+    --accent-light: #ffedd5;
+    --accent-foreground: #ffffff;
+    --accent-glow: rgba(194, 65, 12, 0.25);
+  }
+  .dark[data-accent="amber"],
+  .dark [data-accent="amber"] {
+    --accent: #f97316;
+    --accent-hover: #fb923c;
+    --accent-light: rgba(249, 115, 22, 0.18);
+    --accent-foreground: #08090d;
+    --accent-glow: rgba(249, 115, 22, 0.35);
+  }
+
+  /* 8. Peacock Teal (मोरपंखी फ़िरोज़ी) */
+  [data-accent="teal"] {
+    --accent: #0f766e;
+    --accent-hover: #115e59;
+    --accent-light: #ccfbf1;
+    --accent-foreground: #ffffff;
+    --accent-glow: rgba(15, 118, 110, 0.25);
+  }
+  .dark[data-accent="teal"],
+  .dark [data-accent="teal"] {
+    --accent: #14b8a6;
+    --accent-hover: #2dd4bf;
+    --accent-light: rgba(20, 184, 166, 0.18);
+    --accent-foreground: #08090d;
+    --accent-glow: rgba(20, 184, 166, 0.35);
+  }
+
+  /* 9. Himalayan Cyan (हिमालयी हिम) */
+  [data-accent="cyan"] {
+    --accent: #0369a1;
+    --accent-hover: #075985;
+    --accent-light: #e0f2fe;
+    --accent-foreground: #ffffff;
+    --accent-glow: rgba(3, 105, 161, 0.25);
+  }
+  .dark[data-accent="cyan"],
+  .dark [data-accent="cyan"] {
+    --accent: #0284c7;
+    --accent-hover: #38bdf8;
+    --accent-light: rgba(2, 132, 199, 0.18);
+    --accent-foreground: #08090d;
+    --accent-glow: rgba(2, 132, 199, 0.35);
+  }
+
+  /* 10. Tamba Copper (तांबा जाफरान) */
+  [data-accent="copper"] {
+    --accent: #9a3412;
+    --accent-hover: #7c2d12;
+    --accent-light: #ffedd5;
+    --accent-foreground: #ffffff;
+    --accent-glow: rgba(154, 52, 18, 0.25);
+  }
+  .dark[data-accent="copper"],
+  .dark [data-accent="copper"] {
+    --accent: #ea580c;
+    --accent-hover: #f97316;
+    --accent-light: rgba(234, 88, 12, 0.18);
+    --accent-foreground: #08090d;
+    --accent-glow: rgba(234, 88, 12, 0.35);
   }
 
   /* Density Modes */
@@ -265,9 +407,29 @@
 }
 
 .text-gradient-accent {
-  background: linear-gradient(135deg, var(--accent) 0%, #f97316 60%, #ec4899 100%);
+  background: linear-gradient(135deg, var(--accent) 0%, #ea580c 60%, #e11d48 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+}
+
+/* Light Mode Visual Contrast Enhancements for all Accents */
+html.light .text-gradient-accent {
+  background: linear-gradient(135deg, var(--accent) 0%, #c2410c 50%, #9f1239 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+html.light .bg-accent\/10,
+html.light .bg-accent\/15,
+html.light .bg-accent\/20 {
+  background-color: var(--accent-light) !important;
+}
+
+html.light .border-accent\/20,
+html.light .border-accent\/25,
+html.light .border-accent\/30,
+html.light .border-accent\/40 {
+  border-color: rgba(0, 0, 0, 0.15) !important;
 }
 
 /* Circular Vinyl Disc Spin Animation */

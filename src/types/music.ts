@@ -107,7 +107,17 @@ export interface PlaybackState {
   playbackSpeed: number;
 }
 
-export type AccentColor = 'saffron' | 'rose' | 'indigo' | 'emerald' | 'violet';
+export type AccentColor =
+  | 'saffron'
+  | 'rose'
+  | 'indigo'
+  | 'emerald'
+  | 'violet'
+  | 'ruby'
+  | 'amber'
+  | 'teal'
+  | 'cyan'
+  | 'copper';
 export type DensityMode = 'comfortable' | 'compact';
 export type AnimationIntensity = 'reduced' | 'balanced' | 'expressive';
 

@@ -65,4 +65,27 @@ describe('Storage & Persistence Service', () => {
     expect(storage.getPreferences().accent).toBe('rose');
     expect(storage.getPreferences().theme).toBe('light');
   });
+
+  it('supports all 10 signature accent palettes', () => {
+    const accents = [
+      'saffron',
+      'rose',
+      'indigo',
+      'emerald',
+      'violet',
+      'ruby',
+      'amber',
+      'teal',
+      'cyan',
+      'copper',
+    ] as const;
+
+    for (const accent of accents) {
+      storage.savePreferences({
+        ...DEFAULT_PREFERENCES,
+        accent,
+      });
+      expect(storage.getPreferences().accent).toBe(accent);
+    }
+  });
 });

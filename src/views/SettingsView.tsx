@@ -61,6 +61,11 @@ export const SettingsView: React.FC = () => {
     { id: 'indigo', label: 'Royal Indigo', sublabel: 'Midnight Deep Blue', hex: '#6366f1' },
     { id: 'emerald', label: 'Emerald Sufi', sublabel: 'Spiritual Jade Green', hex: '#10b981' },
     { id: 'violet', label: 'Electric Violet', sublabel: 'Modern Desi Pop', hex: '#8b5cf6' },
+    { id: 'ruby', label: 'Sindoor Ruby', sublabel: 'Classical Crimson Red', hex: '#ef4444' },
+    { id: 'amber', label: 'Marigold Sunset', sublabel: 'Warm Sunset Orange', hex: '#f97316' },
+    { id: 'teal', label: 'Peacock Teal', sublabel: 'Royal Morpankhi Teal', hex: '#14b8a6' },
+    { id: 'cyan', label: 'Himalayan Cyan', sublabel: 'Serene Mountain Glacier', hex: '#0284c7' },
+    { id: 'copper', label: 'Tamba Copper', sublabel: 'Acoustic Metallic Bronze', hex: '#ea580c' },
   ];
 
   return (

@@ -156,8 +156,8 @@ export const Sidebar: React.FC<SidebarProps> = ({
                         className={`text-[10px] font-bold px-1.5 py-0.5 rounded-full ${
                           isActive
                             ? 'bg-accent-foreground/20 text-accent-foreground'
-                            : item.badge === 'NEW'
-                            ? 'bg-amber-500/20 text-amber-400 border border-amber-500/30'
+                            : typeof item.badge === 'string'
+                            ? 'bg-accent/15 text-accent border border-accent/30'
                             : 'bg-surface-active text-foreground-muted'
                         }`}
                       >

@@ -168,9 +168,9 @@ export const HomeView: React.FC<HomeViewProps> = ({
                 <button
                   type="button"
                   onClick={onNavigateToBeyondTaste}
-                  className="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-gradient-to-r from-amber-500/20 to-orange-500/20 hover:from-amber-500/30 hover:to-orange-500/30 border border-amber-500/40 text-xs font-black text-amber-300 transition-all hover:scale-105 active:scale-[0.98] cursor-pointer shadow-sm"
+                  className="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-accent/15 hover:bg-accent/25 border border-accent/30 text-xs font-black text-accent transition-all hover:scale-105 active:scale-[0.98] cursor-pointer shadow-sm"
                 >
-                  <Compass className="w-4 h-4 text-amber-400" />
+                  <Compass className="w-4 h-4 text-accent" />
                   <span>🎚️ Beyond Taste Slider</span>
                 </button>
               )}
