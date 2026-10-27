@@ -21,7 +21,10 @@ import {
   Radio,
   FileText,
   ListMusic,
+  Timer,
 } from 'lucide-react';
+import { SessionTimerModal } from './SessionTimerModal';
+import { sessionTimer } from '../../services/sessionMixService';
 
 export const NowPlayingModal: React.FC = () => {
   const {
@@ -48,6 +51,7 @@ export const NowPlayingModal: React.FC = () => {
 
   const { isLiked, toggleLike } = useLibrary();
   const [activeTab, setActiveTab] = useState<'visualizer' | 'lyrics'>('visualizer');
+  const [isTimerModalOpen, setIsTimerModalOpen] = useState(false);
   const progressBarRef = useRef<HTMLDivElement>(null);
   const [hoverSeekTime, setHoverSeekTime] = useState<number | null>(null);
 
@@ -125,6 +129,21 @@ export const NowPlayingModal: React.FC = () => {
         </div>
 
         <div className="flex items-center gap-2">
+          {/* Sleep / Session Timer Toggle */}
+          <button
+            type="button"
+            aria-label="Sleep & Session Timer"
+            onClick={() => setIsTimerModalOpen(true)}
+            className={`p-2 rounded-full transition-all cursor-pointer ${
+              sessionTimer.isTimerActive()
+                ? 'bg-accent/20 text-accent ring-1 ring-accent/40 shadow-sm'
+                : 'bg-surface-hover hover:bg-surface-active text-foreground-muted hover:text-foreground'
+            }`}
+            title="Set Sleep Timer"
+          >
+            <Timer className="w-5 h-5" />
+          </button>
+
           {/* Quick Queue Toggle */}
           <button
             type="button"
@@ -441,6 +460,12 @@ export const NowPlayingModal: React.FC = () => {
           <span>{currentTrack.licenseNote}</span>
         </div>
       </footer>
+
+      {/* Sleep & Session Timer Modal */}
+      <SessionTimerModal
+        isOpen={isTimerModalOpen}
+        onClose={() => setIsTimerModalOpen(false)}
+      />
     </div>
   );
 };

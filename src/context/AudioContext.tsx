@@ -3,6 +3,7 @@ import { Track, RepeatMode } from '../types/music';
 import { audioEngine } from '../services/audioEngine';
 import { TRACKS } from '../data/catalog';
 import { storage } from '../services/storage';
+import { sessionTimer } from '../services/sessionMixService';
 
 interface AudioContextType {
   currentTrack: Track | null;
@@ -105,6 +106,7 @@ export const AudioProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       },
       onLoading: (loading) => setIsLoading(loading),
       onEnded: () => {
+        sessionTimer.handleTrackEnded();
         handleTrackEndRef.current();
       },
       onError: (msg) => {

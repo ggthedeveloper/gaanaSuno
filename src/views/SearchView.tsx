@@ -1,7 +1,8 @@
 import React, { useState, useMemo, useEffect, useRef } from 'react';
 import { Track, Playlist, Artist, MoodTag } from '../types/music';
 import { searchCatalog } from '../services/recommendation';
-import { ARTISTS, MOOD_OPTIONS } from '../data/catalog';
+import { parseMusicIntent } from '../services/intentParser';
+import { PLAYLISTS, ARTISTS, MOOD_OPTIONS } from '../data/catalog';
 import { TrackRow } from '../components/music/TrackRow';
 import { PlaylistCard } from '../components/music/PlaylistCard';
 import { ArtistCard } from '../components/music/ArtistCard';
@@ -65,6 +66,14 @@ const POPULAR_SUGGESTIONS = [
   'Amir Khusro',
 ];
 
+const NATURAL_INTENT_PROMPTS = [
+  { label: '🌧️ Rainy evening soft Hindi songs', query: 'Rainy evening ke liye soft Hindi songs' },
+  { label: '🚗 Energetic long drive songs', query: 'Play energetic tracks for a long drive' },
+  { label: '📚 Peaceful 30m study tracks', query: 'Something peaceful for 30 minutes of studying' },
+  { label: '📻 90s Classic romantic hits', query: 'Purane classic romantic gaane' },
+  { label: '✨ Late night Sufi peace', query: 'Sufi peace for late night' },
+];
+
 export const SearchView: React.FC<SearchViewProps> = ({
   searchQuery,
   onSearchChange,
@@ -74,9 +83,18 @@ export const SearchView: React.FC<SearchViewProps> = ({
 }) => {
   const { playTrack, addToQueue } = useAudio();
   const [selectedMoodFilter, setSelectedMoodFilter] = useState<MoodTag | 'all'>('all');
+  const [filterOverrides, setFilterOverrides] = useState<Record<string, string | undefined>>({});
   const [ytMetadata, setYtMetadata] = useState<{ title: string; author: string } | null>(null);
   const [ytLoading, setYtLoading] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
+
+  // Compute Natural-Language Intent
+  const parsedIntent = useMemo(() => {
+    if (!searchQuery.trim() || searchQuery.trim().length < 3) return null;
+    return parseMusicIntent(searchQuery, filterOverrides);
+  }, [searchQuery, filterOverrides]);
+
+  const isIntentMode = Boolean(parsedIntent && parsedIntent.filters.length > 0);
 
   const detectedYtId = useMemo(() => extractYouTubeId(searchQuery), [searchQuery]);
 
@@ -174,8 +192,17 @@ export const SearchView: React.FC<SearchViewProps> = ({
   }, []);
 
   const { tracks, playlists } = useMemo(() => {
+    if (isIntentMode && parsedIntent) {
+      const moodFilteredPlaylists = parsedIntent.detectedMood
+        ? PLAYLISTS.filter((p) => p.mood === parsedIntent.detectedMood)
+        : PLAYLISTS;
+      return {
+        tracks: parsedIntent.matchedTracks,
+        playlists: moodFilteredPlaylists,
+      };
+    }
     return searchCatalog(searchQuery, selectedMoodFilter);
-  }, [searchQuery, selectedMoodFilter]);
+  }, [searchQuery, selectedMoodFilter, isIntentMode, parsedIntent]);
 
   const matchingArtists = useMemo(() => {
     const q = searchQuery.trim().toLowerCase();
@@ -199,14 +226,14 @@ export const SearchView: React.FC<SearchViewProps> = ({
         <div className="relative z-10 max-w-2xl">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent/15 border border-accent/25 text-accent text-xs font-bold uppercase tracking-wider mb-3">
             <Sparkles className="w-3.5 h-3.5" />
-            <span>Real-time Discovery</span>
+            <span>Ask GaanaSuno • Natural Intent Search</span>
           </div>
 
           <h1 className="text-2xl sm:text-4xl font-black text-foreground tracking-tight leading-tight">
-            Search songs, artists, genres, or lyrics
+            Describe what fits your moment
           </h1>
           <p className="text-xs sm:text-sm text-foreground-muted mt-1 font-medium">
-            Explore handpicked masterworks, Bollywood hits, Sufi kalams, and acoustic melodies
+            Search in English, Hindi, or Hinglish: mood, activity, tempo, duration, or artists
           </p>
 
           {/* Search Input Bar */}
@@ -217,8 +244,8 @@ export const SearchView: React.FC<SearchViewProps> = ({
               type="text"
               value={searchQuery}
               onChange={(e) => onSearchChange(e.target.value)}
-              placeholder="Search by title, artist, genre, or lyric text..."
-              aria-label="Search"
+              placeholder="e.g. 'Rainy evening ke liye soft Hindi songs', 'Long drive energetic tracks'..."
+              aria-label="Ask GaanaSuno search"
               autoFocus
               className="w-full pl-12 pr-24 py-4 rounded-2xl bg-surface/90 backdrop-blur-xl border border-border text-foreground placeholder:text-foreground-muted/60 text-sm focus:outline-none focus:border-accent focus:ring-4 focus:ring-accent/20 transition-all shadow-2xl"
             />
@@ -241,10 +268,68 @@ export const SearchView: React.FC<SearchViewProps> = ({
             </div>
           </div>
 
+          {/* Understood Natural Intent Feedback Strip */}
+          {isIntentMode && parsedIntent && (
+            <div className="mt-3.5 p-3 rounded-2xl bg-accent/10 border border-accent/25 space-y-2 animate-fade-in">
+              <div className="flex items-center justify-between text-xs font-bold text-accent">
+                <div className="flex items-center gap-1.5">
+                  <Sparkles className="w-3.5 h-3.5" />
+                  <span>Understood Music Intent</span>
+                </div>
+                <span className="text-[10px] uppercase font-mono font-medium text-foreground-muted">
+                  Tap × to dismiss filter
+                </span>
+              </div>
+
+              <div className="flex flex-wrap items-center gap-2">
+                {parsedIntent.filters.map((f) => (
+                  <span
+                    key={f.key}
+                    className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-surface border border-accent/30 text-xs font-semibold text-foreground shadow-sm"
+                  >
+                    <span className="text-accent font-bold">{f.label}:</span>
+                    <span>{f.value}</span>
+                    <button
+                      type="button"
+                      onClick={() => setFilterOverrides((prev) => ({ ...prev, [f.key]: undefined }))}
+                      className="p-0.5 rounded-full hover:bg-surface-active text-foreground-muted hover:text-foreground cursor-pointer"
+                      aria-label={`Remove ${f.label} filter`}
+                    >
+                      <X className="w-3 h-3" />
+                    </button>
+                  </span>
+                ))}
+              </div>
+
+              <p className="text-[11px] text-foreground-muted font-medium">
+                {parsedIntent.explanation}
+              </p>
+            </div>
+          )}
+
+          {/* Natural Intent Suggestions */}
+          <div className="mt-4 space-y-2">
+            <span className="text-[11px] font-bold uppercase tracking-wider text-foreground-muted block">
+              Try Natural Intent Prompts:
+            </span>
+            <div className="flex flex-wrap items-center gap-2">
+              {NATURAL_INTENT_PROMPTS.map((prompt) => (
+                <button
+                  key={prompt.query}
+                  type="button"
+                  onClick={() => onSearchChange(prompt.query)}
+                  className="px-3 py-1 rounded-full text-xs font-semibold bg-accent/10 hover:bg-accent/20 text-foreground border border-accent/20 hover:border-accent/40 transition-all cursor-pointer"
+                >
+                  {prompt.label}
+                </button>
+              ))}
+            </div>
+          </div>
+
           {/* Quick Suggestion Pills */}
-          <div className="mt-4 flex flex-wrap items-center gap-2">
+          <div className="mt-3 flex flex-wrap items-center gap-2">
             <span className="text-[11px] font-bold uppercase tracking-wider text-foreground-muted mr-1">
-              Popular:
+              Popular Keywords:
             </span>
             {POPULAR_SUGGESTIONS.map((sug) => (
               <button

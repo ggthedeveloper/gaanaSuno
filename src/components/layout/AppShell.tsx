@@ -11,6 +11,8 @@ import { QueueDrawer } from '../player/QueueDrawer';
 import { CreatePlaylistModal } from '../modals/CreatePlaylistModal';
 import { TrackDetailModal } from '../modals/TrackDetailModal';
 import { VoiceAssistantModal } from '../voice/VoiceAssistantModal';
+import { MomentMixModal } from '../music/MomentMixModal';
+import { MomentId } from '../../services/sessionMixService';
 import { OnboardingScreen } from '../onboarding/OnboardingScreen';
 import { useTheme } from '../../context/ThemeContext';
 import { Mic } from 'lucide-react';
@@ -39,6 +41,8 @@ export const AppShell: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [isCreatePlaylistOpen, setIsCreatePlaylistOpen] = useState(false);
   const [isVoiceModalOpen, setIsVoiceModalOpen] = useState(false);
+  const [isMomentMixOpen, setIsMomentMixOpen] = useState(false);
+  const [selectedMomentForMix, setSelectedMomentForMix] = useState<MomentId>('unwind');
   const [selectedTrackForDetail, setSelectedTrackForDetail] = useState<Track | null>(null);
 
   const [selectedPlaylist, setSelectedPlaylist] = useState<Playlist | null>(null);
@@ -153,6 +157,10 @@ export const AppShell: React.FC = () => {
                 onNavigateToSearch={() => handleNavigate('search')}
                 onNavigateToMehfil={() => handleNavigate('mehfil')}
                 onNavigateToMoods={handleNavigateToMoods}
+                onOpenMomentMix={(mId) => {
+                  if (mId) setSelectedMomentForMix(mId);
+                  setIsMomentMixOpen(true);
+                }}
                 onSelectPlaylist={handleSelectPlaylist}
                 onSelectArtist={handleSelectArtist}
                 onSelectTrack={setSelectedTrackForDetail}
@@ -255,6 +263,14 @@ export const AppShell: React.FC = () => {
         isOpen={isVoiceModalOpen}
         onClose={() => setIsVoiceModalOpen(false)}
         onNavigate={handleNavigate}
+      />
+
+      {/* Moment Mix Listening Session Modal */}
+      <MomentMixModal
+        isOpen={isMomentMixOpen}
+        initialMoment={selectedMomentForMix}
+        onClose={() => setIsMomentMixOpen(false)}
+        onSelectTrack={setSelectedTrackForDetail}
       />
 
       {/* Onboarding Preferences Welcome Screen */}

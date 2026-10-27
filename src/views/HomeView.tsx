@@ -7,6 +7,8 @@ import { PlaylistCard } from '../components/music/PlaylistCard';
 import { ArtistCard } from '../components/music/ArtistCard';
 import { MoodCard } from '../components/music/MoodCard';
 import { HorizontalCarousel } from '../components/music/HorizontalCarousel';
+import { BeyondTasteDiscovery } from '../components/music/BeyondTasteDiscovery';
+import { MomentId, MOMENT_CONFIGS } from '../services/sessionMixService';
 import { useAudio } from '../context/AudioContext';
 import { useLibrary } from '../context/LibraryContext';
 import { useTheme } from '../context/ThemeContext';
@@ -28,6 +30,7 @@ interface HomeViewProps {
   onNavigateToSearch: () => void;
   onNavigateToMehfil?: () => void;
   onNavigateToMoods: (mood?: MoodOption) => void;
+  onOpenMomentMix?: (momentId?: MomentId) => void;
   onSelectPlaylist: (playlist: Playlist) => void;
   onSelectArtist: (artist: Artist) => void;
   onSelectTrack: (track: Track) => void;
@@ -36,6 +39,7 @@ interface HomeViewProps {
 export const HomeView: React.FC<HomeViewProps> = ({
   onNavigateToMehfil,
   onNavigateToMoods,
+  onOpenMomentMix,
   onSelectPlaylist,
   onSelectArtist,
   onSelectTrack,
@@ -156,6 +160,17 @@ export const HomeView: React.FC<HomeViewProps> = ({
                 <Radio className="w-4 h-4 text-accent" />
                 <span>Explore Vibe Radios</span>
               </button>
+
+              {onOpenMomentMix && (
+                <button
+                  type="button"
+                  onClick={() => onOpenMomentMix('unwind')}
+                  className="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-accent/15 hover:bg-accent/25 border border-accent/30 text-xs font-bold text-accent transition-all hover:scale-105 active:scale-[0.98] cursor-pointer shadow-sm"
+                >
+                  <Sparkles className="w-4 h-4 text-accent" />
+                  <span>Moment Mix Sessions</span>
+                </button>
+              )}
 
               {onNavigateToMehfil && (
                 <button
@@ -339,6 +354,52 @@ export const HomeView: React.FC<HomeViewProps> = ({
           </div>
         </section>
       )}
+
+      {/* ============================================================== */}
+      {/* BEYOND YOUR TASTE — SIGNATURE TASTE HORIZON DISCOVERY          */}
+      {/* ============================================================== */}
+      <BeyondTasteDiscovery onSelectTrack={onSelectTrack} />
+
+      {/* ============================================================== */}
+      {/* MOMENT MIXES — CONTEXT-AWARE LISTENING SESSIONS                */}
+      {/* ============================================================== */}
+      <HorizontalCarousel
+        title="Moment Mix Sessions"
+        subtitle="Curated flows for your intention with customizable duration & sleep timer"
+        icon={<Sparkles className="w-5 h-5 text-accent" />}
+      >
+        {(Object.keys(MOMENT_CONFIGS) as MomentId[]).map((mKey) => {
+          const cfg = MOMENT_CONFIGS[mKey];
+          return (
+            <div
+              key={cfg.id}
+              role="button"
+              tabIndex={0}
+              onClick={() => onOpenMomentMix?.(cfg.id)}
+              className={`group relative overflow-hidden rounded-[1.5rem] p-5 w-60 sm:w-68 bg-gradient-to-br ${cfg.gradient} text-white shadow-lg hover:shadow-2xl hover:scale-[1.03] transition-all duration-300 cursor-pointer select-none shrink-0 flex flex-col justify-between h-44`}
+            >
+              <div className="flex items-start justify-between">
+                <span className="text-3xl filter drop-shadow">{cfg.emoji}</span>
+                <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-white/20 backdrop-blur-md">
+                  {cfg.defaultDurationMinutes} mins
+                </span>
+              </div>
+
+              <div>
+                <h3 className="font-black text-base tracking-tight">{cfg.title}</h3>
+                <p className="text-xs text-white/80 line-clamp-2 mt-1 leading-snug">
+                  {cfg.tagline}
+                </p>
+              </div>
+
+              <div className="flex items-center justify-between text-[11px] font-bold text-white/90 pt-2 border-t border-white/15">
+                <span>Start Session →</span>
+                <Play className="w-3.5 h-3.5 fill-current" />
+              </div>
+            </div>
+          );
+        })}
+      </HorizontalCarousel>
 
       {/* ============================================================== */}
       {/* CONTINUE LISTENING / RECENTLY PLAYED CAROUSEL                  */}

@@ -30,3 +30,11 @@ public/audio/*.m4a
 public/audio/*.wav
 public/audio/*.ogg
 public/audio/*.oga
+
+# iOS / Xcode build artifacts
+ios/App/Pods/
+ios/App/.build/
+ios/App/*.xcworkspace/xcuserdata/
+ios/App/*.xcodeproj/project.xcworkspace/xcuserdata/
+ios/App/*.xcodeproj/xcuserdata/
+DerivedData/

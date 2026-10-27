@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useTheme } from '../context/ThemeContext';
+import { useLibrary } from '../context/LibraryContext';
 import { AccentColor, DensityMode, AnimationIntensity } from '../types/music';
+import { getDiscoveryFeedback, resetDiscoverySignals } from '../services/discoveryEngine';
 import {
   Sun,
   Moon,
@@ -11,6 +13,8 @@ import {
   RotateCcw,
   ShieldCheck,
   Check,
+  Lock,
+  Trash2,
 } from 'lucide-react';
 
 export const SettingsView: React.FC = () => {
@@ -24,6 +28,27 @@ export const SettingsView: React.FC = () => {
     setEnableVisualizer,
     resetPreferences,
   } = useTheme();
+
+  const { likedTrackIds, recentlyPlayedTracks } = useLibrary();
+  const [feedbackSignals, setFeedbackSignals] = useState(getDiscoveryFeedback);
+  const [privacyToast, setPrivacyToast] = useState<string | null>(null);
+
+  const handleResetTasteSignals = () => {
+    resetDiscoverySignals();
+    setFeedbackSignals({ moreLikeThisIds: [], notForMeIds: [] });
+    setPrivacyToast('Beyond-Taste discovery signals have been reset to neutral.');
+    setTimeout(() => setPrivacyToast(null), 3000);
+  };
+
+  const handleClearHistory = () => {
+    try {
+      localStorage.removeItem('gaanasuno_recent_history_v1');
+      setPrivacyToast('Playback history cleared.');
+      setTimeout(() => setPrivacyToast(null), 3000);
+    } catch {
+      // ignore
+    }
+  };
 
   const accentOptions: Array<{
     id: AccentColor;
@@ -232,6 +257,77 @@ export const SettingsView: React.FC = () => {
               className="w-5 h-5 accent-accent rounded cursor-pointer"
             />
           </label>
+        </div>
+      </section>
+
+      {/* Privacy-First Personalization & Taste Signals Transparency */}
+      <section className="bg-surface/60 p-5 sm:p-6 rounded-2xl border border-border/60 space-y-4">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <Lock className="w-5 h-5 text-accent" />
+            <h3 className="font-extrabold text-base text-foreground">
+              Privacy-First Personalization & Signals
+            </h3>
+          </div>
+          <span className="text-[10px] font-mono font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30">
+            100% Local Storage
+          </span>
+        </div>
+
+        <p className="text-xs text-foreground-muted leading-relaxed">
+          GaanaSuno operates entirely client-side. Your listening signals, liked tracks, custom playlists, and discovery feedback are stored securely in your device's browser/app storage. Zero telemetry is broadcast, no user profiles are sold, and zero emotional or mental health diagnoses are inferred.
+        </p>
+
+        {privacyToast && (
+          <div className="p-3 rounded-xl bg-accent/15 border border-accent/30 text-accent text-xs font-bold flex items-center gap-2 animate-fade-in">
+            <Check className="w-4 h-4" />
+            <span>{privacyToast}</span>
+          </div>
+        )}
+
+        {/* Signal Inventory Strip */}
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+          <div className="p-3 rounded-xl bg-surface-subtle border border-border text-center">
+            <span className="text-lg font-black text-foreground block">{likedTrackIds.length}</span>
+            <span className="text-[10px] text-foreground-muted font-medium">Liked Songs</span>
+          </div>
+          <div className="p-3 rounded-xl bg-surface-subtle border border-border text-center">
+            <span className="text-lg font-black text-foreground block">{recentlyPlayedTracks.length}</span>
+            <span className="text-[10px] text-foreground-muted font-medium">History Entries</span>
+          </div>
+          <div className="p-3 rounded-xl bg-surface-subtle border border-border text-center">
+            <span className="text-lg font-black text-accent block">
+              {feedbackSignals.moreLikeThisIds.length}
+            </span>
+            <span className="text-[10px] text-foreground-muted font-medium">"More" Signals</span>
+          </div>
+          <div className="p-3 rounded-xl bg-surface-subtle border border-border text-center">
+            <span className="text-lg font-black text-rose-500 block">
+              {feedbackSignals.notForMeIds.length}
+            </span>
+            <span className="text-[10px] text-foreground-muted font-medium">"Not For Me" Excluded</span>
+          </div>
+        </div>
+
+        {/* Control Buttons */}
+        <div className="flex flex-wrap items-center gap-3 pt-2">
+          <button
+            type="button"
+            onClick={handleResetTasteSignals}
+            className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-surface-subtle hover:bg-surface-hover border border-border text-xs font-bold text-foreground transition-all cursor-pointer"
+          >
+            <RotateCcw className="w-3.5 h-3.5 text-accent" />
+            <span>Reset Discovery Signals</span>
+          </button>
+
+          <button
+            type="button"
+            onClick={handleClearHistory}
+            className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-surface-subtle hover:bg-surface-hover border border-border text-xs font-bold text-foreground transition-all cursor-pointer"
+          >
+            <Trash2 className="w-3.5 h-3.5 text-rose-500" />
+            <span>Clear Playback History</span>
+          </button>
         </div>
       </section>
 

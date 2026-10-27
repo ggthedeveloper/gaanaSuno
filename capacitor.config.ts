@@ -11,6 +11,10 @@ const config: CapacitorConfig = {
     backgroundColor: '#0c0a09',
     allowMixedContent: true,
   },
+  ios: {
+    backgroundColor: '#0c0a09',
+    contentInset: 'always',
+  },
   plugins: {
     StatusBar: {
       style: 'DARK',
