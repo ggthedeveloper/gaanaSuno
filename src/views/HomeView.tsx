@@ -7,6 +7,7 @@ import { PlaylistCard } from '../components/music/PlaylistCard';
 import { ArtistCard } from '../components/music/ArtistCard';
 import { MoodCard } from '../components/music/MoodCard';
 import { HorizontalCarousel } from '../components/music/HorizontalCarousel';
+import { PlayingCardDeck } from '../components/music/PlayingCardDeck';
 import { BeyondTasteDiscovery } from '../components/music/BeyondTasteDiscovery';
 import { MomentId, MOMENT_CONFIGS } from '../services/sessionMixService';
 import { useAudio } from '../context/AudioContext';
@@ -64,9 +65,6 @@ export const HomeView: React.FC<HomeViewProps> = ({
     }
     return { time: 'Late Night Chill 🌙', sub: 'Peaceful lo-fi, soothing acoustics and solace' };
   }, []);
-
-  const featuredTrack = TRACKS[0]; // Kesariya Ishq
-  const isFeaturedPlaying = currentTrack?.id === featuredTrack?.id && isPlaying;
 
   // Filtered tracks based on user preference
   const filteredTracks = useMemo(() => {
@@ -142,16 +140,17 @@ export const HomeView: React.FC<HomeViewProps> = ({
               <button
                 type="button"
                 onClick={() => {
-                  if (featuredTrack) {
-                    if (isFeaturedPlaying) togglePlay();
-                    else playTrack(featuredTrack, TRACKS);
+                  const targetTrack = currentTrack || TRACKS[0];
+                  if (targetTrack) {
+                    if (isPlaying) togglePlay();
+                    else playTrack(targetTrack, TRACKS);
                   }
                 }}
                 className="group relative inline-flex items-center gap-3 pl-6 pr-2 py-2 rounded-full bg-accent text-accent-foreground font-extrabold text-sm shadow-[0_10px_25px_-5px_rgba(245,158,11,0.4)] hover:shadow-[0_15px_30px_-5px_rgba(245,158,11,0.6)] hover:scale-[1.02] active:scale-[0.98] transition-all cursor-pointer"
               >
-                <span>{isFeaturedPlaying ? 'Pause Featured' : 'Listen to Featured Mix'}</span>
+                <span>{isPlaying ? 'Pause Playback' : currentTrack ? `Resume: ${currentTrack.title}` : 'Listen to Featured Mix'}</span>
                 <div className="w-9 h-9 rounded-full bg-black/15 flex items-center justify-center transition-transform group-hover:scale-105 group-hover:rotate-12">
-                  {isFeaturedPlaying ? (
+                  {isPlaying ? (
                     <Pause className="w-4 h-4 fill-current" />
                   ) : (
                     <Play className="w-4 h-4 fill-current ml-0.5" />
@@ -223,93 +222,15 @@ export const HomeView: React.FC<HomeViewProps> = ({
             </div>
           </div>
 
-          {/* Right Column: 3D Layered Artwork Composition Spotlight */}
-          {featuredTrack && (
-            <div className="w-full lg:w-[22rem] shrink-0">
-              <div className="relative group">
-                {/* Background Layer 2: Adjacent track peek with tilt */}
-                <div className="absolute -top-3 -right-3 w-full h-full rounded-3xl bg-surface/40 border border-border shadow-lg transform rotate-3 pointer-events-none opacity-60 group-hover:rotate-6 transition-transform duration-500" />
-
-                {/* Main Card: Spotlight */}
-                <div className="relative z-10 bg-surface/90 backdrop-blur-2xl p-5 rounded-[1.75rem] border border-border shadow-[0_20px_40px_rgba(0,0,0,0.1)] dark:shadow-[0_20px_40px_rgba(0,0,0,0.6)] overflow-hidden">
-                  <div className="relative aspect-square w-full rounded-2xl overflow-hidden shadow-xl mb-4 bg-surface-subtle border border-border">
-                    <img
-                      src={featuredTrack.coverUrl}
-                      alt={featuredTrack.title}
-                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent pointer-events-none" />
-
-                    <div className="absolute top-3 left-3 flex items-center gap-1.5">
-                      <span className="w-2 h-2 rounded-full bg-accent animate-ping" />
-                      <span className="px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider bg-black/60 text-white backdrop-blur-md border border-white/10">
-                        Spotlight of the Day
-                      </span>
-                    </div>
-
-                    <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between text-white">
-                      <div>
-                        <div className="flex items-center gap-1.5">
-                          <p className="text-xs font-bold uppercase tracking-wider text-accent drop-shadow">
-                            {featuredTrack.genre}
-                          </p>
-                          {isFeaturedPlaying && (
-                            <span className="flex items-end gap-0.5 h-3 px-1.5 py-0.5 rounded-full bg-accent/20 border border-accent/30">
-                              <span className="w-0.5 bg-accent rounded-full animate-bounce h-3" />
-                              <span className="w-0.5 bg-accent rounded-full animate-bounce h-1.5 delay-100" />
-                              <span className="w-0.5 bg-accent rounded-full animate-bounce h-2.5 delay-200" />
-                            </span>
-                          )}
-                        </div>
-                        <p className="text-[11px] text-white/80 font-mono mt-0.5">
-                          24-Bit Lossless Audio
-                        </p>
-                      </div>
-
-                      <button
-                        type="button"
-                        aria-label={isFeaturedPlaying ? 'Pause featured' : 'Play featured'}
-                        onClick={() => {
-                          if (isFeaturedPlaying) togglePlay();
-                          else playTrack(featuredTrack, TRACKS);
-                        }}
-                        className="w-12 h-12 rounded-full bg-accent text-accent-foreground flex items-center justify-center shadow-xl hover:scale-110 active:scale-90 transition-all cursor-pointer"
-                      >
-                        {isFeaturedPlaying ? (
-                          <Pause className="w-5 h-5 fill-current" />
-                        ) : (
-                          <Play className="w-5 h-5 fill-current ml-0.5" />
-                        )}
-                      </button>
-                    </div>
-                  </div>
-
-                  {/* Metadata and Details */}
-                  <div className="flex items-start justify-between gap-2">
-                    <div className="min-w-0 flex-1">
-                      <h3
-                        onClick={() => onSelectTrack(featuredTrack)}
-                        className="font-extrabold text-base text-foreground truncate cursor-pointer hover:text-accent transition-colors"
-                      >
-                        {featuredTrack.title}
-                      </h3>
-                      <p className="text-xs text-foreground-muted font-medium truncate mt-0.5">
-                        {featuredTrack.artist}
-                      </p>
-                    </div>
-
-                    <button
-                      type="button"
-                      onClick={() => onSelectTrack(featuredTrack)}
-                      className="text-xs font-bold text-accent hover:underline shrink-0 pt-1"
-                    >
-                      Details →
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          )}
+          {/* Right Column: Interactive 3D Playing Card Deck */}
+          <PlayingCardDeck
+            currentTrack={currentTrack}
+            isPlaying={isPlaying}
+            onPlayTrack={(track) => playTrack(track, TRACKS)}
+            onTogglePlay={togglePlay}
+            onSelectTrack={onSelectTrack}
+            catalog={TRACKS}
+          />
         </div>
 
         {/* Feature Badges Strip */}
