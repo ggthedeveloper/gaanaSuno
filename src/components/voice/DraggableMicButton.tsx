@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { Capacitor } from '@capacitor/core';
 import { Mic } from 'lucide-react';
 
 interface DraggableMicButtonProps {
@@ -11,6 +12,15 @@ const BUTTON_SIZE = 52; // 52px button size
 const MARGIN = 12; // 12px margin from screen edges
 
 export const DraggableMicButton: React.FC<DraggableMicButtonProps> = ({ onClick, className = '' }) => {
+  // Check if running on Android / iOS mobile platform or mobile viewport
+  const [isMobile, setIsMobile] = useState(() => {
+    if (typeof window === 'undefined') return false;
+    const isCapacitorNative = Capacitor.isNativePlatform();
+    const isMobileDevice = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+    const isSmallScreen = window.innerWidth < 768;
+    return isCapacitorNative || isMobileDevice || isSmallScreen;
+  });
+
   const [position, setPosition] = useState<{ x: number; y: number } | null>(null);
   const [isDragging, setIsDragging] = useState(false);
 
@@ -24,6 +34,23 @@ export const DraggableMicButton: React.FC<DraggableMicButtonProps> = ({ onClick,
     initialY: number;
     hasMoved: boolean;
   } | null>(null);
+
+  // Re-check mobile platform status on resize / orientation change
+  useEffect(() => {
+    const checkIsMobile = () => {
+      const isCapacitorNative = Capacitor.isNativePlatform();
+      const isMobileDevice = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+      const isSmallScreen = window.innerWidth < 768;
+      setIsMobile(isCapacitorNative || isMobileDevice || isSmallScreen);
+    };
+
+    window.addEventListener('resize', checkIsMobile);
+    window.addEventListener('orientationchange', checkIsMobile);
+    return () => {
+      window.removeEventListener('resize', checkIsMobile);
+      window.removeEventListener('orientationchange', checkIsMobile);
+    };
+  }, []);
 
   // Compute safe boundaries based on current window size
   const getClampedPosition = (x: number, y: number) => {
@@ -174,7 +201,8 @@ export const DraggableMicButton: React.FC<DraggableMicButtonProps> = ({ onClick,
     dragStartRef.current = null;
   };
 
-  if (!position) return null;
+  // Completely remove / do not render floating mic on Android & iOS mobile devices or mobile viewports
+  if (isMobile || !position) return null;
 
   return (
     <div

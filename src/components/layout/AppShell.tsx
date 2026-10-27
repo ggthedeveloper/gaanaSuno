@@ -260,8 +260,11 @@ export const AppShell: React.FC = () => {
         onClose={() => setSelectedTrackForDetail(null)}
       />
 
-      {/* Movable / Draggable Voice Assistant Button (Can be dragged anywhere on screen across Mobile & Desktop) */}
-      <DraggableMicButton onClick={() => setIsVoiceModalOpen(true)} />
+      {/* Movable / Draggable Voice Assistant Button (Desktop only; removed on Android & iOS mobile) */}
+      <DraggableMicButton
+        onClick={() => setIsVoiceModalOpen(true)}
+        className="hidden md:block"
+      />
 
       {/* Sur-Vaani Voice Assistant Modal */}
       <VoiceAssistantModal
