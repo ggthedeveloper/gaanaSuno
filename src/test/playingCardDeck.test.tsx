@@ -48,7 +48,7 @@ describe('PlayingCardDeck Component', () => {
     expect(screen.getByText('Spotlight of the Day')).toBeInTheDocument();
   });
 
-  it('renders background playing cards with queue badges', () => {
+  it('renders background playing cards in the deck', () => {
     const handlePlay = vi.fn();
     const handleToggle = vi.fn();
     const handleSelect = vi.fn();
@@ -64,9 +64,9 @@ describe('PlayingCardDeck Component', () => {
       />
     );
 
-    expect(screen.getByText('UP NEXT')).toBeInTheDocument();
-    expect(screen.getByText('DECK #2')).toBeInTheDocument();
-    expect(screen.getByText('DECK #3')).toBeInTheDocument();
+    expect(screen.getByTitle(`Play "${TRACKS[1].title}"`)).toBeInTheDocument();
+    expect(screen.getByTitle(`Play "${TRACKS[2].title}"`)).toBeInTheDocument();
+    expect(screen.getByTitle(`Play "${TRACKS[3].title}"`)).toBeInTheDocument();
   });
 
   it('plays a background card track when clicked', () => {

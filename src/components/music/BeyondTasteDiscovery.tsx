@@ -21,7 +21,6 @@ import {
   Dice5,
   Play,
   Pause,
-  Info,
 } from 'lucide-react';
 
 interface BeyondTasteDiscoveryProps {
@@ -90,19 +89,19 @@ export const BeyondTasteDiscovery: React.FC<BeyondTasteDiscoveryProps> = ({
       id: 'familiar',
       label: 'Familiar Comfort',
       tag: '0% Drift',
-      desc: 'Deep cuts strictly within your favorite moods and genres',
+      desc: 'Your favorite genres & moods',
     },
     {
       id: 'balanced',
       label: 'Balanced Horizon',
       tag: '50% Drift',
-      desc: 'Harmonious blend of your taste with adjacent indie & regional styles',
+      desc: 'Blend of favorites and adjacent styles',
     },
     {
       id: 'experimental',
       label: 'Frontier Territory',
       tag: '100% Drift',
-      desc: 'Acoustic classical ragas, folk poetry, and unexpected regional masterworks',
+      desc: 'Fresh sounds & unexpected discoveries',
     },
   ];
 
@@ -206,15 +205,6 @@ export const BeyondTasteDiscovery: React.FC<BeyondTasteDiscoveryProps> = ({
         </div>
       </div>
 
-      {/* Rationale Banner */}
-      <div className="relative z-10 flex items-start gap-2.5 p-3 rounded-xl bg-surface/50 border border-border/60 text-xs text-foreground-muted mb-5">
-        <Info className="w-4 h-4 text-accent shrink-0 mt-0.5" />
-        <div>
-          <strong className="text-foreground">Transparent Recommendation Rationale: </strong>
-          <span>{discoveryResult.rationale}</span>
-        </div>
-      </div>
-
       {/* Recommendation Grid */}
       <div className="relative z-10 grid grid-cols-1 md:grid-cols-2 gap-3.5">
         {discoveryResult.items.map(({ track, explanation, category }) => {
@@ -274,11 +264,9 @@ export const BeyondTasteDiscovery: React.FC<BeyondTasteDiscoveryProps> = ({
                     {track.artist} • {track.genre}
                   </p>
 
-                  {/* Plain-Language Recommendation Explanation */}
-                  <div className="mt-1.5 p-1.5 rounded-lg bg-surface-subtle/80 border border-border/40 text-[11px] text-foreground-muted leading-tight">
-                    <span className="font-semibold text-accent/90">Why: </span>
-                    <span>{explanation}</span>
-                  </div>
+                  <p className="mt-1 text-[11px] text-foreground-muted truncate" title={explanation}>
+                    {explanation}
+                  </p>
                 </div>
               </div>
 

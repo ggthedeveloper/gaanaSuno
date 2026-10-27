@@ -76,8 +76,7 @@ export const MomentMixView: React.FC<MomentMixViewProps> = ({ onSelectTrack }) =
           </h1>
 
           <p className="text-sm sm:text-base text-foreground-muted leading-relaxed font-medium">
-            Listen intentionally. Instead of endless random feeds, Moment Mixes pack cohesive tracks calibrated
-            to your real time window (15m, 30m, 45m, 60m) with automatic sleep timer shutoff.
+            Curated listening sessions calibrated to your schedule with automatic sleep timer shutoff.
           </p>
         </div>
       </section>

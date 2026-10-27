@@ -24,9 +24,7 @@ export const BeyondTasteView: React.FC<BeyondTasteViewProps> = ({ onSelectTrack 
           </h1>
 
           <p className="text-sm sm:text-base text-foreground-muted leading-relaxed font-medium">
-            Conventional music apps lock you inside an algorithmic bubble repeating the same 20 songs.
-            GaanaSuno puts you in direct command with transparent, user-controlled exploration sliders,
-            plain-language rationale for every track, and 100% on-device taste profiling.
+            Explore music on your own terms with interactive discovery sliders and private on-device curation.
           </p>
 
           <div className="pt-2 flex flex-wrap items-center gap-3 text-xs font-medium text-foreground-muted">

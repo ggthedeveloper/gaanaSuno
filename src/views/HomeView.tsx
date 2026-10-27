@@ -24,7 +24,6 @@ import {
   Flame,
   Coffee,
   Music,
-  Compass,
 } from 'lucide-react';
 
 interface HomeViewProps {
@@ -39,7 +38,6 @@ interface HomeViewProps {
 }
 
 export const HomeView: React.FC<HomeViewProps> = ({
-  onNavigateToBeyondTaste,
   onNavigateToMehfil,
   onNavigateToMoods,
   onOpenMomentMix,
@@ -128,15 +126,15 @@ export const HomeView: React.FC<HomeViewProps> = ({
             </div>
 
             <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black text-foreground tracking-tight leading-[1.08]">
-              Discover the soul of <span className="text-gradient-accent">Global & Indian Music</span>
+              Discover <span className="text-gradient-accent">Global & Indian Music</span>
             </h1>
 
-            <p className="mt-3.5 text-sm sm:text-base text-foreground-muted leading-relaxed max-w-xl font-medium">
-              Stream Bollywood hits, Punjabi anthems, Indie acoustics, Lo-Fi beats, and timeless melodies in lossless sound.
+            <p className="mt-2.5 text-sm sm:text-base text-foreground-muted max-w-lg font-medium">
+              Bollywood chartbusters, indie acoustics, and timeless melodies.
             </p>
 
-            {/* Nested CTA & Play Pill Button Architecture */}
-            <div className="mt-7 flex flex-wrap items-center gap-4">
+            {/* Quick Actions */}
+            <div className="mt-6 flex flex-wrap items-center gap-3">
               <button
                 type="button"
                 onClick={() => {
@@ -146,10 +144,10 @@ export const HomeView: React.FC<HomeViewProps> = ({
                     else playTrack(targetTrack, TRACKS);
                   }
                 }}
-                className="group relative inline-flex items-center gap-3 pl-6 pr-2 py-2 rounded-full bg-accent text-accent-foreground font-extrabold text-sm shadow-[0_10px_25px_-5px_rgba(245,158,11,0.4)] hover:shadow-[0_15px_30px_-5px_rgba(245,158,11,0.6)] hover:scale-[1.02] active:scale-[0.98] transition-all cursor-pointer"
+                className="group relative inline-flex items-center gap-3 pl-6 pr-2.5 py-2 rounded-full bg-accent text-accent-foreground font-extrabold text-sm shadow-[0_10px_25px_-5px_rgba(245,158,11,0.4)] hover:shadow-[0_15px_30px_-5px_rgba(245,158,11,0.6)] hover:scale-[1.02] active:scale-[0.98] transition-all cursor-pointer"
               >
-                <span>{isPlaying ? 'Pause Playback' : currentTrack ? `Resume: ${currentTrack.title}` : 'Listen to Featured Mix'}</span>
-                <div className="w-9 h-9 rounded-full bg-black/15 flex items-center justify-center transition-transform group-hover:scale-105 group-hover:rotate-12">
+                <span>{isPlaying ? 'Pause Playback' : currentTrack ? `Resume: ${currentTrack.title}` : 'Listen Now'}</span>
+                <div className="w-8 h-8 rounded-full bg-black/15 flex items-center justify-center transition-transform group-hover:scale-105">
                   {isPlaying ? (
                     <Pause className="w-4 h-4 fill-current" />
                   ) : (
@@ -161,51 +159,15 @@ export const HomeView: React.FC<HomeViewProps> = ({
               <button
                 type="button"
                 onClick={() => onNavigateToMoods()}
-                className="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-surface-subtle hover:bg-surface-hover border border-border text-xs font-bold text-foreground transition-all active:scale-[0.98] cursor-pointer"
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-surface-subtle hover:bg-surface-hover border border-border text-xs font-bold text-foreground transition-all active:scale-[0.98] cursor-pointer"
               >
                 <Radio className="w-4 h-4 text-accent" />
-                <span>Explore Vibe Radios</span>
+                <span>Vibe Radios</span>
               </button>
-
-              {onNavigateToBeyondTaste && (
-                <button
-                  type="button"
-                  onClick={onNavigateToBeyondTaste}
-                  className="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-accent/15 hover:bg-accent/25 border border-accent/30 text-xs font-black text-accent transition-all hover:scale-105 active:scale-[0.98] cursor-pointer shadow-sm"
-                >
-                  <Compass className="w-4 h-4 text-accent" />
-                  <span>🎚️ Beyond Taste Slider</span>
-                </button>
-              )}
-
-              {onOpenMomentMix && (
-                <button
-                  type="button"
-                  onClick={() => onOpenMomentMix('unwind')}
-                  className="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-accent/15 hover:bg-accent/25 border border-accent/30 text-xs font-bold text-accent transition-all hover:scale-105 active:scale-[0.98] cursor-pointer shadow-sm"
-                >
-                  <Sparkles className="w-4 h-4 text-accent" />
-                  <span>Moment Mix Sessions</span>
-                </button>
-              )}
-
-              {onNavigateToMehfil && (
-                <button
-                  type="button"
-                  onClick={onNavigateToMehfil}
-                  className="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-accent/15 hover:bg-accent/25 border border-accent/30 text-xs font-bold text-accent transition-all hover:scale-105 active:scale-[0.98] cursor-pointer shadow-lg"
-                >
-                  <Flame className="w-4 h-4 text-accent" />
-                  <span>The Listening Lounge (Vinyl & Cassette)</span>
-                </button>
-              )}
             </div>
 
             {/* Quick Vibe Selector Pills */}
-            <div className="mt-7 pt-5 border-t border-border/60">
-              <span className="text-[11px] font-bold uppercase tracking-wider text-foreground-muted block mb-2.5">
-                Instant Mood Tuner
-              </span>
+            <div className="mt-6 pt-5 border-t border-border/50">
               <div className="flex flex-wrap items-center gap-2">
                 {MOOD_OPTIONS.map((mood) => (
                   <button
@@ -232,26 +194,6 @@ export const HomeView: React.FC<HomeViewProps> = ({
             catalog={TRACKS}
           />
         </div>
-
-        {/* Feature Badges Strip */}
-        <div className="relative z-10 mt-8 pt-6 border-t border-border/60 grid grid-cols-2 sm:grid-cols-4 gap-4 text-center">
-          <div className="p-2 rounded-xl bg-surface/30 border border-border">
-            <p className="text-base sm:text-lg font-black text-foreground">{TRACKS.length} Songs</p>
-            <p className="text-[11px] text-foreground-muted">Handpicked Catalog</p>
-          </div>
-          <div className="p-2 rounded-xl bg-surface/30 border border-border">
-            <p className="text-base sm:text-lg font-black text-accent">{vocalLegendsTracks.length} Bollywood Hits</p>
-            <p className="text-[11px] text-foreground-muted">Arijit, Armaan, Jubin & More</p>
-          </div>
-          <div className="p-2 rounded-xl bg-surface/30 border border-border">
-            <p className="text-base sm:text-lg font-black text-foreground">{PLAYLISTS.length} Playlists</p>
-            <p className="text-[11px] text-foreground-muted">Mood & Genre Curations</p>
-          </div>
-          <div className="p-2 rounded-xl bg-surface/30 border border-border">
-            <p className="text-base sm:text-lg font-black text-foreground">0ms Latency</p>
-            <p className="text-[11px] text-foreground-muted">Instant Offline Playback</p>
-          </div>
-        </div>
       </section>
 
       {/* ============================================================== */}
@@ -264,7 +206,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
       {/* ============================================================== */}
       <HorizontalCarousel
         title="Moment Mix Sessions"
-        subtitle="Curated flows for your intention with customizable duration & sleep timer"
+        subtitle="Timer-enabled listening flows"
         icon={<Sparkles className="w-5 h-5 text-accent" />}
       >
         {(Object.keys(MOMENT_CONFIGS) as MomentId[]).map((mKey) => {
@@ -310,32 +252,25 @@ export const HomeView: React.FC<HomeViewProps> = ({
         >
           <div className="absolute top-0 right-0 w-80 h-80 rounded-full bg-amber-500/10 blur-[100px] pointer-events-none" />
           <div className="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
-            <div className="space-y-2 max-w-xl">
+            <div className="space-y-1.5 max-w-xl">
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/20 text-amber-300 text-xs font-bold uppercase tracking-wider">
                 <Flame className="w-3.5 h-3.5" />
-                <span>Tactile Acoustic Experience</span>
+                <span>Vinyl & Cassette</span>
               </div>
               <h2 className="text-2xl sm:text-3xl font-black text-amber-100 tracking-tight">
-                Enter the Listening Lounge
+                The Listening Lounge
               </h2>
               <p className="text-xs sm:text-sm text-stone-300 font-medium">
-                Step into a tactile listening sanctuary with our 90s Magnetic Cassette Deck, Sitar Turntable, Procedural Tanpura Drone, and Emotional Sound Compass.
+                Vintage cassette deck, sitar turntable & acoustic Tanpura drone.
               </p>
             </div>
 
-            <div className="flex items-center gap-3">
-              <div className="hidden sm:flex items-center gap-2 text-xs font-mono text-amber-300 bg-black/40 px-3.5 py-2 rounded-xl border border-amber-500/20">
-                <span>🪔 Tanpura Synthesizer</span>
-                <span>•</span>
-                <span>📻 Vintage Decks</span>
-              </div>
-              <button
-                type="button"
-                className="px-5 py-3 rounded-xl bg-amber-500 hover:bg-amber-400 text-stone-950 font-black text-xs uppercase tracking-wider transition-all shadow-lg group-hover:scale-105 active:scale-95 cursor-pointer"
-              >
-                Enter Lounge →
-              </button>
-            </div>
+            <button
+              type="button"
+              className="px-5 py-3 rounded-xl bg-amber-500 hover:bg-amber-400 text-stone-950 font-black text-xs uppercase tracking-wider transition-all shadow-lg group-hover:scale-105 active:scale-95 cursor-pointer"
+            >
+              Enter Lounge →
+            </button>
           </div>
         </section>
       )}
@@ -346,7 +281,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
       {recentlyPlayedTracks.length > 0 && (
         <HorizontalCarousel
           title="Continue Listening"
-          subtitle="Pick up right where you left off"
+          subtitle="Pick up where you left off"
           icon={<Flame className="w-5 h-5" />}
         >
           {recentlyPlayedTracks.map((track) => (
@@ -364,8 +299,8 @@ export const HomeView: React.FC<HomeViewProps> = ({
       {/* YOUTUBE TRENDING HITS                                         */}
       {/* ============================================================== */}
       <HorizontalCarousel
-        title="YouTube Trending — Global & Bollywood Hits"
-        subtitle="The definitive chart-topping hits by Arijit Singh, Diljit Dosanjh, Shreya Ghoshal, A.R. Rahman & Anuv Jain"
+        title="Trending Now"
+        subtitle="Chartbusters & viral hits"
         icon={
           <div className="w-5 h-5 rounded-md bg-red-600 flex items-center justify-center text-white shadow-sm">
             <Play className="w-2.5 h-2.5 fill-current ml-0.5" />
@@ -386,8 +321,8 @@ export const HomeView: React.FC<HomeViewProps> = ({
       {/* BOLLYWOOD VOCAL LEGENDS & CHARTBUSTERS CAROUSEL                */}
       {/* ============================================================== */}
       <HorizontalCarousel
-        title="Bollywood Vocal Legends & Chartbusters"
-        subtitle="The golden voices ruling millions: Arijit Singh, Armaan Malik, Jubin Nautiyal, Ankit Tiwari, Stebin Ben & Ami Mishra"
+        title="Bollywood Superstars"
+        subtitle="Arijit, Armaan, Jubin, Ankit, Stebin & more"
         icon={<Sparkles className="w-5 h-5 text-accent" />}
       >
         {vocalLegendsTracks.map((track) => (
@@ -404,8 +339,8 @@ export const HomeView: React.FC<HomeViewProps> = ({
       {/* GLOBAL BILLBOARD & ENGLISH POP HITS                           */}
       {/* ============================================================== */}
       <HorizontalCarousel
-        title="Global English Pop & Crossover Hits"
-        subtitle="Record-breaking international sensations: The Weeknd, Ed Sheeran, Stephen Sanchez & Dua Lipa"
+        title="Global Pop Hits"
+        subtitle="The Weeknd, Ed Sheeran, Dua Lipa & more"
         icon={<Flame className="w-5 h-5 text-accent" />}
       >
         {globalHitsTracks.map((track) => (
@@ -422,8 +357,8 @@ export const HomeView: React.FC<HomeViewProps> = ({
       {/* ROMANTIC EVENINGS CAROUSEL                                     */}
       {/* ============================================================== */}
       <HorizontalCarousel
-        title="Soulful Romance & Love"
-        subtitle="Heartfelt Bollywood ballads, soulful duets, and timeless love melodies"
+        title="Romantic Melodies"
+        subtitle="Heartfelt ballads & love duets"
         icon={<Heart className="w-5 h-5 text-rose-500" />}
       >
         {romanticTracks.map((track) => (
@@ -440,8 +375,8 @@ export const HomeView: React.FC<HomeViewProps> = ({
       {/* BROWSE BY MOOD & EMOTION                                       */}
       {/* ============================================================== */}
       <HorizontalCarousel
-        title="Browse by Mood & Emotion"
-        subtitle="Let your current feeling guide your listening journey"
+        title="Browse by Mood"
+        subtitle="Find music for your current feeling"
         icon={<Radio className="w-5 h-5 text-accent" />}
         actionText="Explore All Vibes →"
         onAction={() => onNavigateToMoods()}
@@ -460,8 +395,8 @@ export const HomeView: React.FC<HomeViewProps> = ({
       {/* SUFI & DEVOTIONAL RUHANIYAT CAROUSEL                           */}
       {/* ============================================================== */}
       <HorizontalCarousel
-        title="Ruhaniyat — Sufi & Devotional Peace"
-        subtitle="Transcendental qawwalis, bamboo bansuri, and morning stotrams"
+        title="Sufi & Devotional"
+        subtitle="Spiritual kalams & peace"
         icon={<Sparkles className="w-5 h-5 text-amber-500" />}
       >
         {sufiDevotionalTracks.map((track) => (
@@ -478,8 +413,8 @@ export const HomeView: React.FC<HomeViewProps> = ({
       {/* CHAI, MONSOON & LO-FI CAROUSEL                                 */}
       {/* ============================================================== */}
       <HorizontalCarousel
-        title="Chai, Baarish & Lo-Fi Beats"
-        subtitle="Midnight Delhi vibes, warm vinyl crackle, and acoustic fingerpicking"
+        title="Monsoon & Lo-Fi"
+        subtitle="Acoustic warmth & chill beats"
         icon={<Coffee className="w-5 h-5 text-cyan-500" />}
       >
         {lofiChillTracks.map((track) => (
@@ -496,8 +431,8 @@ export const HomeView: React.FC<HomeViewProps> = ({
       {/* FEATURED PLAYLISTS                                             */}
       {/* ============================================================== */}
       <HorizontalCarousel
-        title="Featured Curated Playlists"
-        subtitle="Curated collections crafted for every moment"
+        title="Curated Playlists"
+        subtitle="Made for every moment"
         icon={<Disc className="w-5 h-5 text-accent" />}
       >
         {PLAYLISTS.map((playlist) => (
@@ -513,8 +448,8 @@ export const HomeView: React.FC<HomeViewProps> = ({
       {/* PARTY & GROOVE CAROUSEL                                        */}
       {/* ============================================================== */}
       <HorizontalCarousel
-        title="Desi Party & Dholak Groove"
-        subtitle="High-octane Punjabi beats and wedding dancefloor anthems"
+        title="Party Anthems"
+        subtitle="High-octane dance beats"
         icon={<Music className="w-5 h-5 text-emerald-500" />}
       >
         {partyTracks.map((track) => (
@@ -535,10 +470,10 @@ export const HomeView: React.FC<HomeViewProps> = ({
           <div>
             <h2 className="text-xl sm:text-2xl font-black text-foreground tracking-tight flex items-center gap-2">
               <Volume2 className="w-5 h-5 text-accent" />
-              <span>Top Trending Songs</span>
+              <span>Top Songs</span>
             </h2>
             <p className="text-xs text-foreground-muted mt-0.5 font-medium">
-              Most loved hits and timeless indie melodies
+              Most loved this week
             </p>
           </div>
         </div>
@@ -560,8 +495,8 @@ export const HomeView: React.FC<HomeViewProps> = ({
       {/* LEGENDARY ARTISTS & MAESTROS                                   */}
       {/* ============================================================== */}
       <HorizontalCarousel
-        title="Legendary Indian Artists & Maestros"
-        subtitle="Iconic voices and virtuosos who shaped Indian musical history"
+        title="Popular Artists"
+        subtitle="Iconic voices & creators"
         icon={<Sparkles className="w-5 h-5 text-accent" />}
       >
         {ARTISTS.map((artist) => (
