@@ -49,7 +49,7 @@ export interface Track {
   moods: MoodTag[];
   genre: string;
   year: number;
-  language: 'Hindi' | 'Urdu' | 'Punjabi' | 'Awadhi';
+  language: 'Hindi' | 'Urdu' | 'Punjabi' | 'Awadhi' | 'English';
   licenseNote: string;
   lyrics?: LyricLine[];
   tempo?: 'slow' | 'medium' | 'fast';

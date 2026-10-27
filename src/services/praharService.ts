@@ -46,7 +46,7 @@ export const PRAHAR_DATA: Record<IndianPrahar, PraharData> = {
       english: 'Awake, O flute player, the night has passed and dawn has arrived.',
       poet: 'Mirabai'
     },
-    recommendedTrackIds: ['track-23', 'track-22', 'track-7', 'track-21'],
+    recommendedTrackIds: ['track-7', 'track-23', 'track-24', 'track-37'],
     accentGradient: 'from-amber-500 via-orange-400 to-yellow-300',
     glowColor: 'rgba(245, 158, 11, 0.25)',
   },
@@ -200,7 +200,7 @@ export const NAVARASA_DATA: Record<NavarasaId, NavarasaData> = {
     color: '#d97706',
     gradient: 'from-amber-600 via-orange-700 to-rose-800',
     quote: 'ख़ुदा और बंदे का एकाकार — कबीर और अमीर खुसरो का अनहद नाद।',
-    trackIds: ['track-2', 'track-13', 'track-22', 'track-23'],
+    trackIds: ['track-2', 'track-13', 'track-17', 'track-31', 'track-40'],
   },
 };
 

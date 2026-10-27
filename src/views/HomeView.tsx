@@ -23,7 +23,6 @@ import {
   Flame,
   Coffee,
   Music,
-  ShieldCheck,
   Compass,
 } from 'lucide-react';
 
@@ -80,9 +79,14 @@ export const HomeView: React.FC<HomeViewProps> = ({
     []
   );
 
-  // Specific thematic track collections
-  const heritageTracks = useMemo(
-    () => TRACKS.filter((t) => ['track-21', 'track-22', 'track-23', 'track-24', 'track-2', 'track-13', 'track-6'].includes(t.id)),
+  // Vocal Legends & Chartbuster Hits
+  const vocalLegendsTracks = useMemo(
+    () => TRACKS.filter((t) => ['track-21', 'track-22', 'track-23', 'track-24', 'track-33', 'track-34', 'track-35', 'track-36', 'track-37', 'track-38', 'track-39', 'track-40', 'track-41', 'track-42'].includes(t.id)),
+    []
+  );
+
+  const globalHitsTracks = useMemo(
+    () => TRACKS.filter((t) => ['track-43', 'track-44', 'track-45', 'track-46'].includes(t.id)),
     []
   );
 
@@ -315,8 +319,8 @@ export const HomeView: React.FC<HomeViewProps> = ({
             <p className="text-[11px] text-foreground-muted">Handpicked Catalog</p>
           </div>
           <div className="p-2 rounded-xl bg-surface/30 border border-border">
-            <p className="text-base sm:text-lg font-black text-accent">{heritageTracks.length} Heritage</p>
-            <p className="text-[11px] text-foreground-muted">Non-Copyright & Public Domain</p>
+            <p className="text-base sm:text-lg font-black text-accent">{vocalLegendsTracks.length} Bollywood Hits</p>
+            <p className="text-[11px] text-foreground-muted">Arijit, Armaan, Jubin & More</p>
           </div>
           <div className="p-2 rounded-xl bg-surface/30 border border-border">
             <p className="text-base sm:text-lg font-black text-foreground">{PLAYLISTS.length} Playlists</p>
@@ -458,18 +462,36 @@ export const HomeView: React.FC<HomeViewProps> = ({
       </HorizontalCarousel>
 
       {/* ============================================================== */}
-      {/* SANSKRITI — NON-COPYRIGHT INDIAN HERITAGE CAROUSEL             */}
+      {/* BOLLYWOOD VOCAL LEGENDS & CHARTBUSTERS CAROUSEL                */}
       {/* ============================================================== */}
       <HorizontalCarousel
-        title="Sanskriti — Non-Copyright Indian Heritage"
-        subtitle="Public domain classical ragas, Amir Khusro Sufi kalams, and Sant Kabir bhajans"
-        icon={<ShieldCheck className="w-5 h-5 text-accent" />}
+        title="Bollywood Vocal Legends & Chartbusters"
+        subtitle="The golden voices ruling millions: Arijit Singh, Armaan Malik, Jubin Nautiyal, Ankit Tiwari, Stebin Ben & Ami Mishra"
+        icon={<Sparkles className="w-5 h-5 text-accent" />}
       >
-        {heritageTracks.map((track) => (
+        {vocalLegendsTracks.map((track) => (
           <TrackCard
             key={track.id}
             track={track}
-            allTracks={heritageTracks}
+            allTracks={vocalLegendsTracks}
+            onOpenDetail={onSelectTrack}
+          />
+        ))}
+      </HorizontalCarousel>
+
+      {/* ============================================================== */}
+      {/* GLOBAL BILLBOARD & ENGLISH POP HITS                           */}
+      {/* ============================================================== */}
+      <HorizontalCarousel
+        title="Global English Pop & Crossover Hits"
+        subtitle="Record-breaking international sensations: The Weeknd, Ed Sheeran, Stephen Sanchez & Dua Lipa"
+        icon={<Flame className="w-5 h-5 text-accent" />}
+      >
+        {globalHitsTracks.map((track) => (
+          <TrackCard
+            key={track.id}
+            track={track}
+            allTracks={globalHitsTracks}
             onOpenDetail={onSelectTrack}
           />
         ))}

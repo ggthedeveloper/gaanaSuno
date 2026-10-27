@@ -221,6 +221,8 @@ export function parseMusicIntent(
       detectedLanguage = 'Urdu';
     } else if (normalized.includes('awadhi')) {
       detectedLanguage = 'Awadhi';
+    } else if (normalized.includes('english') || normalized.includes('hollywood') || normalized.includes('western') || normalized.includes('international')) {
+      detectedLanguage = 'English';
     } else if (normalized.includes('hindi') || normalized.includes('bollywood')) {
       detectedLanguage = 'Hindi';
     }
